@@ -2,7 +2,6 @@
    TOKENS
    ============================================================ */
 :root {
-  /* Colors — swap freely */
   --color-bg:         #0d1a0f;
   --color-surface:    #132017;
   --color-primary:    #4caf72;
@@ -11,23 +10,19 @@
   --color-text-muted: #8aa890;
   --color-border:     #1e3325;
 
-  /* Typography */
   --font-heading: 'Georgia', serif;
   --font-body:    system-ui, -apple-system, sans-serif;
 
-  /* Grid */
   --cols:        12;
   --gutter:      24px;
   --margin:      120px;
 
-  /* Spacing scale (rem) */
   --space-xs:  0.5rem;
   --space-sm:  1rem;
   --space-md:  2rem;
   --space-lg:  4rem;
   --space-xl:  8rem;
 
-  /* Transitions */
   --ease:      cubic-bezier(0.4, 0, 0.2, 1);
   --duration:  0.3s;
 }
@@ -65,13 +60,11 @@ ul { list-style: none; }
   padding-inline: var(--margin);
 }
 
-/* Column spans */
 .col-span-4  { grid-column: span 4; }
 .col-span-6  { grid-column: span 6; }
 .col-span-8  { grid-column: span 8; }
 .col-span-12 { grid-column: span 12; }
 
-/* Offsets */
 .col-offset-2 { grid-column-start: 3; }
 
 /* ============================================================
@@ -149,7 +142,10 @@ p:last-child { margin-bottom: 0; }
   left: 0;
   right: 0;
   z-index: 100;
-  padding: var(--space-md) 0;
+  padding: var(--space-md) var(--margin);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   transition: background var(--duration) var(--ease),
               padding var(--duration) var(--ease);
 }
@@ -157,15 +153,8 @@ p:last-child { margin-bottom: 0; }
 .nav.scrolled {
   background: rgba(13, 26, 15, 0.92);
   backdrop-filter: blur(12px);
-  padding: var(--space-sm) 0;
+  padding-block: var(--space-sm);
   border-bottom: 1px solid var(--color-border);
-}
-
-.nav__inner {
-  grid-column: span 12;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .nav__logo {
@@ -174,17 +163,45 @@ p:last-child { margin-bottom: 0; }
   letter-spacing: -0.01em;
 }
 
-.nav__links {
+.nav__actions {
   display: flex;
-  gap: var(--space-md);
+  align-items: center;
+  gap: var(--space-sm);
 }
 
-.nav__links a {
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  transition: color var(--duration) var(--ease);
+.btn--nav {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid rgba(232, 240, 234, 0.35);
+  border-radius: 4px;
+  padding: 0.55rem 1.3rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: background var(--duration) var(--ease),
+              border-color var(--duration) var(--ease),
+              transform var(--duration) var(--ease);
 }
-.nav__links a:hover { color: var(--color-text); }
+
+.btn--nav:hover {
+  background: rgba(232, 240, 234, 0.08);
+  border-color: rgba(232, 240, 234, 0.7);
+  transform: none;
+}
+
+.nav__ig {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(232, 240, 234, 0.25);
+  border-radius: 7px;
+  color: var(--color-text);
+  transition: border-color var(--duration) var(--ease);
+}
+
+.nav__ig:hover { border-color: rgba(232, 240, 234, 0.7); }
 
 /* ============================================================
    HERO
@@ -193,17 +210,18 @@ p:last-child { margin-bottom: 0; }
   min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: var(--space-xl) 0;
+  padding: var(--space-xl) var(--margin);
+  text-align: center;
 }
 
-/* Subtle animated background */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(76, 175, 114, 0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(76, 175, 114, 0.12) 0%, transparent 70%);
   animation: heroGlow 8s ease-in-out infinite alternate;
 }
 
@@ -213,9 +231,25 @@ p:last-child { margin-bottom: 0; }
 }
 
 .hero__content {
-  grid-column: span 8;
   position: relative;
   z-index: 1;
+  max-width: 700px;
+}
+
+.hero__badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: 1px solid rgba(232, 240, 234, 0.2);
+  border-radius: 100px;
+  padding: 0.4rem 1.2rem;
+  margin-bottom: var(--space-md);
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeUp 0.9s var(--ease) 0.1s forwards;
 }
 
 .hero__heading {
@@ -223,16 +257,16 @@ p:last-child { margin-bottom: 0; }
   margin-bottom: var(--space-md);
   opacity: 0;
   transform: translateY(40px);
-  animation: fadeUp 0.9s var(--ease) 0.2s forwards;
+  animation: fadeUp 0.9s var(--ease) 0.25s forwards;
 }
 
 .hero__sub {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--color-text-muted);
   margin-bottom: var(--space-md);
   opacity: 0;
   transform: translateY(40px);
-  animation: fadeUp 0.9s var(--ease) 0.4s forwards;
+  animation: fadeUp 0.9s var(--ease) 0.45s forwards;
 }
 
 .hero__content .btn {
@@ -243,6 +277,97 @@ p:last-child { margin-bottom: 0; }
 
 @keyframes fadeUp {
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   CAROUSEL
+   ============================================================ */
+.carousel {
+  overflow: hidden;
+  width: 100%;
+  line-height: 0;
+}
+
+.carousel__track {
+  display: flex;
+  animation: carousel-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+.carousel__track:hover {
+  animation-play-state: paused;
+}
+
+/*
+  Each slide has margin-right so the gap is part of each item's footprint.
+  With 8 originals + 8 duplicates (16 total), -50% in translateX moves
+  exactly 8 slide-widths, creating a seamless loop.
+*/
+.carousel__slide {
+  flex: 0 0 380px;
+  height: 260px;
+  margin-right: 6px;
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.carousel__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@keyframes carousel-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   STATS (scroll-triggered reveal, sticky scroll)
+   ============================================================ */
+
+/*
+  The outer section is 300vh so there is scroll room to trigger
+  each line individually. The inner sticky container is always
+  100vh tall, so it visually reads as a single viewport-height section.
+  All three lines occupy their layout space from the start (opacity only),
+  so vertical centering is based on the full group height throughout.
+*/
+.stats-scroll {
+  height: 300vh;
+}
+
+.stats-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats__group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stats__line {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5.5vw, 5.5rem); /* 5.5rem = 88px at 16px base */
+  line-height: 1.15;
+  color: var(--color-text);
+  text-align: center;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.stats__line.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ============================================================
@@ -452,6 +577,11 @@ p:last-child { margin-bottom: 0; }
   .lessons .col-span-4:last-child {
     grid-column: 4 / span 6;
   }
+
+  .carousel__slide {
+    flex-basis: 280px;
+    height: 190px;
+  }
 }
 
 /* ============================================================
@@ -473,9 +603,16 @@ p:last-child { margin-bottom: 0; }
 
   .lessons .col-span-4:last-child { grid-column: span 4; }
 
-  .nav__links { display: none; }
+  .nav { padding-inline: 20px; }
+
+  .btn--nav { display: none; }
 
   .form__row { grid-template-columns: 1fr; }
 
-  .hero__content { grid-column: span 4; }
+  .hero__content { padding-inline: 0; }
+
+  .carousel__slide {
+    flex-basis: 220px;
+    height: 150px;
+  }
 }
