@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brian Ridley — Golf Instructor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="grid">
+      <div class="nav__inner">
+        <a href="#" class="nav__logo">Brian Ridley</a>
+        <ul class="nav__links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#lessons">Lessons</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="grid">
+      <div class="hero__content">
+        <h1 class="hero__heading">Elevate<br>Your Game.</h1>
+        <p class="hero__sub">PGA-certified instruction for all levels.</p>
+        <a href="#lessons" class="btn btn--primary">Book a Lesson</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="grid">
+      <div class="about__image col-span-6">
+        <div class="about__img-placeholder"></div>
+      </div>
+      <div class="about__copy col-span-6">
+        <span class="label">About Brian</span>
+        <h2>20 Years on the Fairway</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LESSONS -->
+  <section class="lessons" id="lessons">
+    <div class="grid">
+      <div class="lessons__header col-span-12">
+        <span class="label">What I Offer</span>
+        <h2>Lesson Packages</h2>
+      </div>
+      <div class="card col-span-4">
+        <span class="card__icon">⛳</span>
+        <h3>Individual</h3>
+        <p>One-on-one sessions tailored to your swing, pace, and goals.</p>
+        <a href="#contact" class="btn btn--outline">Enquire</a>
+      </div>
+      <div class="card col-span-4">
+        <span class="card__icon">🏌️</span>
+        <h3>Group</h3>
+        <p>Small group sessions — great for social players and beginners.</p>
+        <a href="#contact" class="btn btn--outline">Enquire</a>
+      </div>
+      <div class="card col-span-4">
+        <span class="card__icon">📹</span>
+        <h3>Video Analysis</h3>
+        <p>In-depth swing analysis with frame-by-frame breakdown and feedback.</p>
+        <a href="#contact" class="btn btn--outline">Enquire</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="grid">
+      <div class="testimonials__header col-span-12">
+        <span class="label">Kind Words</span>
+        <h2>What Students Say</h2>
+      </div>
+      <blockquote class="testimonial col-span-4">
+        <p>"Brian transformed my short game in just three sessions. Absolutely worth every penny."</p>
+        <cite>— Sarah M.</cite>
+      </blockquote>
+      <blockquote class="testimonial col-span-4">
+        <p>"Clear, patient, and genuinely knowledgeable. My handicap dropped 6 shots in a season."</p>
+        <cite>— James T.</cite>
+      </blockquote>
+      <blockquote class="testimonial col-span-4">
+        <p>"Best investment I've made in my game. Brian spots things no one else catches."</p>
+        <cite>— David K.</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="grid">
+      <div class="contact__inner col-span-8 col-offset-2">
+        <span class="label">Get In Touch</span>
+        <h2>Book a Lesson</h2>
+        <form class="form" novalidate>
+          <div class="form__row">
+            <div class="form__field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" />
+            </div>
+            <div class="form__field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" />
+            </div>
+          </div>
+          <div class="form__field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell Brian what you're working on..."></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="grid">
+      <div class="footer__inner col-span-12">
+        <p>&copy; 2026 Brian Ridley Golf. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
