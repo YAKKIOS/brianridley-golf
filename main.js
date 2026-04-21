@@ -54,6 +54,34 @@ if (statsSection && statsLines.length) {
 }
 
 /* ============================================================
+   SERVICES — rounded card expands to full-bleed on scroll
+
+   margin-inline and border-radius start at MAX_MARGIN (48px) and
+   both animate to 0 as the section scrolls into view. Keeping them
+   equal means the corner arc always sits flush with the dark background,
+   so you never see an awkward gap or overlap at the edge.
+   ============================================================ */
+const svcSection = document.querySelector('.services');
+
+if (svcSection) {
+  const MAX = 48;
+
+  const animateServices = () => {
+    if (window.innerWidth < 768) return;
+    const rect = svcSection.getBoundingClientRect();
+    const raw = Math.max(0, Math.min(1, 1 - rect.top / window.innerHeight));
+    const eased = 1 - Math.pow(1 - raw, 2); // ease-out quad
+    const m = Math.round(MAX * (1 - eased));
+    svcSection.style.marginInline = `${m}px`;
+    svcSection.style.borderRadius = `${m}px ${m}px 0 0`;
+  };
+
+  window.addEventListener('scroll', animateServices, { passive: true });
+  window.addEventListener('resize', animateServices);
+  animateServices();
+}
+
+/* ============================================================
    FORM — basic submit handler (replace with real endpoint)
    ============================================================ */
 const form = document.querySelector('.form');

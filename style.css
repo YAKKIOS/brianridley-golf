@@ -415,9 +415,26 @@ p:last-child { margin-bottom: 0; }
 /* ============================================================
    SERVICES
    ============================================================ */
+
+/*
+  margin-inline and border-radius are set as inline styles by JS,
+  which animates them on scroll from 48px → 0 as the section
+  enters the viewport. The initial CSS values are the starting state.
+  overflow: hidden clips content to the rounded corners.
+*/
 .services {
   padding: var(--space-xl) 0;
+  background: #f0efec;
+  margin-inline: 48px;
+  border-radius: 48px 48px 0 0;
+  overflow: hidden;
 }
+
+/* Text colour overrides for light background */
+.services h2    { color: #0d1a0f; }
+.services .label { color: var(--color-primary-dk); }
+.services p      { color: #3d4d3f; }
+.services .services__intro { color: #3d4d3f; }
 
 .services__header {
   text-align: center;
@@ -437,8 +454,8 @@ p:last-child { margin-bottom: 0; }
 }
 
 .service-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: #ffffff;
+  border: 1px solid rgba(13, 26, 15, 0.1);
   border-radius: 8px;
   padding: 40px;
   display: flex;
@@ -454,7 +471,7 @@ p:last-child { margin-bottom: 0; }
   font-family: var(--font-body);
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: #0d1a0f;
   letter-spacing: 0;
   line-height: 1.2;
   margin-bottom: var(--space-sm);
@@ -465,9 +482,9 @@ p:last-child { margin-bottom: 0; }
 .service-card__image {
   width: 100%;
   aspect-ratio: 1;
-  background: var(--color-bg);
+  background: #e4e3e0;
   border-radius: 4px;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(13, 26, 15, 0.06);
 }
 
 .services__cta {
@@ -725,5 +742,11 @@ p:last-child { margin-bottom: 0; }
 
   .services__cards {
     grid-template-columns: 1fr;
+  }
+
+  /* No expand animation on mobile — always full-bleed */
+  .services {
+    margin-inline: 0 !important;
+    border-radius: 0 !important;
   }
 }
