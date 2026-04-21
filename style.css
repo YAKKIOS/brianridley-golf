@@ -142,10 +142,7 @@ p:last-child { margin-bottom: 0; }
   left: 0;
   right: 0;
   z-index: 100;
-  padding: var(--space-md) var(--margin);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: var(--space-md) 0;
   transition: background var(--duration) var(--ease),
               padding var(--duration) var(--ease);
 }
@@ -153,8 +150,15 @@ p:last-child { margin-bottom: 0; }
 .nav.scrolled {
   background: rgba(13, 26, 15, 0.92);
   backdrop-filter: blur(12px);
-  padding-block: var(--space-sm);
+  padding: var(--space-sm) 0;
   border-bottom: 1px solid var(--color-border);
+}
+
+.nav__inner {
+  grid-column: span 12;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav__logo {
@@ -162,6 +166,24 @@ p:last-child { margin-bottom: 0; }
   font-size: 1.25rem;
   letter-spacing: -0.01em;
 }
+
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.nav__links a {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  transition: color var(--duration) var(--ease);
+}
+.nav__links a:hover { color: var(--color-text); }
 
 .nav__actions {
   display: flex;
@@ -179,22 +201,20 @@ p:last-child { margin-bottom: 0; }
   font-weight: 500;
   letter-spacing: 0.02em;
   transition: background var(--duration) var(--ease),
-              border-color var(--duration) var(--ease),
-              transform var(--duration) var(--ease);
+              border-color var(--duration) var(--ease);
 }
 
 .btn--nav:hover {
   background: rgba(232, 240, 234, 0.08);
   border-color: rgba(232, 240, 234, 0.7);
-  transform: none;
 }
 
 .nav__ig {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border: 1px solid rgba(232, 240, 234, 0.25);
   border-radius: 7px;
   color: var(--color-text);
@@ -603,8 +623,7 @@ p:last-child { margin-bottom: 0; }
 
   .lessons .col-span-4:last-child { grid-column: span 4; }
 
-  .nav { padding-inline: 20px; }
-
+  .nav__links { display: none; }
   .btn--nav { display: none; }
 
   .form__row { grid-template-columns: 1fr; }
