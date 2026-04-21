@@ -13,23 +13,68 @@
     <div class="grid">
       <div class="nav__inner">
         <a href="#" class="nav__logo">Brian Ridley</a>
-        <ul class="nav__links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#lessons">Lessons</a></li>
-          <li><a href="#testimonials">Testimonials</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="nav__right">
+          <ul class="nav__links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#lessons">Lessons</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <div class="nav__actions">
+            <a href="#contact" class="btn btn--nav">Book a lesson</a>
+            <a href="#" class="nav__ig" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero" id="hero">
-    <div class="grid">
-      <div class="hero__content">
-        <h1 class="hero__heading">Elevate<br>Your Game.</h1>
-        <p class="hero__sub">PGA-certified instruction for all levels.</p>
-        <a href="#lessons" class="btn btn--primary">Book a Lesson</a>
+    <div class="hero__content">
+      <span class="hero__badge">Current PGA/DP Tour Coach</span>
+      <h1 class="hero__heading">Elevate<br>Your Game.</h1>
+      <p class="hero__sub">PGA-certified instruction for all levels.</p>
+      <a href="#contact" class="btn btn--primary">Book a lesson</a>
+    </div>
+  </section>
+
+  <!-- PHOTO CAROUSEL -->
+  <section class="carousel" aria-label="Photo gallery">
+    <div class="carousel__track">
+      <div class="carousel__slide"><img src="images/gallery-1.jpg" alt="Brian coaching on the course" loading="lazy"></div>
+      <div class="carousel__slide"><img src="images/gallery-2.jpg" alt="Students on the fairway" loading="lazy"></div>
+      <div class="carousel__slide"><img src="images/gallery-3.jpg" alt="Swing analysis session" loading="lazy"></div>
+      <div class="carousel__slide"><img src="images/gallery-4.jpg" alt="Brian at the flag" loading="lazy"></div>
+      <div class="carousel__slide"><img src="images/gallery-5.jpg" alt="Group lesson on the green" loading="lazy"></div>
+      <div class="carousel__slide"><img src="images/gallery-6.jpg" alt="Driving range session" loading="lazy"></div>
+      <div class="carousel__slide"><img src="images/gallery-7.jpg" alt="Course walk with students" loading="lazy"></div>
+      <div class="carousel__slide"><img src="images/gallery-8.jpg" alt="One-on-one coaching" loading="lazy"></div>
+      <!-- Duplicate set for seamless loop -->
+      <div class="carousel__slide" aria-hidden="true"><img src="images/gallery-1.jpg" alt="" loading="lazy"></div>
+      <div class="carousel__slide" aria-hidden="true"><img src="images/gallery-2.jpg" alt="" loading="lazy"></div>
+      <div class="carousel__slide" aria-hidden="true"><img src="images/gallery-3.jpg" alt="" loading="lazy"></div>
+      <div class="carousel__slide" aria-hidden="true"><img src="images/gallery-4.jpg" alt="" loading="lazy"></div>
+      <div class="carousel__slide" aria-hidden="true"><img src="images/gallery-5.jpg" alt="" loading="lazy"></div>
+      <div class="carousel__slide" aria-hidden="true"><img src="images/gallery-6.jpg" alt="" loading="lazy"></div>
+      <div class="carousel__slide" aria-hidden="true"><img src="images/gallery-7.jpg" alt="" loading="lazy"></div>
+      <div class="carousel__slide" aria-hidden="true"><img src="images/gallery-8.jpg" alt="" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- STATS (scroll-triggered reveal) -->
+  <section class="stats-scroll" aria-label="Credentials">
+    <div class="stats-sticky">
+      <div class="stats__group">
+        <p class="stats__line" data-line="0">40 years of experience</p>
+        <p class="stats__line" data-line="1">AimPoint certified</p>
+        <p class="stats__line" data-line="2">Advanced PGA member</p>
       </div>
     </div>
   </section>

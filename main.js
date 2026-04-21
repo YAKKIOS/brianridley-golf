@@ -26,6 +26,33 @@ const observer = new IntersectionObserver((entries) => {
 revealEls.forEach(el => observer.observe(el));
 
 /* ============================================================
+   STATS — scroll-triggered one-by-one reveal
+   The .stats-scroll section is 300vh with a sticky 100vh inner,
+   so the content reads as viewport-height while providing scroll
+   room to sequence each line individually.
+   ============================================================ */
+const statsSection = document.querySelector('.stats-scroll');
+const statsLines = document.querySelectorAll('.stats__line');
+
+if (statsSection && statsLines.length) {
+  const revealStats = () => {
+    const rect = statsSection.getBoundingClientRect();
+    const scrolled = -rect.top;
+    const max = statsSection.offsetHeight - window.innerHeight;
+    const progress = Math.max(0, Math.min(1, scrolled / max));
+
+    statsLines.forEach((line, i) => {
+      if (progress >= i / statsLines.length) {
+        line.classList.add('visible');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealStats, { passive: true });
+  revealStats();
+}
+
+/* ============================================================
    FORM — basic submit handler (replace with real endpoint)
    ============================================================ */
 const form = document.querySelector('.form');
