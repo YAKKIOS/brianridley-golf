@@ -97,7 +97,9 @@ p:last-child { margin-bottom: 0; }
    BUTTONS
    ============================================================ */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.75rem 2rem;
   border-radius: 4px;
   font-size: 0.9rem;
@@ -132,6 +134,33 @@ p:last-child { margin-bottom: 0; }
   background: var(--color-primary);
   color: #fff;
 }
+
+/* ============================================================
+   BUTTON ARROW
+   Two identical SVG arrows stacked in a clipping box.
+   Arrow A exits top-right on hover; B enters from bottom-left.
+   ============================================================ */
+.btn__arrow {
+  position: relative;
+  display: inline-flex;
+  width: 11px;
+  height: 11px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.btn__arr {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  transition: transform 0.4s ease-out;
+}
+
+.btn__arr--a { transform: translate(0, 0); }
+.btn__arr--b { transform: translate(-120%, 120%); }
+
+.btn:hover .btn__arr--a { transform: translate(120%, -120%); }
+.btn:hover .btn__arr--b { transform: translate(0, 0); }
 
 /* ============================================================
    NAV
@@ -207,6 +236,7 @@ p:last-child { margin-bottom: 0; }
 .btn--nav:hover {
   background: rgba(232, 240, 234, 0.08);
   border-color: rgba(232, 240, 234, 0.7);
+  transform: none;
 }
 
 .nav__ig {
@@ -302,11 +332,6 @@ p:last-child { margin-bottom: 0; }
 /* ============================================================
    CAROUSEL
    ============================================================ */
-
-/*
-  .reveal on .carousel gives the section a fade-up entrance.
-  overflow: hidden must stay so the scrolling track stays clipped.
-*/
 .carousel {
   overflow: hidden;
   width: 100%;
@@ -324,16 +349,13 @@ p:last-child { margin-bottom: 0; }
 }
 
 /*
-  Width: exactly 3 slides visible at once at any viewport width.
-  With 16px margin-right per slide and 2 visible gaps:
-    3 * slideWidth + 2 * 16px = 100vw  →  slideWidth = (100vw - 32px) / 3
-
-  The -50% loop trick still holds because all 16 items have identical
-  footprints (width + margin), so the track midpoint = 8 items exactly.
+  Width: (100vw - 32px) / 3  →  exactly 3 slides visible.
+  Height: width × 9/16 = (100vw - 32px) × 3/16  →  true 16:9.
+  Clamped so very wide screens don't get excessively tall images.
 */
 .carousel__slide {
   flex: 0 0 calc((100vw - 32px) / 3);
-  height: 220px;
+  height: clamp(120px, calc((100vw - 32px) * 3 / 16), 300px);
   margin-right: 16px;
   background: var(--color-surface);
   overflow: hidden;
@@ -354,14 +376,6 @@ p:last-child { margin-bottom: 0; }
 /* ============================================================
    STATS (scroll-triggered reveal, sticky scroll)
    ============================================================ */
-
-/*
-  The outer section is 300vh so there is scroll room to trigger
-  each line individually. The inner sticky container is always
-  100vh tall, so it visually reads as a single viewport-height section.
-  All three lines occupy their layout space from the start (opacity only),
-  so vertical centering is based on the full group height throughout.
-*/
 .stats-scroll {
   height: 300vh;
 }
@@ -383,7 +397,7 @@ p:last-child { margin-bottom: 0; }
 
 .stats__line {
   font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 5.5vw, 5.5rem); /* 5.5rem = 88px at 16px base */
+  font-size: clamp(2.5rem, 5.5vw, 5.5rem);
   line-height: 1.15;
   color: var(--color-text);
   text-align: center;
@@ -643,7 +657,7 @@ p:last-child { margin-bottom: 0; }
 .reveal {
   opacity: 0;
   transform: translateY(32px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
 }
 .reveal.visible {
   opacity: 1;
@@ -673,6 +687,7 @@ p:last-child { margin-bottom: 0; }
   /* 2 slides visible on tablet */
   .carousel__slide {
     flex: 0 0 calc((100vw - 16px) / 2);
+    height: calc((100vw - 16px) * 9 / 32);
   }
 }
 
@@ -702,10 +717,10 @@ p:last-child { margin-bottom: 0; }
 
   .hero__content { padding-inline: 0; }
 
-  /* 1.3 slides visible on mobile */
+  /* ~1.3 slides visible on mobile */
   .carousel__slide {
     flex: 0 0 78vw;
-    height: 160px;
+    height: calc(78vw * 9 / 16);
   }
 
   .services__cards {
