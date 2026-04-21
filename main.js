@@ -1,29 +1,4 @@
 /* ============================================================
-   SMOOTH SCROLL — Lenis
-   ============================================================ */
-const lenis = new Lenis({
-  duration: 1.2,
-  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-});
-
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
-/* Smooth-scroll anchor links through Lenis */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', e => {
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      lenis.scrollTo(target);
-    }
-  });
-});
-
-/* ============================================================
    NAV — scroll state
    ============================================================ */
 const nav = document.querySelector('.nav');
@@ -53,11 +28,9 @@ revealEls.forEach(el => observer.observe(el));
 /* ============================================================
    STATS — bidirectional scroll-triggered reveal
 
-   Thresholds > 0 so nothing is visible the moment the sticky
-   panel first locks. Progress is NOT clamped from below, so
-   negative values (section still below viewport) keep all lines
-   hidden. Upper clamp at 1 keeps all lines visible once the
-   section is fully scrolled past.
+   Thresholds > 0 so nothing shows the moment the sticky panel
+   first locks. Progress is NOT clamped from below, so while the
+   section is still below the viewport all lines stay hidden.
    ============================================================ */
 const statsSection = document.querySelector('.stats-scroll');
 const statsLines = document.querySelectorAll('.stats__line');
@@ -69,7 +42,7 @@ if (statsSection && statsLines.length) {
     const rect = statsSection.getBoundingClientRect();
     const scrolled = -rect.top;
     const max = statsSection.offsetHeight - window.innerHeight;
-    const progress = Math.min(1, scrolled / max); // no lower clamp — negative = hidden
+    const progress = Math.min(1, scrolled / max);
 
     statsLines.forEach((line, i) => {
       line.classList.toggle('visible', progress >= thresholds[i]);
