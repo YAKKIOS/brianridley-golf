@@ -612,7 +612,20 @@ p:last-child { margin-bottom: 0; }
 }
 
 .about .grid {
+  align-items: start;
+}
+
+/* Image column is sticky — sticks at top of viewport and uses
+   flex to keep the image centred at 50vh while text scrolls past. */
+.about__image {
+  align-self: start;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  padding: var(--space-md) 0;
 }
 
 .about__img-placeholder {
@@ -621,9 +634,18 @@ p:last-child { margin-bottom: 0; }
   background: var(--color-surface);
   border-radius: 8px;
   border: 1px solid var(--color-border);
+  max-height: calc(100vh - var(--space-xl));
 }
 
+/* Copy column is taller than 100vh so there is scroll travel
+   while the image is sticky. Content is centred so it starts
+   aligned with the sticky image and scrolls away naturally. */
 .about__copy {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 160vh;
   padding-left: var(--space-md);
 }
 
@@ -806,7 +828,18 @@ p:last-child { margin-bottom: 0; }
   .col-span-8 { grid-column: span 10; }
   .col-offset-2 { grid-column-start: 2; }
 
-  .about__copy { padding-left: 0; margin-top: var(--space-md); }
+  /* Columns stack on tablet — disable sticky and restore natural height */
+  .about__image {
+    position: static;
+    height: auto;
+    padding: 0;
+  }
+  .about__copy {
+    padding-left: 0;
+    margin-top: var(--space-md);
+    min-height: auto;
+    justify-content: flex-start;
+  }
 
   .lessons .col-span-4:last-child {
     grid-column: 4 / span 6;
