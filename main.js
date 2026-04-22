@@ -71,7 +71,7 @@ if (svcSection) {
     const rect = svcSection.getBoundingClientRect();
     const raw = Math.max(0, Math.min(1, 1 - rect.top / window.innerHeight));
     const eased = 1 - Math.pow(1 - raw, 2); // ease-out quad
-    const m = Math.round(MAX * (1 - eased));
+    const m = MAX * (1 - eased);
     svcSection.style.marginInline = `${m}px`;
     svcSection.style.borderRadius = `${m}px ${m}px 0 0`;
   };
@@ -79,6 +79,85 @@ if (svcSection) {
   window.addEventListener('scroll', animateServices, { passive: true });
   window.addEventListener('resize', animateServices);
   animateServices();
+}
+
+/* ============================================================
+   CAROUSEL — pixel-perfect seamless loop
+   Measures the real width of the original slides, then translates
+   by exact pixels and resets invisibly when it reaches the clone set.
+   ============================================================ */
+const carouselTrack = document.querySelector('.carousel__track');
+
+if (carouselTrack) {
+  const originalSlides = carouselTrack.querySelectorAll('.carousel__slide:not([aria-hidden])');
+  let loopWidth = 0;
+
+  const measureLoop = () => {
+    loopWidth = 0;
+    originalSlides.forEach(slide => {
+      const style = getComputedStyle(slide);
+      loopWidth += slide.offsetWidth + parseFloat(style.marginRight);
+    });
+  };
+
+  measureLoop();
+  window.addEventListener('resize', measureLoop);
+
+  let offset = 0;
+  let paused = false;
+  const SPEED = 1; // px per frame
+
+  carouselTrack.addEventListener('mouseenter', () => { paused = true; });
+  carouselTrack.addEventListener('mouseleave', () => { paused = false; });
+
+  const tick = () => {
+    if (!paused) {
+      offset += SPEED;
+      if (offset >= loopWidth) offset -= loopWidth;
+      carouselTrack.style.transform = `translate3d(-${offset}px, 0, 0)`;
+    }
+    requestAnimationFrame(tick);
+  };
+
+  requestAnimationFrame(tick);
+}
+
+/* ============================================================
+   TESTIMONIALS FEATURE — scroll-linked fade + image cross-fade
+   Text scrolls naturally. First slide fades as it exits upward.
+   Image cross-fades when the second slide reaches mid-viewport.
+   ============================================================ */
+const tfFeature = document.querySelector('.tf-feature');
+
+if (tfFeature) {
+  const slides = tfFeature.querySelectorAll('.tf-slide');
+  const imgs   = tfFeature.querySelectorAll('.tf-img');
+
+  // Initialise second slide invisible
+  slides[1].style.opacity = 0;
+
+  const updateTF = () => {
+    const vh = window.innerHeight;
+
+    // Slide 0 — fade out as its bottom half clears the viewport centre
+    const r0 = slides[0].getBoundingClientRect();
+    const exitFade = Math.min(1, Math.max(0, (vh * 0.5 - r0.bottom) / (vh * 0.35)));
+    slides[0].style.opacity = 1 - exitFade;
+
+    // Slide 1 — fade in as it rises from the bottom third of the viewport
+    const r1 = slides[1].getBoundingClientRect();
+    const enterFade = Math.min(1, Math.max(0, (vh * 0.85 - r1.top) / (vh * 0.4)));
+    slides[1].style.opacity = enterFade;
+
+    // Cross-fade image when the second slide's top reaches the image's bottom edge
+    const imgBottom = tfFeature.querySelector('.tf-image-frame').getBoundingClientRect().bottom;
+    const showSecond = r1.top < imgBottom;
+    imgs[0].classList.toggle('tf-img--active', !showSecond);
+    imgs[1].classList.toggle('tf-img--active',  showSecond);
+  };
+
+  window.addEventListener('scroll', updateTF, { passive: true });
+  updateTF();
 }
 
 /* ============================================================

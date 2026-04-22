@@ -1,8 +1,19 @@
 /* ============================================================
+   FONTS
+   ============================================================ */
+@font-face {
+  font-family: 'LTMuseum';
+  src: url('assets/fonts/LTMuseum-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================================
    TOKENS
    ============================================================ */
 :root {
-  --color-bg:         #0d1a0f;
+  --color-bg:         #051C11;
   --color-surface:    #132017;
   --color-primary:    #4caf72;
   --color-primary-dk: #3a8f5a;
@@ -10,12 +21,12 @@
   --color-text-muted: #8aa890;
   --color-border:     #1e3325;
 
-  --font-heading: 'Georgia', serif;
+  --font-heading: 'LTMuseum', 'Georgia', serif;
   --font-body:    system-ui, -apple-system, sans-serif;
 
   --cols:        12;
   --gutter:      24px;
-  --margin:      120px;
+  --margin:      80px;
 
   --space-xs:  0.5rem;
   --space-sm:  1rem;
@@ -72,8 +83,8 @@ ul { list-style: none; }
    ============================================================ */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
+  font-weight: 300;
   line-height: 1.1;
-  letter-spacing: -0.02em;
 }
 
 h1 { font-size: clamp(3rem, 8vw, 7rem); }
@@ -100,7 +111,7 @@ p:last-child { margin-bottom: 0; }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 4px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -257,28 +268,15 @@ p:last-child { margin-bottom: 0; }
    HERO
    ============================================================ */
 .hero {
-  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: var(--space-xl) var(--margin);
+  padding: 12rem var(--margin) 7rem;
   text-align: center;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(76, 175, 114, 0.12) 0%, transparent 70%);
-  animation: heroGlow 8s ease-in-out infinite alternate;
-}
-
-@keyframes heroGlow {
-  from { opacity: 0.6; transform: scale(1); }
-  to   { opacity: 1;   transform: scale(1.05); }
-}
 
 .hero__content {
   position: relative;
@@ -340,12 +338,7 @@ p:last-child { margin-bottom: 0; }
 
 .carousel__track {
   display: flex;
-  animation: carousel-scroll 22s linear infinite;
   will-change: transform;
-}
-
-.carousel__track:hover {
-  animation-play-state: paused;
 }
 
 /*
@@ -359,6 +352,7 @@ p:last-child { margin-bottom: 0; }
   margin-right: 16px;
   background: var(--color-surface);
   overflow: hidden;
+  transform: translateZ(0);
 }
 
 .carousel__slide img {
@@ -368,10 +362,6 @@ p:last-child { margin-bottom: 0; }
   display: block;
 }
 
-@keyframes carousel-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
 
 /* ============================================================
    STATS (scroll-triggered reveal, sticky scroll)
@@ -427,7 +417,7 @@ p:last-child { margin-bottom: 0; }
   background: #f0efec;
   margin-inline: 48px;
   border-radius: 48px 48px 0 0;
-  overflow: hidden;
+  overflow: clip;
 }
 
 /* Text colour overrides for light background */
@@ -454,7 +444,7 @@ p:last-child { margin-bottom: 0; }
 }
 
 .service-card {
-  background: #ffffff;
+  /*background: #ffffff;*/
   border: 1px solid rgba(13, 26, 15, 0.1);
   border-radius: 8px;
   padding: 40px;
@@ -470,9 +460,8 @@ p:last-child { margin-bottom: 0; }
 .service-card__title {
   font-family: var(--font-body);
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #0d1a0f;
-  letter-spacing: 0;
   line-height: 1.2;
   margin-bottom: var(--space-sm);
 }
@@ -491,6 +480,128 @@ p:last-child { margin-bottom: 0; }
   display: flex;
   justify-content: center;
   padding-top: var(--space-md);
+}
+
+/* ============================================================
+   TESTIMONIALS FEATURE (within services)
+   ============================================================ */
+.tf-header {
+  text-align: center;
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+/* Two-column layout.
+   repeat(12, 1fr) + same gap as parent means these columns are
+   pixel-identical to the parent grid — no subgrid quirks. */
+.tf-feature {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+  align-items: start;
+}
+
+/* Left column — naturally sized, sticks near the top as you scroll */
+.tf-feature__left {
+  grid-column: span 6;
+  position: sticky;
+  top: var(--space-lg);
+}
+
+.tf-feature__right {
+  grid-column: span 5;
+}
+
+.tf-image-frame {
+  position: relative;
+  width: 100%;
+  height: 48vh;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tf-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.tf-img--active { opacity: 1; }
+
+/* Slides are natural content height — bottom padding creates the
+   scroll distance needed for the sticky image effect */
+.tf-slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: var(--space-sm);
+  padding-bottom: var(--space-xl);
+}
+
+.tf-slide:last-child {
+  padding-bottom: var(--space-lg);
+}
+
+.tf-quote {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.4;
+  color: #0d1a0f;
+  margin-bottom: var(--space-md);
+}
+
+.tf-author { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.tf-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0d1a0f;
+  margin: 0;
+}
+
+.tf-role {
+  font-size: 1rem;
+  color: #3d4d3f;
+  margin: 0;
+}
+
+/* Testimonial cards — masonry via CSS columns */
+.tf-cards {
+  columns: 3;
+  column-gap: var(--gutter);
+  margin-top: var(--space-xl);
+  padding-bottom: var(--space-lg);
+}
+
+.tf-card {
+  break-inside: avoid;
+  margin-bottom: var(--gutter);
+  /*background: #ffffff;*/
+  border: 1px solid rgba(13, 26, 15, 0.1);
+  border-radius: 8px;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.tf-card p {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #0d1a0f;
+  margin: 0;
+}
+
+.tf-card cite {
+  font-size: 0.85rem;
+  color: var(--color-primary-dk);
+  font-style: normal;
+  font-weight: 600;
 }
 
 /* ============================================================
