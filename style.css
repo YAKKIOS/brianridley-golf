@@ -491,71 +491,56 @@ p:last-child { margin-bottom: 0; }
   margin-bottom: var(--space-sm);
 }
 
-/* Two-column layout.
-   repeat(12, 1fr) + same gap as parent means these columns are
-   pixel-identical to the parent grid — no subgrid quirks. */
-.tf-feature {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: var(--gutter);
-  align-items: start;
-}
-
-/* Left column — naturally sized, sticks near the top as you scroll */
-.tf-feature__left {
-  grid-column: span 6;
-  position: sticky;
-  top: var(--space-lg);
-}
-
-.tf-feature__right {
-  grid-column: span 5;
-}
-
-.tf-image-frame {
-  position: relative;
-  width: 100%;
-  height: 48vh;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.tf-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.9s ease;
-}
-
-.tf-img--active { opacity: 1; }
-
-/* Slides are natural content height — bottom padding creates the
-   scroll distance needed for the sticky image effect */
-.tf-slide {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-top: var(--space-sm);
-  padding-bottom: var(--space-xl);
-}
-
-.tf-slide:last-child {
+/* Slider — full-width quote rotator with arrow navigation */
+.tf-slider__track {
   padding-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(13, 26, 15, 0.12);
+  margin-bottom: var(--space-md);
 }
 
-.tf-quote {
+.tf-slider__slide {
+  display: none;
+}
+
+.tf-slider__slide.is-active {
+  display: block;
+}
+
+.tf-slider__quote {
   font-family: var(--font-heading);
   font-size: 2rem;
   font-weight: 300;
   line-height: 1.4;
   color: #0d1a0f;
-  margin-bottom: var(--space-md);
 }
 
-.tf-author { display: flex; flex-direction: column; gap: 0.25rem; }
+/* Bar: author left, arrows right */
+.tf-slider__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.tf-slider__author {
+  display: none;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.tf-slider__author.is-active {
+  display: flex;
+}
+
+/* Circular avatar placeholder — replace with <img> when photos are ready */
+.tf-slider__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(13, 26, 15, 0.1);
+  border: 1px solid rgba(13, 26, 15, 0.12);
+  flex-shrink: 0;
+}
 
 .tf-name {
   font-size: 1rem;
@@ -565,9 +550,34 @@ p:last-child { margin-bottom: 0; }
 }
 
 .tf-role {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #3d4d3f;
   margin: 0;
+}
+
+.tf-slider__arrows {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.tf-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(13, 26, 15, 0.2);
+  background: transparent;
+  color: #0d1a0f;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.tf-arrow:hover {
+  border-color: rgba(13, 26, 15, 0.45);
+  background: rgba(13, 26, 15, 0.04);
 }
 
 /* Testimonial cards — masonry via CSS columns */

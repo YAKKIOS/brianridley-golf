@@ -123,41 +123,65 @@ if (carouselTrack) {
 }
 
 /* ============================================================
-   TESTIMONIALS FEATURE — scroll-linked fade + image cross-fade
-   Text scrolls naturally. First slide fades as it exits upward.
-   Image cross-fades when the second slide reaches mid-viewport.
+   TESTIMONIAL SLIDER — arrow-driven cross-fade with slide direction
    ============================================================ */
-const tfFeature = document.querySelector('.tf-feature');
+const tfSlider = document.querySelector('.tf-slider');
 
-if (tfFeature) {
-  const slides = tfFeature.querySelectorAll('.tf-slide');
-  const imgs   = tfFeature.querySelectorAll('.tf-img');
+if (tfSlider) {
+  const slides      = Array.from(tfSlider.querySelectorAll('.tf-slider__slide'));
+  const authorItems = Array.from(tfSlider.querySelectorAll('.tf-slider__author'));
+  const prevBtn     = tfSlider.querySelector('.tf-arrow--prev');
+  const nextBtn     = tfSlider.querySelector('.tf-arrow--next');
+  const N           = slides.length;
+  let current       = 0;
+  let busy          = false;
 
-  // Initialise second slide invisible
-  slides[1].style.opacity = 0;
+  slides[0].classList.add('is-active');
+  authorItems[0].classList.add('is-active');
 
-  const updateTF = () => {
-    const vh = window.innerHeight;
+  const go = (dir) => {
+    if (busy) return;
+    busy = true;
+    const next = (current + dir + N) % N;
 
-    // Slide 0 — fade out as its bottom half clears the viewport centre
-    const r0 = slides[0].getBoundingClientRect();
-    const exitFade = Math.min(1, Math.max(0, (vh * 0.5 - r0.bottom) / (vh * 0.35)));
-    slides[0].style.opacity = 1 - exitFade;
+    const outSlide  = slides[current];
+    const inSlide   = slides[next];
+    const outAuthor = authorItems[current];
+    const inAuthor  = authorItems[next];
 
-    // Slide 1 — fade in as it rises from the bottom third of the viewport
-    const r1 = slides[1].getBoundingClientRect();
-    const enterFade = Math.min(1, Math.max(0, (vh * 0.85 - r1.top) / (vh * 0.4)));
-    slides[1].style.opacity = enterFade;
+    // Fade + slide out
+    outSlide.style.cssText  = 'transition: opacity 0.28s ease, transform 0.28s ease; opacity: 0; transform: translateX(' + (dir > 0 ? '-24px' : '24px') + ');';
+    outAuthor.style.cssText = 'transition: opacity 0.28s ease; opacity: 0; display: flex;';
 
-    // Cross-fade image when the second slide's top reaches the image's bottom edge
-    const imgBottom = tfFeature.querySelector('.tf-image-frame').getBoundingClientRect().bottom;
-    const showSecond = r1.top < imgBottom;
-    imgs[0].classList.toggle('tf-img--active', !showSecond);
-    imgs[1].classList.toggle('tf-img--active',  showSecond);
+    setTimeout(() => {
+      outSlide.classList.remove('is-active');
+      outSlide.style.cssText  = '';
+      outAuthor.classList.remove('is-active');
+      outAuthor.style.cssText = '';
+
+      // Position incoming slide off-screen (no transition yet)
+      inSlide.style.cssText  = 'opacity: 0; transform: translateX(' + (dir > 0 ? '24px' : '-24px') + '); transition: none;';
+      inAuthor.style.cssText = 'opacity: 0; transition: none; display: flex;';
+      inSlide.classList.add('is-active');
+      inAuthor.classList.add('is-active');
+
+      // Two rAF ticks to ensure the starting state is painted before transitioning
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        inSlide.style.cssText  = 'transition: opacity 0.32s ease, transform 0.32s ease; opacity: 1; transform: translateX(0);';
+        inAuthor.style.cssText = 'transition: opacity 0.32s ease; opacity: 1; display: flex;';
+
+        setTimeout(() => {
+          inSlide.style.cssText  = '';
+          inAuthor.style.cssText = '';
+          current = next;
+          busy    = false;
+        }, 320);
+      }));
+    }, 280);
   };
 
-  window.addEventListener('scroll', updateTF, { passive: true });
-  updateTF();
+  prevBtn.addEventListener('click', () => go(-1));
+  nextBtn.addEventListener('click', () => go(1));
 }
 
 /* ============================================================
