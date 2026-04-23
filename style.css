@@ -439,9 +439,15 @@ p:last-child { margin-bottom: 0; }
 
 .services__cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(10, 1fr);
   gap: var(--gutter);
 }
+
+/* Row 1: wide left, narrow right. Row 2: mirrored. */
+.service-card:nth-child(1) { grid-column: 1 / span 6; }
+.service-card:nth-child(2) { grid-column: 7 / span 4; }
+.service-card:nth-child(3) { grid-column: 1 / span 4; }
+.service-card:nth-child(4) { grid-column: 5 / span 6; }
 
 .service-card {
   /*background: #ffffff;*/
@@ -897,6 +903,7 @@ p:last-child { margin-bottom: 0; }
   .services__cards {
     grid-template-columns: 1fr;
   }
+  .service-card { grid-column: 1 !important; }
 
   /* No expand animation on mobile — always full-bleed */
   .services {
