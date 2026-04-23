@@ -184,19 +184,3 @@ if (tfSlider) {
   nextBtn.addEventListener('click', () => go(1));
 }
 
-/* ============================================================
-   FORM — basic submit handler (replace with real endpoint)
-   ============================================================ */
-const form = document.querySelector('.form');
-
-form?.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const btn = form.querySelector('[type="submit"]');
-  btn.textContent = 'Sent!';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = 'Send Message';
-    btn.disabled = false;
-    form.reset();
-  }, 3000);
-});
