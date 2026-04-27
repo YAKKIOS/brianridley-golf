@@ -1,4 +1,21 @@
 /* ============================================================
+   LENIS — smooth scroll
+   autoRaf: false so we drive it ourselves via requestAnimationFrame,
+   keeping it in sync with all other rAF-based animations on the page.
+   ============================================================ */
+const lenis = new Lenis({
+  lerp:            0.08,
+  wheelMultiplier: 1,
+  smoothTouch:     false,
+  autoRaf:         false,
+});
+
+(function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+})(0);
+
+/* ============================================================
    NAV — scroll state
    ============================================================ */
 const nav = document.querySelector('.nav');
@@ -128,51 +145,37 @@ if (carouselTrack) {
 const tfSlider = document.querySelector('.tf-slider');
 
 if (tfSlider) {
-  const slides      = Array.from(tfSlider.querySelectorAll('.tf-slider__slide'));
-  const authorItems = Array.from(tfSlider.querySelectorAll('.tf-slider__author'));
-  const prevBtn     = tfSlider.querySelector('.tf-arrow--prev');
-  const nextBtn     = tfSlider.querySelector('.tf-arrow--next');
-  const N           = slides.length;
-  let current       = 0;
-  let busy          = false;
+  const slides  = Array.from(tfSlider.querySelectorAll('.tf-slider__slide'));
+  const prevBtn = tfSlider.querySelector('.tf-arrow--prev');
+  const nextBtn = tfSlider.querySelector('.tf-arrow--next');
+  const N       = slides.length;
+  let current   = 0;
+  let busy      = false;
 
   slides[0].classList.add('is-active');
-  authorItems[0].classList.add('is-active');
 
   const go = (dir) => {
     if (busy) return;
     busy = true;
-    const next = (current + dir + N) % N;
+    const next     = (current + dir + N) % N;
+    const outSlide = slides[current];
+    const inSlide  = slides[next];
 
-    const outSlide  = slides[current];
-    const inSlide   = slides[next];
-    const outAuthor = authorItems[current];
-    const inAuthor  = authorItems[next];
-
-    // Fade + slide out
-    outSlide.style.cssText  = 'transition: opacity 0.28s ease, transform 0.28s ease; opacity: 0; transform: translateX(' + (dir > 0 ? '-24px' : '24px') + ');';
-    outAuthor.style.cssText = 'transition: opacity 0.28s ease; opacity: 0; display: flex;';
+    // Fade + slide out (author animates with it, inside the slide)
+    outSlide.style.cssText = 'transition: opacity 0.28s ease, transform 0.28s ease; opacity: 0; transform: translateX(' + (dir > 0 ? '-24px' : '24px') + ');';
 
     setTimeout(() => {
       outSlide.classList.remove('is-active');
-      outSlide.style.cssText  = '';
-      outAuthor.classList.remove('is-active');
-      outAuthor.style.cssText = '';
+      outSlide.style.cssText = '';
 
-      // Position incoming slide off-screen (no transition yet)
-      inSlide.style.cssText  = 'opacity: 0; transform: translateX(' + (dir > 0 ? '24px' : '-24px') + '); transition: none;';
-      inAuthor.style.cssText = 'opacity: 0; transition: none; display: flex;';
+      inSlide.style.cssText = 'opacity: 0; transform: translateX(' + (dir > 0 ? '24px' : '-24px') + '); transition: none;';
       inSlide.classList.add('is-active');
-      inAuthor.classList.add('is-active');
 
-      // Two rAF ticks to ensure the starting state is painted before transitioning
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        inSlide.style.cssText  = 'transition: opacity 0.32s ease, transform 0.32s ease; opacity: 1; transform: translateX(0);';
-        inAuthor.style.cssText = 'transition: opacity 0.32s ease; opacity: 1; display: flex;';
+        inSlide.style.cssText = 'transition: opacity 0.32s ease, transform 0.32s ease; opacity: 1; transform: translateX(0);';
 
         setTimeout(() => {
-          inSlide.style.cssText  = '';
-          inAuthor.style.cssText = '';
+          inSlide.style.cssText = '';
           current = next;
           busy    = false;
         }, 320);

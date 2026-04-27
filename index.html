@@ -44,7 +44,7 @@
   <section class="hero" id="hero">
     <div class="hero__content">
       <span class="hero__badge">Current PGA/DP Tour Coach</span>
-      <h1 class="hero__heading">Elevate<br>your game.</h1>
+      <h1 class="hero__heading">Elevate your<br>game</h1>
       <p class="hero__sub">PGA certified golf instructor based in North East England. Personalised coaching that actually fixes your swing.</p>
       <a href="#contact" class="btn btn--primary">
         Book a lesson
@@ -59,18 +59,18 @@
   <!-- PHOTO CAROUSEL -->
   <section class="carousel reveal" aria-label="Photo gallery">
     <div class="carousel__track">
-      <div class="carousel__slide"><img src="assets/images/IMG_4506.JPG" alt="Brian coaching on the course" loading="lazy"></div>
+      <div class="carousel__slide"><img src="assets/images/one.avif" alt="Brian coaching on the course" loading="lazy"></div>
       <div class="carousel__slide"><img src="assets/images/IMG_4506.JPG" alt="Students on the fairway" loading="lazy"></div>
-      <div class="carousel__slide"><img src="assets/images/IMG_4506.JPG" alt="Swing analysis session" loading="lazy"></div>
+      <div class="carousel__slide"><img src="assets/images/two.avif" alt="Swing analysis session" loading="lazy"></div>
       <div class="carousel__slide"><img src="assets/images/IMG_4506.JPG" alt="Brian at the flag" loading="lazy"></div>
       <div class="carousel__slide"><img src="assets/images/IMG_4506.JPG" alt="Group lesson on the green" loading="lazy"></div>
       <div class="carousel__slide"><img src="assets/images/IMG_4506.JPG" alt="Driving range session" loading="lazy"></div>
       <div class="carousel__slide"><img src="assets/images/IMG_4506.JPG" alt="Course walk with students" loading="lazy"></div>
       <div class="carousel__slide"><img src="assets/images/IMG_4506.JPG" alt="One-on-one coaching" loading="lazy"></div>
       <!-- Duplicate set for seamless loop -->
+      <div class="carousel__slide" aria-hidden="true"><img src="assets/images/one.avif" alt="" loading="lazy"></div>
       <div class="carousel__slide" aria-hidden="true"><img src="assets/images/IMG_4506.JPG" alt="" loading="lazy"></div>
-      <div class="carousel__slide" aria-hidden="true"><img src="assets/images/IMG_4506.JPG" alt="" loading="lazy"></div>
-      <div class="carousel__slide" aria-hidden="true"><img src="assets/images/IMG_4506.JPG" alt="" loading="lazy"></div>
+      <div class="carousel__slide" aria-hidden="true"><img src="assets/images/two.avif" alt="" loading="lazy"></div>
       <div class="carousel__slide" aria-hidden="true"><img src="assets/images/IMG_4506.JPG" alt="" loading="lazy"></div>
       <div class="carousel__slide" aria-hidden="true"><img src="assets/images/IMG_4506.JPG" alt="" loading="lazy"></div>
       <div class="carousel__slide" aria-hidden="true"><img src="assets/images/IMG_4506.JPG" alt="" loading="lazy"></div>
@@ -110,7 +110,9 @@
             <h3 class="service-card__title">Group Coaching</h3>
             <p>Small group sessions — the perfect blend of quality instruction and social play.</p>
           </div>
-          <div class="service-card__image"></div>
+          <div class="service-card__image">                                                                                                                      
+    <img src="assets/images/icon.avif" alt="Description">
+  </div>  
         </div>
         <div class="service-card">
           <div class="service-card__body">
@@ -139,32 +141,23 @@
 
       <!-- FEATURED TESTIMONIALS -->
       <div class="tf-header col-span-12 reveal">
-        <span class="label">What students say</span>
         <h2>In their own words</h2>
-        <p class="services__intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hear directly from the students who have worked with Brian.</p>
       </div>
 
       <div class="tf-slider col-span-12 reveal" data-delay="100" id="testimonials">
         <div class="tf-slider__track">
           <div class="tf-slider__slide">
             <blockquote class="tf-slider__quote">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation."</blockquote>
+            <div class="tf-slider__author">
+              <div class="tf-slider__avatar">    <img src="assets/images/IMG_3847.jpg" alt="Description"></div>
+              <div class="tf-slider__meta">
+                <p class="tf-name">Dan Brown</p>
+                <p class="tf-role">Two time DP World Championship Winner</p>
+              </div>
+            </div>
           </div>
           <div class="tf-slider__slide">
             <blockquote class="tf-slider__quote">"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident sunt in culpa."</blockquote>
-          </div>
-          <div class="tf-slider__slide">
-            <blockquote class="tf-slider__quote">"Brian coached me through a complete rebuild of my swing over six months. Patience, expertise, and a genuine passion for the game — I can't recommend him highly enough."</blockquote>
-          </div>
-        </div>
-        <div class="tf-slider__bar">
-          <div class="tf-slider__authors">
-            <div class="tf-slider__author">
-              <div class="tf-slider__avatar"></div>
-              <div class="tf-slider__meta">
-                <p class="tf-name">Sarah Mitchell</p>
-                <p class="tf-role">Amateur Golfer</p>
-              </div>
-            </div>
             <div class="tf-slider__author">
               <div class="tf-slider__avatar"></div>
               <div class="tf-slider__meta">
@@ -172,6 +165,9 @@
                 <p class="tf-role">Club Member, Slaley Hall</p>
               </div>
             </div>
+          </div>
+          <div class="tf-slider__slide">
+            <blockquote class="tf-slider__quote">"Brian coached me through a complete rebuild of my swing over six months. Patience, expertise, and a genuine passion for the game — I can't recommend him highly enough."</blockquote>
             <div class="tf-slider__author">
               <div class="tf-slider__avatar"></div>
               <div class="tf-slider__meta">
@@ -180,14 +176,14 @@
               </div>
             </div>
           </div>
-          <div class="tf-slider__arrows">
-            <button class="tf-arrow tf-arrow--prev" aria-label="Previous testimonial">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <button class="tf-arrow tf-arrow--next" aria-label="Next testimonial">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-          </div>
+        </div>
+        <div class="tf-slider__arrows">
+          <button class="tf-arrow tf-arrow--prev" aria-label="Previous testimonial">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="tf-arrow tf-arrow--next" aria-label="Next testimonial">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
         </div>
       </div>
 
@@ -224,13 +220,13 @@
   <!-- ABOUT -->
   <section class="about" id="about">
     <div class="grid">
-      <div class="about__image col-span-6">
+      <div class="about__image col-span-6 reveal">
         <div class="about__img-placeholder"></div>
       </div>
       <div class="about__copy col-span-6 reveal" data-delay="150">
-        <span class="label">About Brian</span>
+        <!--span class="label">About Brian</span-->
         <h2>20 Years on the Fairway</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+        <p>Brian employ’s PMG’s 5P’s ethos to help players establish an overview of their game, he will  create a whole game plan so the player can become the best version of themselves they can be,he has a proven holistic, no stone left unturned approach to help players all levels improve.</p>
         <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
@@ -273,6 +269,7 @@
     </div>
   </footer>
 
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

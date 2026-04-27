@@ -43,7 +43,11 @@
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+/* Lenis smooth scroll — override any native smooth scroll */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
 
 body {
   background-color: var(--color-bg);
@@ -127,14 +131,14 @@ p:last-child { margin-bottom: 0; }
 .btn:hover { transform: translateY(-2px); }
 
 .btn--primary {
-  background: var(--color-primary);
-  color: #fff;
-  border-color: var(--color-primary);
+  background: #dfffa3;
+  color: #000;
 }
-.btn--primary:hover {
+
+/*.btn--primary:hover {
   background: var(--color-primary-dk);
   border-color: var(--color-primary-dk);
-}
+}*/
 
 .btn--outline {
   background: transparent;
@@ -352,6 +356,7 @@ p:last-child { margin-bottom: 0; }
   margin-right: 16px;
   background: var(--color-surface);
   overflow: hidden;
+  border-radius: 8px;
   transform: translateZ(0);
 }
 
@@ -414,7 +419,7 @@ p:last-child { margin-bottom: 0; }
 */
 .services {
   padding: var(--space-xl) 0;
-  background: #f0efec;
+  background: #edede1;
   margin-inline: 48px;
   border-radius: 48px 48px 0 0;
   overflow: clip;
@@ -450,8 +455,8 @@ p:last-child { margin-bottom: 0; }
 .service-card:nth-child(4) { grid-column: 5 / span 6; }
 
 .service-card {
-  /*background: #ffffff;*/
-  border: 1px solid rgba(13, 26, 15, 0.1);
+  background: #f9f9ef;
+  /*border: 1px solid rgba(13, 26, 15, 0.1);*/
   border-radius: 8px;
   padding: 40px;
   display: flex;
@@ -465,7 +470,7 @@ p:last-child { margin-bottom: 0; }
 
 .service-card__title {
   font-family: var(--font-body);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: #0d1a0f;
   line-height: 1.2;
@@ -480,6 +485,14 @@ p:last-child { margin-bottom: 0; }
   background: #e4e3e0;
   border-radius: 4px;
   border: 1px solid rgba(13, 26, 15, 0.06);
+  overflow: hidden;
+}
+
+.service-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .services__cta {
@@ -493,14 +506,15 @@ p:last-child { margin-bottom: 0; }
    ============================================================ */
 .tf-header {
   text-align: center;
-  margin-top: var(--space-lg);
+  margin-top: var(--space-xl);
   margin-bottom: var(--space-sm);
 }
 
 /* Slider — full-width quote rotator with arrow navigation */
 .tf-slider__track {
-  padding-bottom: var(--space-lg);
-  border-bottom: 1px solid rgba(13, 26, 15, 0.12);
+  background: #f9f9ef;
+  border-radius: 16px;
+  padding: var(--space-lg);
   margin-bottom: var(--space-md);
 }
 
@@ -518,34 +532,31 @@ p:last-child { margin-bottom: 0; }
   font-weight: 300;
   line-height: 1.4;
   color: #0d1a0f;
-}
-
-/* Bar: author left, arrows right */
-.tf-slider__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
+  margin-bottom: var(--space-md);
 }
 
 .tf-slider__author {
-  display: none;
+  display: flex;
   align-items: center;
   gap: var(--space-sm);
 }
 
-.tf-slider__author.is-active {
-  display: flex;
-}
-
-/* Circular avatar placeholder — replace with <img> when photos are ready */
+/* Circular avatar */
 .tf-slider__avatar {
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: rgba(13, 26, 15, 0.1);
-  border: 1px solid rgba(13, 26, 15, 0.12);
+  /*border: 1px solid rgba(13, 26, 15, 0.12);*/
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.tf-slider__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .tf-name {
@@ -563,8 +574,8 @@ p:last-child { margin-bottom: 0; }
 
 .tf-slider__arrows {
   display: flex;
+  justify-content: center;
   gap: 0.5rem;
-  flex-shrink: 0;
 }
 
 .tf-arrow {
@@ -628,20 +639,7 @@ p:last-child { margin-bottom: 0; }
 }
 
 .about .grid {
-  align-items: start;
-}
-
-/* Image column is sticky — sticks at top of viewport and uses
-   flex to keep the image centred at 50vh while text scrolls past. */
-.about__image {
-  align-self: start;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  padding: var(--space-md) 0;
 }
 
 .about__img-placeholder {
@@ -650,18 +648,9 @@ p:last-child { margin-bottom: 0; }
   background: var(--color-surface);
   border-radius: 8px;
   border: 1px solid var(--color-border);
-  max-height: calc(100vh - var(--space-xl));
 }
 
-/* Copy column is taller than 100vh so there is scroll travel
-   while the image is sticky. Content is centred so it starts
-   aligned with the sticky image and scrolls away naturally. */
 .about__copy {
-  align-self: start;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 160vh;
   padding-left: var(--space-md);
 }
 
@@ -781,17 +770,9 @@ p:last-child { margin-bottom: 0; }
   .col-span-8 { grid-column: span 10; }
   .col-offset-2 { grid-column-start: 2; }
 
-  /* Columns stack on tablet — disable sticky and restore natural height */
-  .about__image {
-    position: static;
-    height: auto;
-    padding: 0;
-  }
   .about__copy {
     padding-left: 0;
     margin-top: var(--space-md);
-    min-height: auto;
-    justify-content: flex-start;
   }
 
   .lessons .col-span-4:last-child {
