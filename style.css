@@ -1,13 +1,3 @@
-/* ============================================================
-   FONTS
-   ============================================================ */
-@font-face {
-  font-family: 'LTMuseum';
-  src: url('assets/fonts/LTMuseum-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* ============================================================
    TOKENS
@@ -21,7 +11,7 @@
   --color-text-muted: #8aa890;
   --color-border:     #1e3325;
 
-  --font-heading: 'LTMuseum', 'Georgia', serif;
+  --font-heading: 'Host Grotesk', sans-serif;
   --font-body:    system-ui, -apple-system, sans-serif;
 
   --cols:        12;
