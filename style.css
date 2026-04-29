@@ -71,7 +71,6 @@ ul { list-style: none; }
 .col-span-12 { grid-column: span 12; }
 
 .col-offset-2 { grid-column-start: 3; }
-.col-offset-3 { grid-column-start: 4; }
 
 /* ============================================================
    TYPOGRAPHY
@@ -424,6 +423,8 @@ p:last-child { margin-bottom: 0; }
 }
 
 .services__intro {
+  grid-column: 4 / span 6;
+  text-align: center;
   margin-top: 0;
 }
 
@@ -773,7 +774,7 @@ p:last-child { margin-bottom: 0; }
   .col-span-6 { grid-column: span 12; }
   .col-span-8 { grid-column: span 10; }
   .col-offset-2 { grid-column-start: 2; }
-  .col-offset-3 { grid-column-start: 1; }
+  .services__intro { grid-column: 2 / span 10; }
 
   /* Columns stack on tablet — disable sticky and restore natural height */
   .about__image {
@@ -815,7 +816,7 @@ p:last-child { margin-bottom: 0; }
   .col-span-12 { grid-column: span 4; }
 
   .col-offset-2 { grid-column-start: 1; }
-  .col-offset-3 { grid-column-start: 1; }
+  .services__intro { grid-column: span 4; }
 
   .lessons .col-span-4:last-child { grid-column: span 4; }
 
