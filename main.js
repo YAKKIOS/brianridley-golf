@@ -99,6 +99,31 @@ if (svcSection) {
 }
 
 /* ============================================================
+   FOOTER — rounded card expands to full-bleed on scroll
+   Same mechanic as services: margin-inline + border-radius
+   animate from MAX (48px) → 0 as the section enters view.
+   ============================================================ */
+const footerSection = document.querySelector('.footer');
+
+if (footerSection) {
+  const MAX = 48;
+
+  const animateFooter = () => {
+    if (window.innerWidth < 768) return;
+    const rect = footerSection.getBoundingClientRect();
+    const raw = Math.max(0, Math.min(1, 1 - rect.top / window.innerHeight));
+    const eased = 1 - Math.pow(1 - raw, 2);
+    const m = MAX * (1 - eased);
+    footerSection.style.marginInline = `${m}px`;
+    footerSection.style.borderRadius = `${m}px`;
+  };
+
+  window.addEventListener('scroll', animateFooter, { passive: true });
+  window.addEventListener('resize', animateFooter);
+  animateFooter();
+}
+
+/* ============================================================
    CAROUSEL — pixel-perfect seamless loop
    Measures the real width of the original slides, then translates
    by exact pixels and resets invisibly when it reaches the clone set.

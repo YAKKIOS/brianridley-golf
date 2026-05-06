@@ -46,7 +46,7 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="grid">
-      <div class="hero__content col-span-12">
+      <div class="hero__content">
         <span class="hero__badge">Current PGA/DP Tour Coach</span>
         <h1 class="hero__heading">Elevate your game</h1>
         <p class="hero__sub">PGA certified golf instructor based in North East England. Personalised coaching that actually fixes your swing.</p>
@@ -98,10 +98,10 @@
   <!-- SERVICES -->
   <section class="services" id="services">
     <div class="grid">
-      <div class="services__header col-span-12 reveal">
+      <div class="services__intro-group col-span-12 reveal">
         <h2>Services</h2>
+        <p class="services__intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Personalised coaching programmes to suit every level of golfer.</p>
       </div>
-      <p class="services__intro col-span-12 reveal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Personalised coaching programmes to suit every level of golfer.</p>
       <div class="services__cards col-span-12 reveal" data-delay="150">
         <div class="service-card">
           <div class="service-card__body">
@@ -140,19 +140,11 @@
           </div>
         </div>
       </div>
-      <div class="services__cta col-span-12 reveal" data-delay="250">
-        <a href="#contact" class="btn btn--primary">
-          Book a lesson
-          <span class="btn__arrow" aria-hidden="true">
-            <svg class="btn__arr btn__arr--a" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9L9 2M9 2H4M9 2V7"/></svg>
-            <svg class="btn__arr btn__arr--b" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9L9 2M9 2H4M9 2V7"/></svg>
-          </span>
-        </a>
-      </div>
+      
 
       <!-- FEATURED TESTIMONIALS -->
       <div class="tf-header col-span-12 reveal">
-        <h2>In their own words</h2>
+        <h2>Trusted by regional champions</h2>
       </div>
 
       <div class="tf-slider col-span-12 reveal" data-delay="100" id="testimonials">
@@ -198,8 +190,8 @@
         </div>
       </div>
 
-      <!-- TESTIMONIAL CARDS -->
-      <div class="tf-cards col-span-12 reveal" data-delay="150">
+      <!-- TESTIMONIAL CARDS — hidden -->
+      <div class="tf-cards col-span-12" hidden>
         <blockquote class="tf-card">
           <p>"Brian transformed my short game in just three sessions. I came in slicing every drive and left with a swing I actually understood. Absolutely worth every penny."</p>
           <cite>— Sarah M.</cite>
@@ -235,10 +227,24 @@
         <div class="about__img-placeholder"></div>
       </div>
       <div class="about__copy col-span-6 reveal" data-delay="150">
-        <!--span class="label">About Brian</span-->
         <h2>20 Years on the Fairway</h2>
-        <p>Brian employ’s PMG’s 5P’s ethos to help players establish an overview of their game, he will  create a whole game plan so the player can become the best version of themselves they can be,he has a proven holistic, no stone left unturned approach to help players all levels improve.</p>
+        <p>Brian employ’s PMG’s 5P’s ethos to help players establish an overview of their game, he will create a whole game plan so the player can become the best version of themselves they can be. He has a proven holistic, no stone left unturned approach to help players of all levels improve.</p>
         <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPONSORS -->
+  <section class="sponsors">
+    <div class="grid">
+      <div class="sponsors__header col-span-12 reveal">
+        <h2>Sponsors</h2>
+      </div>
+      <div class="sponsors__logos col-span-12 reveal" data-delay="100">
+        <div class="sponsor-logo"></div>
+        <div class="sponsor-logo"></div>
+        <div class="sponsor-logo"></div>
+        <div class="sponsor-logo"></div>
       </div>
     </div>
   </section>
@@ -272,9 +278,20 @@
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" id="contact">
     <div class="grid">
-      <div class="footer__inner col-span-12 reveal">
+      <div class="footer__content col-span-12">
+        <h2 class="footer__heading">Ready to elevate your game?</h2>
+        <p class="footer__sub">Get in touch to book your first session with Brian.</p>
+        <a href="mailto:brian@ridleygolf.co.uk" class="btn btn--primary">
+          Book a lesson
+          <span class="btn__arrow" aria-hidden="true">
+            <svg class="btn__arr btn__arr--a" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9L9 2M9 2H4M9 2V7"/></svg>
+            <svg class="btn__arr btn__arr--b" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9L9 2M9 2H4M9 2V7"/></svg>
+          </span>
+        </a>
+      </div>
+      <div class="footer__meta col-span-12">
         <p>&copy; 2026 Brian Ridley Golf. All rights reserved.</p>
       </div>
     </div>
