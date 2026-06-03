@@ -1,214 +1,387 @@
 /* ============================================================
-   LENIS — smooth scroll
-   autoRaf: false so we drive it ourselves via requestAnimationFrame,
-   keeping it in sync with all other rAF-based animations on the page.
+   BRIAN RIDLEY GOLF — MAIN JS
    ============================================================ */
-const lenis = new Lenis({
-  lerp:            0.08,
-  wheelMultiplier: 1,
-  smoothTouch:     false,
-  autoRaf:         false,
-});
-
-(function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-})(0);
 
 /* ============================================================
-   NAV — scroll state
+   1. NAVBAR — scroll-triggered background
    ============================================================ */
-const nav = document.querySelector('.nav');
+(function initNavbar() {
+  const navbar = document.getElementById('navbar');
+  if (!navbar) return;
 
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-
-/* ============================================================
-   SCROLL REVEAL
-   Any element with class="reveal" fades up when it enters view.
-   Add data-delay="200" (ms) for staggered children.
-   ============================================================ */
-const revealEls = document.querySelectorAll('.reveal');
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const delay = entry.target.dataset.delay || 0;
-    setTimeout(() => entry.target.classList.add('visible'), Number(delay));
-    observer.unobserve(entry.target);
-  });
-}, { threshold: 0.15 });
-
-revealEls.forEach(el => observer.observe(el));
-
-/* ============================================================
-   STATS — bidirectional scroll-triggered reveal
-
-   Thresholds > 0 so nothing shows the moment the sticky panel
-   first locks. Progress is NOT clamped from below, so while the
-   section is still below the viewport all lines stay hidden.
-   ============================================================ */
-const statsSection = document.querySelector('.stats-scroll');
-const statsLines = document.querySelectorAll('.stats__line');
-
-if (statsSection && statsLines.length) {
-  const thresholds = [0.1, 0.4, 0.7];
-
-  const revealStats = () => {
-    const rect = statsSection.getBoundingClientRect();
-    const scrolled = -rect.top;
-    const max = statsSection.offsetHeight - window.innerHeight;
-    const progress = Math.min(1, scrolled / max);
-
-    statsLines.forEach((line, i) => {
-      line.classList.toggle('visible', progress >= thresholds[i]);
-    });
-  };
-
-  window.addEventListener('scroll', revealStats, { passive: true });
-  revealStats();
-}
-
-/* ============================================================
-   SERVICES — rounded card expands to full-bleed on scroll
-
-   margin-inline and border-radius start at MAX_MARGIN (48px) and
-   both animate to 0 as the section scrolls into view. Keeping them
-   equal means the corner arc always sits flush with the dark background,
-   so you never see an awkward gap or overlap at the edge.
-   ============================================================ */
-const svcSection = document.querySelector('.services');
-
-if (svcSection) {
-  const MAX = 48;
-
-  const animateServices = () => {
-    if (window.innerWidth < 768) return;
-    const rect = svcSection.getBoundingClientRect();
-    const raw = Math.max(0, Math.min(1, 1 - rect.top / window.innerHeight));
-    const eased = 1 - Math.pow(1 - raw, 2); // ease-out quad
-    const m = MAX * (1 - eased);
-    svcSection.style.marginInline = `${m}px`;
-    svcSection.style.borderRadius = `${m}px ${m}px 0 0`;
-  };
-
-  window.addEventListener('scroll', animateServices, { passive: true });
-  window.addEventListener('resize', animateServices);
-  animateServices();
-}
-
-/* ============================================================
-   FOOTER — rounded card expands to full-bleed on scroll
-   Same mechanic as services: margin-inline + border-radius
-   animate from MAX (48px) → 0 as the section enters view.
-   ============================================================ */
-const footerSection = document.querySelector('.footer');
-
-if (footerSection) {
-  const MAX = 48;
-
-  const animateFooter = () => {
-    if (window.innerWidth < 768) return;
-    const rect = footerSection.getBoundingClientRect();
-    const raw = Math.max(0, Math.min(1, 1 - rect.top / window.innerHeight));
-    const eased = 1 - Math.pow(1 - raw, 2);
-    const m = MAX * (1 - eased);
-    footerSection.style.marginInline = `${m}px`;
-    footerSection.style.borderRadius = `${m}px`;
-  };
-
-  window.addEventListener('scroll', animateFooter, { passive: true });
-  window.addEventListener('resize', animateFooter);
-  animateFooter();
-}
-
-/* ============================================================
-   CAROUSEL — pixel-perfect seamless loop
-   Measures the real width of the original slides, then translates
-   by exact pixels and resets invisibly when it reaches the clone set.
-   ============================================================ */
-const carouselTrack = document.querySelector('.carousel__track');
-
-if (carouselTrack) {
-  const originalSlides = carouselTrack.querySelectorAll('.carousel__slide:not([aria-hidden])');
-  let loopWidth = 0;
-
-  const measureLoop = () => {
-    loopWidth = 0;
-    originalSlides.forEach(slide => {
-      const style = getComputedStyle(slide);
-      loopWidth += slide.offsetWidth + parseFloat(style.marginRight);
-    });
-  };
-
-  measureLoop();
-  window.addEventListener('resize', measureLoop);
-
-  let offset = 0;
-  let paused = false;
-  const SPEED = 1; // px per frame
-
-  carouselTrack.addEventListener('mouseenter', () => { paused = true; });
-  carouselTrack.addEventListener('mouseleave', () => { paused = false; });
-
-  const tick = () => {
-    if (!paused) {
-      offset += SPEED;
-      if (offset >= loopWidth) offset -= loopWidth;
-      carouselTrack.style.transform = `translate3d(-${offset}px, 0, 0)`;
+  function onScroll() {
+    if (window.scrollY > 80) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
     }
-    requestAnimationFrame(tick);
-  };
+  }
 
-  requestAnimationFrame(tick);
-}
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // run on load in case page is already scrolled
+})();
+
 
 /* ============================================================
-   TESTIMONIAL SLIDER — arrow-driven cross-fade with slide direction
+   2. HAMBURGER — mobile nav toggle
    ============================================================ */
-const tfSlider = document.querySelector('.tf-slider');
+(function initHamburger() {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  if (!hamburger || !navLinks) return;
 
-if (tfSlider) {
-  const slides  = Array.from(tfSlider.querySelectorAll('.tf-slider__slide'));
-  const prevBtn = tfSlider.querySelector('.tf-arrow--prev');
-  const nextBtn = tfSlider.querySelector('.tf-arrow--next');
-  const N       = slides.length;
-  let current   = 0;
-  let busy      = false;
+  hamburger.addEventListener('click', function () {
+    const isOpen = navLinks.classList.toggle('mobile-open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
 
-  slides[0].classList.add('is-active');
+  // Close nav when a link is clicked
+  navLinks.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      navLinks.classList.remove('mobile-open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 
-  const go = (dir) => {
-    if (busy) return;
-    busy = true;
-    const next     = (current + dir + N) % N;
-    const outSlide = slides[current];
-    const inSlide  = slides[next];
 
-    // Fade + slide out (author animates with it, inside the slide)
-    outSlide.style.cssText = 'transition: opacity 0.28s ease, transform 0.28s ease; opacity: 0; transform: translateX(' + (dir > 0 ? '-24px' : '24px') + ');';
+/* ============================================================
+   3. FADE-IN — IntersectionObserver
+   ============================================================ */
+(function initFadeIn() {
+  const elements = document.querySelectorAll('.fade-in');
+  if (!elements.length) return;
 
-    setTimeout(() => {
-      outSlide.classList.remove('is-active');
-      outSlide.style.cssText = '';
+  const observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
 
-      inSlide.style.cssText = 'opacity: 0; transform: translateX(' + (dir > 0 ? '24px' : '-24px') + '); transition: none;';
-      inSlide.classList.add('is-active');
+  elements.forEach(function (el) {
+    observer.observe(el);
+  });
+})();
 
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        inSlide.style.cssText = 'transition: opacity 0.32s ease, transform 0.32s ease; opacity: 1; transform: translateX(0);';
 
-        setTimeout(() => {
-          inSlide.style.cssText = '';
-          current = next;
-          busy    = false;
-        }, 320);
-      }));
-    }, 280);
+/* ============================================================
+   4. VIDEO CAROUSEL — infinite scroll, clone-based
+   ============================================================ */
+(function initCarousel() {
+  const track   = document.getElementById('carouselTrack');
+  const wrapper = track ? track.parentElement : null;
+  if (!track || !wrapper) return;
+
+  // Clone all original cards and append → seamless -50% loop
+  const originals = Array.from(track.children);
+  originals.forEach(function (card) {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  function startVideo(card) {
+    if (card.classList.contains('is-playing')) return;
+    const iframe = card.querySelector('iframe');
+    if (!iframe) return;
+    // Load src from data-src on first play
+    if (!iframe.src || iframe.src === window.location.href) {
+      iframe.src = iframe.dataset.src + '&autoplay=1&mute=1';
+    } else if (!iframe.src.includes('autoplay=1')) {
+      iframe.src = iframe.src + '&autoplay=1&mute=1';
+    }
+    card.classList.add('is-playing');
+    track.classList.add('paused');
+  }
+
+  // Click / tap on play overlay
+  wrapper.addEventListener('click', function (e) {
+    const playBtn = e.target.closest('.carousel-play');
+    if (!playBtn) return;
+    startVideo(playBtn.closest('.carousel-card'));
+  });
+
+  // Hover to play on pointer devices
+  wrapper.addEventListener('mouseover', function (e) {
+    const card = e.target.closest('.carousel-card[data-type="video"]');
+    if (!card) return;
+    startVideo(card);
+  });
+
+  // Pause scroll on any hover; resume when leaving
+  wrapper.addEventListener('mouseenter', function () {
+    track.classList.add('paused');
+  });
+
+  wrapper.addEventListener('mouseleave', function () {
+    track.classList.remove('paused');
+  });
+
+  wrapper.addEventListener('focusin', function () {
+    track.classList.add('paused');
+  });
+
+  wrapper.addEventListener('focusout', function () {
+    track.classList.remove('paused');
+  });
+})();
+
+
+/* ============================================================
+   5. PRICING TOGGLE
+   ============================================================ */
+(function initPricing() {
+  const toggleBtns   = document.querySelectorAll('.pricing-toggle .btn');
+  const pricingCard  = document.querySelector('.pricing-card');
+  const titleEl      = document.getElementById('pricingTitle');
+  const subtitleEl   = document.getElementById('pricingSubtitle');
+  const priceEl      = document.getElementById('pricingPrice');
+  const descEl       = document.getElementById('pricingDesc');
+  const listEl       = document.getElementById('pricingList');
+
+  if (!toggleBtns.length || !pricingCard) return;
+
+  const plans = {
+    '4hr': {
+      title:    'Focused Coaching Block',
+      subtitle: '4 hours of one-to-one coaching',
+      price:    '£320',
+      desc:     'The perfect starting point. Brian begins with a full game assessment before building a structured programme across your sessions. You\'ll leave each one with clear, actionable drills to practise between visits.',
+      features: [
+        'Full swing &amp; game assessment',
+        'Personalised practice plan',
+        'Video analysis every session',
+        'Trackman launch monitor data',
+        'Session notes &amp; drill guide'
+      ]
+    },
+    '10hr': {
+      title:    'Elite Coaching Programme',
+      subtitle: '10 hours of one-to-one coaching — best value',
+      price:    '£750',
+      desc:     'The complete transformation package. Ten hours gives Brian the time to address root causes, rebuild habits and measure your progress against real benchmarks. Includes an on-course playing lesson and ongoing support.',
+      features: [
+        'Everything in the 4-hour block',
+        'Full game deep-dive analysis',
+        'On-course playing lesson included',
+        'Mental game coaching sessions',
+        'Unlimited email &amp; WhatsApp support',
+        'Progress report at 5 &amp; 10 hours'
+      ]
+    }
   };
 
-  prevBtn.addEventListener('click', () => go(-1));
-  nextBtn.addEventListener('click', () => go(1));
-}
+  function buildList(features) {
+    return features.map(function (f) {
+      return '<li><span class="material-icons-round">check_circle</span>' + f + '</li>';
+    }).join('');
+  }
 
+  function switchPlan(planKey) {
+    const plan = plans[planKey];
+    if (!plan) return;
+
+    // Brief fade for smooth transition
+    pricingCard.classList.add('transitioning');
+
+    setTimeout(function () {
+      titleEl.textContent   = plan.title;
+      subtitleEl.textContent = plan.subtitle;
+      priceEl.innerHTML     = plan.price;
+      descEl.textContent    = plan.desc;
+      listEl.innerHTML      = buildList(plan.features);
+      pricingCard.classList.remove('transitioning');
+    }, 200);
+  }
+
+  toggleBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      toggleBtns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      switchPlan(btn.dataset.plan);
+    });
+  });
+})();
+
+
+/* ============================================================
+   6. FAQ ACCORDION — one open at a time
+   ============================================================ */
+(function initFaq() {
+  const items = document.querySelectorAll('.faq-item');
+  if (!items.length) return;
+
+  items.forEach(function (item) {
+    const trigger = item.querySelector('.faq-item__trigger');
+    const content = item.querySelector('.faq-item__content');
+    if (!trigger || !content) return;
+
+    trigger.addEventListener('click', function () {
+      const isOpen = item.classList.contains('is-open');
+
+      // Close all
+      items.forEach(function (other) {
+        const otherContent = other.querySelector('.faq-item__content');
+        other.classList.remove('is-open');
+        other.querySelector('.faq-item__trigger').setAttribute('aria-expanded', 'false');
+        if (otherContent) {
+          otherContent.style.maxHeight = '0';
+          otherContent.hidden = false; // keep in DOM for transition
+        }
+      });
+
+      // Open clicked if it was closed
+      if (!isOpen) {
+        item.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+    });
+
+    // CSS handles default collapsed state (max-height: 0)
+    // Ensure inline style is set so transitions work correctly
+    content.style.maxHeight = '0';
+  });
+})();
+
+
+/* ============================================================
+   6b. SERVICES — timed accordion with image swap
+   ============================================================ */
+(function initServices() {
+  const items    = document.querySelectorAll('.service-item');
+  const images   = document.querySelectorAll('.services-img');
+  const DURATION = 8000;
+  let current    = 0;
+  let timer      = null;
+
+  if (!items.length) return;
+
+  function goTo(index) {
+    const prev = items[current];
+    const next = items[index];
+
+    // Deactivate previous
+    prev.classList.remove('active');
+    prev.querySelector('.service-item__trigger').setAttribute('aria-expanded', 'false');
+
+    // Deactivate all images
+    images.forEach(function (img) { img.classList.remove('active'); });
+
+    // Activate new item
+    next.classList.add('active');
+    next.querySelector('.service-item__trigger').setAttribute('aria-expanded', 'true');
+
+    // Force progress bar animation restart
+    const bar = next.querySelector('.service-item__progress-bar');
+    bar.style.animation = 'none';
+    bar.offsetHeight; // trigger reflow
+    bar.style.animation = '';
+
+    // Swap image
+    const img = document.querySelector('.services-img[data-index="' + index + '"]');
+    if (img) img.classList.add('active');
+
+    current = index;
+
+    // Restart auto-advance timer
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      goTo((current + 1) % items.length);
+    }, DURATION);
+  }
+
+  // Click handlers
+  items.forEach(function (item, i) {
+    item.querySelector('.service-item__trigger').addEventListener('click', function () {
+      if (i !== current) goTo(i);
+    });
+  });
+
+  // Kick off
+  goTo(0);
+})();
+
+
+/* ============================================================
+   7. TESTIMONIAL SLIDER — prev/next, 2 visible, clips overflow
+   ============================================================ */
+(function initTestimonialSlider() {
+  const track   = document.getElementById('testimonialsTrack');
+  const prevBtn = document.getElementById('testimonialPrev');
+  const nextBtn = document.getElementById('testimonialNext');
+  if (!track || !prevBtn || !nextBtn) return;
+
+  const cards      = Array.from(track.children);
+  const total      = cards.length;
+  let currentIndex = 0;
+
+  function visibleCount() {
+    return 1;
+  }
+
+  function updateSlider() {
+    const visible   = visibleCount();
+    const maxIndex  = total - visible;
+    const cardWidth = cards[0].offsetWidth;
+    const gap       = parseFloat(getComputedStyle(track).gap) || 24;
+
+    // Clamp index in case viewport resized
+    if (currentIndex > maxIndex) currentIndex = Math.max(0, maxIndex);
+
+    track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
+
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= maxIndex;
+  }
+
+  prevBtn.addEventListener('click', function () {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateSlider();
+    }
+  });
+
+  nextBtn.addEventListener('click', function () {
+    const maxIndex = total - visibleCount();
+    if (currentIndex < maxIndex) {
+      currentIndex++;
+      updateSlider();
+    }
+  });
+
+  window.addEventListener('resize', updateSlider, { passive: true });
+  updateSlider();
+})();
+
+
+/* ============================================================
+   8. SMOOTH SCROLL — enhanced anchor navigation
+      (supplements CSS scroll-behavior: smooth)
+   ============================================================ */
+(function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (!target) return;
+
+      e.preventDefault();
+
+      const bannerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--banner-h')) * 16;
+      const navH    = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) * 16;
+      const offset  = bannerH + navH;
+
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    });
+  });
+})();
