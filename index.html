@@ -245,17 +245,53 @@
   </section>
 
   <!-- ===================== CALLOUT ===================== -->
-  <section class="section section--white callout" id="callout">
+  <section class="callout" id="callout">
+    <div class="callout__image"></div>
+    <div class="callout__overlay"></div>
+    <div class="callout__content fade-in">
+      <h2>I've spent 40 years watching golfers make the same fixable mistakes. I can spot yours in ten minutes.</h2>
+      <a href="#pricing" class="btn btn--lime btn--pill" data-text="Book your first session"><span>Book your first session</span></a>
+      <p class="callout__note">Limited availability &mdash; 2026 spots filling fast</p>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="section section--how" id="how-it-works">
     <div class="container">
-      <div class="callout__card">
-        <div class="callout__image"></div>
-        <div class="callout__overlay"></div>
-        <div class="callout__content fade-in">
-          <h2>I've spent 40 years watching golfers make the same fixable mistakes. I can spot yours in ten minutes.</h2>
-          <a href="#pricing" class="btn btn--lime btn--pill" data-text="Book your first session"><span>Book your first session</span></a>
-          <p class="callout__note">Limited availability &mdash; 2026 spots filling fast</p>
+
+      <div class="how__header fade-in">
+        <span class="eyebrow">The process</span>
+        <h3>How it works</h3>
+      </div>
+
+      <div class="how__timeline">
+        <div class="how__line"><div class="how__line-fill"></div></div>
+        <div class="how__steps">
+
+          <div class="how__step how__step--active">
+            <div class="how__node"></div>
+            <span class="eyebrow how__num">01</span>
+            <h5>Book your session</h5>
+            <p>Choose your block &mdash; 4 or 10 hours &mdash; and select a date that works for you. Instant confirmation, no waiting.</p>
+          </div>
+
+          <div class="how__step">
+            <div class="how__node"></div>
+            <span class="eyebrow how__num">02</span>
+            <h5>Assessment &amp; plan</h5>
+            <p>Your first session is a full game assessment. Brian builds a personalised coaching plan structured around your specific goals and gaps in your game.</p>
+          </div>
+
+          <div class="how__step">
+            <div class="how__node"></div>
+            <span class="eyebrow how__num">03</span>
+            <h5>Track your progress</h5>
+            <p>Session notes, targeted drill prescriptions and progress tracking keep you improving between every visit to the range.</p>
+          </div>
+
         </div>
       </div>
+
     </div>
   </section>
 
@@ -282,8 +318,8 @@
     </div>
   </section>
 
-  <!-- ===================== SPONSORS ===================== -->
-  <section class="section section--warm sponsors-section" id="sponsors">
+  <!-- ===================== SPONSORS (hidden) ===================== -->
+  <section class="section section--warm sponsors-section" id="sponsors" style="display:none">
     <div class="container">
       <h5 class="sponsors__heading fade-in">Trusted by &amp; associated with</h5>
       <div class="sponsors__grid fade-in">
@@ -298,40 +334,6 @@
         </div>
         <div class="sponsor-logo">
           <div class="sponsor-logo__placeholder">Sponsor Four</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== HOW IT WORKS ===================== -->
-  <section class="section section--warm" id="how-it-works">
-    <div class="container">
-      <div class="section__header fade-in">
-        <span class="eyebrow">The process</span>
-        <h3>How it works</h3>
-        <p class="section__lead">Three straightforward steps to start transforming your golf game.</p>
-      </div>
-      <div class="grid grid--3">
-        <div class="card card--white fade-in">
-          <div class="card__icon-wrap">
-            <span class="material-icons-round">calendar_month</span>
-          </div>
-          <h5>1. Book your session</h5>
-          <p>Choose your block &mdash; 4 or 10 hours &mdash; and select a date that works for you. Instant confirmation, no waiting.</p>
-        </div>
-        <div class="card card--white fade-in">
-          <div class="card__icon-wrap">
-            <span class="material-icons-round">sports_golf</span>
-          </div>
-          <h5>2. Assessment &amp; plan</h5>
-          <p>Your first session is a full game assessment. Brian builds a personalised coaching plan structured around your specific goals.</p>
-        </div>
-        <div class="card card--white fade-in">
-          <div class="card__icon-wrap">
-            <span class="material-icons-round">trending_up</span>
-          </div>
-          <h5>3. Track your progress</h5>
-          <p>Session notes, targeted drill prescriptions and progress tracking keep you improving between every session.</p>
         </div>
       </div>
     </div>
@@ -353,6 +355,7 @@
         <div class="carousel-card">
           <div class="carousel-image">
             <img src="assets/images/one.avif" alt="Coaching session on the range" loading="lazy">
+            <div class="carousel-caption">Full swing session on the range</div>
           </div>
         </div>
 
@@ -365,9 +368,10 @@
           </div>
         </div>
 
-        <div class="carousel-card">
+        <div class="carousel-card carousel-card--landscape">
           <div class="carousel-image">
             <img src="assets/images/IMG_3847.JPG" alt="Brian Ridley coaching" loading="lazy">
+            <div class="carousel-caption">Short game work with a student</div>
           </div>
         </div>
 
@@ -392,6 +396,7 @@
         <div class="carousel-card">
           <div class="carousel-image">
             <img src="assets/images/two.avif" alt="Golf coaching drill" loading="lazy">
+            <div class="carousel-caption">On-course playing lesson</div>
           </div>
         </div>
 
@@ -404,9 +409,10 @@
           </div>
         </div>
 
-        <div class="carousel-card">
+        <div class="carousel-card carousel-card--landscape">
           <div class="carousel-image">
             <img src="assets/images/IMG_4506.JPG" alt="On-course session" loading="lazy">
+            <div class="carousel-caption">Trackman analysis session</div>
           </div>
         </div>
 

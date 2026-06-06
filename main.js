@@ -18,7 +18,7 @@
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // run on load in case page is already scrolled
+  onScroll();
 })();
 
 
@@ -36,7 +36,6 @@
     hamburger.setAttribute('aria-expanded', String(isOpen));
   });
 
-  // Close nav when a link is clicked
   navLinks.querySelectorAll('a').forEach(function (link) {
     link.addEventListener('click', function () {
       navLinks.classList.remove('mobile-open');
@@ -48,7 +47,31 @@
 
 
 /* ============================================================
-   3. FADE-IN — IntersectionObserver
+   3. BANNER — hide on scroll
+   ============================================================ */
+(function initBannerHide() {
+  const banner = document.querySelector('.banner');
+  const navbar = document.getElementById('navbar');
+  if (!banner) return;
+
+  let bannerHidden = false;
+
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10 && !bannerHidden) {
+      bannerHidden = true;
+      banner.classList.add('banner--hidden');
+      navbar && navbar.classList.add('navbar--no-banner');
+    } else if (window.scrollY <= 10 && bannerHidden) {
+      bannerHidden = false;
+      banner.classList.remove('banner--hidden');
+      navbar && navbar.classList.remove('navbar--no-banner');
+    }
+  }, { passive: true });
+})();
+
+
+/* ============================================================
+   4. FADE-IN — IntersectionObserver
    ============================================================ */
 (function initFadeIn() {
   const elements = document.querySelectorAll('.fade-in');
@@ -73,70 +96,120 @@
 
 
 /* ============================================================
-   4. VIDEO CAROUSEL — infinite scroll, clone-based
+   5. VIDEO CAROUSEL — draggable, momentum-based
    ============================================================ */
 (function initCarousel() {
+  const wrapper = document.querySelector('.carousel-wrapper');
   const track   = document.getElementById('carouselTrack');
-  const wrapper = track ? track.parentElement : null;
   if (!track || !wrapper) return;
 
-  // Clone all original cards and append → seamless -50% loop
-  const originals = Array.from(track.children);
-  originals.forEach(function (card) {
-    const clone = card.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
+  let posX      = 0;
+  let startX    = 0;
+  let startPosX = 0;
+  let isDragging = false;
+  let velocity  = 0;
+  let lastX     = 0;
+  let rafId     = null;
+  let hasDragged = false;
+
+  function getMaxOffset() {
+    return -(track.scrollWidth - wrapper.clientWidth);
+  }
+
+  function setPos(newX) {
+    const max = getMaxOffset();
+    posX = Math.max(max, Math.min(0, newX));
+    track.style.transform = 'translateX(' + posX + 'px)';
+  }
+
+  function momentum() {
+    if (Math.abs(velocity) < 0.5) return;
+    setPos(posX + velocity);
+    velocity *= 0.94;
+    rafId = requestAnimationFrame(momentum);
+  }
+
+  /* — Mouse — */
+  wrapper.addEventListener('mousedown', function (e) {
+    isDragging = true;
+    hasDragged = false;
+    startX     = e.clientX;
+    startPosX  = posX;
+    lastX      = e.clientX;
+    velocity   = 0;
+    cancelAnimationFrame(rafId);
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', function (e) {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) hasDragged = true;
+    velocity = e.clientX - lastX;
+    lastX    = e.clientX;
+    setPos(startPosX + dx);
+  });
+
+  window.addEventListener('mouseup', function () {
+    if (!isDragging) return;
+    isDragging = false;
+    momentum();
+  });
+
+  /* — Touch — */
+  wrapper.addEventListener('touchstart', function (e) {
+    hasDragged = false;
+    startX     = e.touches[0].clientX;
+    startPosX  = posX;
+    lastX      = e.touches[0].clientX;
+    velocity   = 0;
+    cancelAnimationFrame(rafId);
+  }, { passive: true });
+
+  wrapper.addEventListener('touchmove', function (e) {
+    const dx = e.touches[0].clientX - startX;
+    if (Math.abs(dx) > 4) hasDragged = true;
+    velocity = e.touches[0].clientX - lastX;
+    lastX    = e.touches[0].clientX;
+    setPos(startPosX + dx);
+  }, { passive: true });
+
+  wrapper.addEventListener('touchend', function () {
+    momentum();
+  });
+
+  /* — Play on click (not drag) — */
+  wrapper.addEventListener('click', function (e) {
+    if (hasDragged) return;
+    const playBtn = e.target.closest('.carousel-play');
+    if (!playBtn) return;
+    startVideo(playBtn.closest('.carousel-card'));
+  });
+
+  /* — Hover to play on desktop — */
+  wrapper.addEventListener('mouseover', function (e) {
+    if (isDragging) return;
+    const card = e.target.closest('.carousel-card[data-type="video"]');
+    if (!card) return;
+    startVideo(card);
   });
 
   function startVideo(card) {
-    if (card.classList.contains('is-playing')) return;
+    if (!card || card.classList.contains('is-playing')) return;
     const iframe = card.querySelector('iframe');
     if (!iframe) return;
-    // Load src from data-src on first play
     if (!iframe.src || iframe.src === window.location.href) {
       iframe.src = iframe.dataset.src + '&autoplay=1&mute=1';
     } else if (!iframe.src.includes('autoplay=1')) {
       iframe.src = iframe.src + '&autoplay=1&mute=1';
     }
     card.classList.add('is-playing');
-    track.classList.add('paused');
   }
-
-  // Click / tap on play overlay
-  wrapper.addEventListener('click', function (e) {
-    const playBtn = e.target.closest('.carousel-play');
-    if (!playBtn) return;
-    startVideo(playBtn.closest('.carousel-card'));
-  });
-
-  // Hover to play on pointer devices
-  wrapper.addEventListener('mouseover', function (e) {
-    const card = e.target.closest('.carousel-card[data-type="video"]');
-    if (!card) return;
-    startVideo(card);
-  });
-
-  // Pause scroll on any hover; resume when leaving
-  wrapper.addEventListener('mouseenter', function () {
-    track.classList.add('paused');
-  });
-
-  wrapper.addEventListener('mouseleave', function () {
-    track.classList.remove('paused');
-  });
-
-  wrapper.addEventListener('focusin', function () {
-    track.classList.add('paused');
-  });
-
-  wrapper.addEventListener('focusout', function () {
-    track.classList.remove('paused');
-  });
 })();
 
 
 /* ============================================================
-   5. PRICING TOGGLE
+   6. PRICING TOGGLE
    ============================================================ */
 (function initPricing() {
   const toggleBtns   = document.querySelectorAll('.pricing-toggle .btn');
@@ -189,15 +262,14 @@
     const plan = plans[planKey];
     if (!plan) return;
 
-    // Brief fade for smooth transition
     pricingCard.classList.add('transitioning');
 
     setTimeout(function () {
-      titleEl.textContent   = plan.title;
+      titleEl.textContent    = plan.title;
       subtitleEl.textContent = plan.subtitle;
-      priceEl.innerHTML     = plan.price;
-      descEl.textContent    = plan.desc;
-      listEl.innerHTML      = buildList(plan.features);
+      priceEl.innerHTML      = plan.price;
+      descEl.textContent     = plan.desc;
+      listEl.innerHTML       = buildList(plan.features);
       pricingCard.classList.remove('transitioning');
     }, 200);
   }
@@ -213,7 +285,7 @@
 
 
 /* ============================================================
-   6. FAQ ACCORDION — one open at a time
+   7. FAQ ACCORDION — one open at a time
    ============================================================ */
 (function initFaq() {
   const items = document.querySelectorAll('.faq-item');
@@ -227,18 +299,16 @@
     trigger.addEventListener('click', function () {
       const isOpen = item.classList.contains('is-open');
 
-      // Close all
       items.forEach(function (other) {
         const otherContent = other.querySelector('.faq-item__content');
         other.classList.remove('is-open');
         other.querySelector('.faq-item__trigger').setAttribute('aria-expanded', 'false');
         if (otherContent) {
           otherContent.style.maxHeight = '0';
-          otherContent.hidden = false; // keep in DOM for transition
+          otherContent.hidden = false;
         }
       });
 
-      // Open clicked if it was closed
       if (!isOpen) {
         item.classList.add('is-open');
         trigger.setAttribute('aria-expanded', 'true');
@@ -246,15 +316,13 @@
       }
     });
 
-    // CSS handles default collapsed state (max-height: 0)
-    // Ensure inline style is set so transitions work correctly
     content.style.maxHeight = '0';
   });
 })();
 
 
 /* ============================================================
-   6b. SERVICES — timed accordion with image swap
+   7b. SERVICES — timed accordion with image swap
    ============================================================ */
 (function initServices() {
   const items    = document.querySelectorAll('.service-item');
@@ -269,50 +337,42 @@
     const prev = items[current];
     const next = items[index];
 
-    // Deactivate previous
     prev.classList.remove('active');
     prev.querySelector('.service-item__trigger').setAttribute('aria-expanded', 'false');
 
-    // Deactivate all images
     images.forEach(function (img) { img.classList.remove('active'); });
 
-    // Activate new item
     next.classList.add('active');
     next.querySelector('.service-item__trigger').setAttribute('aria-expanded', 'true');
 
-    // Force progress bar animation restart
     const bar = next.querySelector('.service-item__progress-bar');
     bar.style.animation = 'none';
-    bar.offsetHeight; // trigger reflow
+    bar.offsetHeight;
     bar.style.animation = '';
 
-    // Swap image
     const img = document.querySelector('.services-img[data-index="' + index + '"]');
     if (img) img.classList.add('active');
 
     current = index;
 
-    // Restart auto-advance timer
     clearTimeout(timer);
     timer = setTimeout(function () {
       goTo((current + 1) % items.length);
     }, DURATION);
   }
 
-  // Click handlers
   items.forEach(function (item, i) {
     item.querySelector('.service-item__trigger').addEventListener('click', function () {
       if (i !== current) goTo(i);
     });
   });
 
-  // Kick off
   goTo(0);
 })();
 
 
 /* ============================================================
-   7. TESTIMONIAL SLIDER — prev/next, 2 visible, clips overflow
+   8. TESTIMONIAL SLIDER — prev/next
    ============================================================ */
 (function initTestimonialSlider() {
   const track   = document.getElementById('testimonialsTrack');
@@ -324,20 +384,14 @@
   const total      = cards.length;
   let currentIndex = 0;
 
-  function visibleCount() {
-    return 1;
-  }
-
   function updateSlider() {
-    const visible   = visibleCount();
-    const maxIndex  = total - visible;
+    const maxIndex  = total - 1;
     const cardWidth = cards[0].offsetWidth;
     const gap       = parseFloat(getComputedStyle(track).gap) || 24;
 
-    // Clamp index in case viewport resized
     if (currentIndex > maxIndex) currentIndex = Math.max(0, maxIndex);
 
-    track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
+    track.style.transform = 'translateX(-' + (currentIndex * (cardWidth + gap)) + 'px)';
 
     prevBtn.disabled = currentIndex === 0;
     nextBtn.disabled = currentIndex >= maxIndex;
@@ -351,8 +405,7 @@
   });
 
   nextBtn.addEventListener('click', function () {
-    const maxIndex = total - visibleCount();
-    if (currentIndex < maxIndex) {
+    if (currentIndex < total - 1) {
       currentIndex++;
       updateSlider();
     }
@@ -364,8 +417,52 @@
 
 
 /* ============================================================
-   8. SMOOTH SCROLL — enhanced anchor navigation
-      (supplements CSS scroll-behavior: smooth)
+   9. HOW IT WORKS — animated timeline line
+   ============================================================ */
+(function initHowItWorks() {
+  const section  = document.getElementById('how-it-works');
+  if (!section) return;
+
+  const steps    = section.querySelectorAll('.how__step');
+  const lineFill = section.querySelector('.how__line-fill');
+  let animated   = false;
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !animated) {
+        animated = true;
+        runAnimation();
+        observer.unobserve(section);
+      }
+    });
+  }, { threshold: 0.35 });
+
+  observer.observe(section);
+
+  function runAnimation() {
+    if (!lineFill) return;
+
+    // Line fills from 0 → 100% over 3s
+    lineFill.style.transition = 'width 3s linear';
+    requestAnimationFrame(function () {
+      lineFill.style.width = '100%';
+    });
+
+    // Activate step 2 at ~1s
+    setTimeout(function () {
+      steps[1] && steps[1].classList.add('how__step--active');
+    }, 1000);
+
+    // Activate step 3 at ~2s
+    setTimeout(function () {
+      steps[2] && steps[2].classList.add('how__step--active');
+    }, 2000);
+  }
+})();
+
+
+/* ============================================================
+   10. SMOOTH SCROLL — enhanced anchor navigation
    ============================================================ */
 (function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
@@ -375,7 +472,8 @@
 
       e.preventDefault();
 
-      const bannerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--banner-h')) * 16;
+      const bannerHidden = document.querySelector('.banner--hidden');
+      const bannerH = bannerHidden ? 0 : parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--banner-h')) * 16;
       const navH    = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) * 16;
       const offset  = bannerH + navH;
 
