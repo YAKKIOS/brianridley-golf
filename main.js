@@ -96,29 +96,55 @@
 
 
 /* ============================================================
-   5. VIDEO CAROUSEL — draggable, momentum-based
+   5. VIDEO CAROUSEL — infinite drag, momentum-based
    ============================================================ */
 (function initCarousel() {
   const wrapper = document.querySelector('.carousel-wrapper');
   const track   = document.getElementById('carouselTrack');
   if (!track || !wrapper) return;
 
-  let posX      = 0;
-  let startX    = 0;
-  let startPosX = 0;
-  let isDragging = false;
-  let velocity  = 0;
-  let lastX     = 0;
-  let rafId     = null;
-  let hasDragged = false;
+  /* — Clone originals for seamless looping — */
+  const originals = Array.from(track.children);
+  originals.forEach(function (card) {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
 
-  function getMaxOffset() {
-    return -(track.scrollWidth - wrapper.clientWidth);
+  let posX       = 0;
+  let startX     = 0;
+  let startPosX  = 0;
+  let isDragging = false;
+  let velocity   = 0;
+  let lastX      = 0;
+  let rafId      = null;
+  let hasDragged = false;
+  let loopWidth  = 0; // computed lazily after first render
+
+  function getLoopWidth() {
+    // Half of total scrollWidth = width of one full set of originals
+    if (!loopWidth) loopWidth = track.scrollWidth / 2;
+    return loopWidth;
+  }
+
+  window.addEventListener('resize', function () {
+    loopWidth = 0; // recompute on next use
+  }, { passive: true });
+
+  /* Normalise posX so it always stays within one loop width.
+     This is the infinite seam — when we cross the boundary we
+     jump instantly (no transition) to the equivalent position
+     in the original set, which looks identical visually. */
+  function normalise(x) {
+    const W = getLoopWidth();
+    // Map x into the range (-W, 0]
+    x = ((x % W) + W) % W; // to [0, W)
+    x -= W;                  // to (-W, 0]
+    return x;
   }
 
   function setPos(newX) {
-    const max = getMaxOffset();
-    posX = Math.max(max, Math.min(0, newX));
+    posX = normalise(newX);
     track.style.transform = 'translateX(' + posX + 'px)';
   }
 
@@ -182,28 +208,57 @@
   wrapper.addEventListener('click', function (e) {
     if (hasDragged) return;
     const playBtn = e.target.closest('.carousel-play');
-    if (!playBtn) return;
-    startVideo(playBtn.closest('.carousel-card'));
-  });
-
-  /* — Hover to play on desktop — */
-  wrapper.addEventListener('mouseover', function (e) {
-    if (isDragging) return;
-    const card = e.target.closest('.carousel-card[data-type="video"]');
-    if (!card) return;
-    startVideo(card);
-  });
-
-  function startVideo(card) {
-    if (!card || card.classList.contains('is-playing')) return;
-    const iframe = card.querySelector('iframe');
-    if (!iframe) return;
-    if (!iframe.src || iframe.src === window.location.href) {
-      iframe.src = iframe.dataset.src + '&autoplay=1&mute=1';
-    } else if (!iframe.src.includes('autoplay=1')) {
-      iframe.src = iframe.src + '&autoplay=1&mute=1';
+    if (playBtn) {
+      toggleVideo(playBtn.closest('.carousel-card'));
+      return;
     }
+    // Click on a playing card pauses it
+    const card = e.target.closest('.carousel-card.is-playing');
+    if (card) toggleVideo(card);
+  });
+
+  /* — Hover to preview on desktop — */
+  wrapper.addEventListener('mouseenter', function (e) {
+    const card = e.target.closest('.carousel-card[data-type="video"]');
+    if (card && !card.classList.contains('is-playing')) playVideo(card);
+  }, true);
+
+  wrapper.addEventListener('mouseleave', function (e) {
+    const card = e.target.closest('.carousel-card[data-type="video"]');
+    if (card && !card.classList.contains('is-playing-clicked')) pauseVideo(card);
+  }, true);
+
+  function playVideo(card) {
+    if (!card) return;
+    const video = card.querySelector('video');
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(function () {});
     card.classList.add('is-playing');
+  }
+
+  function pauseVideo(card) {
+    if (!card) return;
+    const video = card.querySelector('video');
+    if (!video) return;
+    video.pause();
+    card.classList.remove('is-playing');
+  }
+
+  function toggleVideo(card) {
+    if (!card) return;
+    if (card.classList.contains('is-playing-clicked')) {
+      // User-clicked play → pause
+      card.classList.remove('is-playing-clicked');
+      pauseVideo(card);
+    } else {
+      // First click — play with sound
+      const video = card.querySelector('video');
+      if (!video) return;
+      video.muted = false;
+      video.play().catch(function () { video.muted = true; video.play(); });
+      card.classList.add('is-playing', 'is-playing-clicked');
+    }
   }
 })();
 
@@ -442,21 +497,21 @@
   function runAnimation() {
     if (!lineFill) return;
 
-    // Line fills from 0 → 100% over 3s
-    lineFill.style.transition = 'width 3s linear';
+    // Line fills from 0 → 100% over 9s
+    lineFill.style.transition = 'width 9s linear';
     requestAnimationFrame(function () {
       lineFill.style.width = '100%';
     });
 
-    // Activate step 2 at ~1s
+    // Activate step 2 at 3s (line at ~33%)
     setTimeout(function () {
       steps[1] && steps[1].classList.add('how__step--active');
-    }, 1000);
+    }, 3000);
 
-    // Activate step 3 at ~2s
+    // Activate step 3 at 6s (line at ~66%)
     setTimeout(function () {
       steps[2] && steps[2].classList.add('how__step--active');
-    }, 2000);
+    }, 6000);
   }
 })();
 
