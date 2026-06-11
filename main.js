@@ -427,47 +427,116 @@
 
 
 /* ============================================================
-   8. TESTIMONIAL SLIDER — prev/next
+   8. TESTIMONIALS — infinite drag, snap-to-slide
    ============================================================ */
-(function initTestimonialSlider() {
-  const track   = document.getElementById('testimonialsTrack');
-  const prevBtn = document.getElementById('testimonialPrev');
-  const nextBtn = document.getElementById('testimonialNext');
-  if (!track || !prevBtn || !nextBtn) return;
+(function initTestimonials() {
+  const viewport = document.querySelector('.testimonials__viewport');
+  const track    = document.getElementById('testimonialsTrack');
+  if (!track || !viewport) return;
 
-  const cards      = Array.from(track.children);
-  const total      = cards.length;
-  let currentIndex = 0;
+  /* Clone originals for seamless infinite loop */
+  Array.from(track.children).forEach(function (item) {
+    const clone = item.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
 
-  function updateSlider() {
-    const maxIndex  = total - 1;
-    const cardWidth = cards[0].offsetWidth;
-    const gap       = parseFloat(getComputedStyle(track).gap) || 24;
+  let posX      = 0;
+  let startX    = 0;
+  let startPosX = 0;
+  let isDragging = false;
+  let velocity  = 0;
+  let lastX     = 0;
+  let loopWidth = 0;
 
-    if (currentIndex > maxIndex) currentIndex = Math.max(0, maxIndex);
-
-    track.style.transform = 'translateX(-' + (currentIndex * (cardWidth + gap)) + 'px)';
-
-    prevBtn.disabled = currentIndex === 0;
-    nextBtn.disabled = currentIndex >= maxIndex;
+  function getLoopWidth() {
+    if (!loopWidth) loopWidth = track.scrollWidth / 2;
+    return loopWidth;
   }
 
-  prevBtn.addEventListener('click', function () {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateSlider();
-    }
+  window.addEventListener('resize', function () { loopWidth = 0; }, { passive: true });
+
+  /* Map posX to canonical range (-W, 0].
+     Special-case 0 so we don't flip to -W on exact boundaries. */
+  function normalise(x) {
+    const W = getLoopWidth();
+    const n = ((x % W) + W) % W;
+    return n === 0 ? 0 : n - W;
+  }
+
+  function setPos(x) {
+    posX = normalise(x);
+    track.style.transform = 'translateX(' + posX + 'px)';
+  }
+
+  /* After releasing, snap posX to the nearest slide boundary */
+  function snap() {
+    const slideWidth = track.children[0].offsetWidth;
+    const gap        = parseFloat(getComputedStyle(track).gap) || 0;
+    const unit       = slideWidth + gap;
+
+    /* Pick next or prev slide based on velocity direction; round otherwise */
+    let idx = -posX / unit;
+    if (velocity < -1.5)     idx = Math.ceil(idx);
+    else if (velocity > 1.5) idx = Math.floor(idx);
+    else                     idx = Math.round(idx);
+
+    const target = -idx * unit;
+
+    track.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    posX = target;
+    track.style.transform = 'translateX(' + target + 'px)';
+
+    /* Once animation ends, normalise back to canonical position (no visual jump) */
+    track.addEventListener('transitionend', function () {
+      track.style.transition = '';
+      posX = normalise(posX);
+      track.style.transform = 'translateX(' + posX + 'px)';
+    }, { once: true });
+  }
+
+  /* — Mouse — */
+  viewport.addEventListener('mousedown', function (e) {
+    isDragging = true;
+    startX     = e.clientX;
+    startPosX  = posX;
+    lastX      = e.clientX;
+    velocity   = 0;
+    track.style.transition = '';
+    e.preventDefault();
   });
 
-  nextBtn.addEventListener('click', function () {
-    if (currentIndex < total - 1) {
-      currentIndex++;
-      updateSlider();
-    }
+  window.addEventListener('mousemove', function (e) {
+    if (!isDragging) return;
+    velocity = e.clientX - lastX;
+    lastX    = e.clientX;
+    setPos(startPosX + (e.clientX - startX));
   });
 
-  window.addEventListener('resize', updateSlider, { passive: true });
-  updateSlider();
+  window.addEventListener('mouseup', function () {
+    if (!isDragging) return;
+    isDragging = false;
+    snap();
+  });
+
+  /* — Touch — */
+  viewport.addEventListener('touchstart', function (e) {
+    startX     = e.touches[0].clientX;
+    startPosX  = posX;
+    lastX      = e.touches[0].clientX;
+    velocity   = 0;
+    track.style.transition = '';
+  }, { passive: true });
+
+  viewport.addEventListener('touchmove', function (e) {
+    velocity = e.touches[0].clientX - lastX;
+    lastX    = e.touches[0].clientX;
+    setPos(startPosX + (e.touches[0].clientX - startX));
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', function () {
+    snap();
+  });
 })();
 
 
