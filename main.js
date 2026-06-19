@@ -377,43 +377,28 @@
 
 
 /* ============================================================
-   7b. SERVICES — timed accordion with image swap
+   7b. SERVICES — click accordion with image swap
    ============================================================ */
 (function initServices() {
-  const items    = document.querySelectorAll('.service-item');
-  const images   = document.querySelectorAll('.services-img');
-  const DURATION = 8000;
-  let current    = 0;
-  let timer      = null;
+  const items   = document.querySelectorAll('.service-item');
+  const images  = document.querySelectorAll('.services-img');
+  let current   = 0;
 
   if (!items.length) return;
 
   function goTo(index) {
-    const prev = items[current];
-    const next = items[index];
-
-    prev.classList.remove('active');
-    prev.querySelector('.service-item__trigger').setAttribute('aria-expanded', 'false');
+    items[current].classList.remove('active');
+    items[current].querySelector('.service-item__trigger').setAttribute('aria-expanded', 'false');
 
     images.forEach(function (img) { img.classList.remove('active'); });
 
-    next.classList.add('active');
-    next.querySelector('.service-item__trigger').setAttribute('aria-expanded', 'true');
-
-    const bar = next.querySelector('.service-item__progress-bar');
-    bar.style.animation = 'none';
-    bar.offsetHeight;
-    bar.style.animation = '';
+    items[index].classList.add('active');
+    items[index].querySelector('.service-item__trigger').setAttribute('aria-expanded', 'true');
 
     const img = document.querySelector('.services-img[data-index="' + index + '"]');
     if (img) img.classList.add('active');
 
     current = index;
-
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      goTo((current + 1) % items.length);
-    }, DURATION);
   }
 
   items.forEach(function (item, i) {
@@ -450,7 +435,12 @@
   let loopWidth = 0;
 
   function getLoopWidth() {
-    if (!loopWidth) loopWidth = track.scrollWidth / 2;
+    if (!loopWidth) {
+      const slideWidth = track.children[0].offsetWidth;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const origCount = track.children.length / 2; /* half are clones */
+      loopWidth = origCount * (slideWidth + gap);
+    }
     return loopWidth;
   }
 
