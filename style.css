@@ -1670,7 +1670,7 @@ p {
   /* Services split — stack on mobile, image on top */
   .services-split {
     grid-template-columns: 1fr;
-    gap: 0;
+    gap: 2rem;
   }
 
   .services-visual {
@@ -1678,16 +1678,6 @@ p {
     top: auto;
     height: 280px;
     order: -1;
-    border-radius: 0;
-  }
-
-  /* No height animation on mobile — snaps open/closed instantly */
-  .service-item__body {
-    transition: none;
-  }
-
-  .service-item.active .service-item__body {
-    grid-template-rows: 1fr;
   }
 
   .services-left {
