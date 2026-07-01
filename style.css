@@ -189,6 +189,7 @@ p {
    ============================================================ */
 .section--credentials {
   background-color: var(--warm-bg);
+  display: none; /* hidden for now, keep markup for later */
 }
 
 .credentials-split {
@@ -690,7 +691,7 @@ p {
 .hero {
   position: relative;
   height: 100vh;
-  min-height: 37.5rem; /* 600px */
+  min-height: 44rem; /* 704px — leaves room for hero__stats without crowding content */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -734,6 +735,40 @@ p {
   max-width: 36rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+.hero__stats {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2.5rem; /* 40px off the bottom of the image */
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 1.5rem;
+  padding: 0 var(--container-pad);
+}
+
+.hero__stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-sm); /* 16px */
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+}
+
+.hero__stat .material-icons-round {
+  font-size: 1.25rem;
+  color: var(--lime-accent);
+}
+
+.hero__stat-divider {
+  width: 1px;
+  height: 1.5rem;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 
@@ -1685,6 +1720,15 @@ p {
 
   .hero__sub {
     font-size: var(--fs-sm);
+  }
+
+  .hero__stats {
+    bottom: 1.5rem; /* 24px on mobile */
+    gap: 1rem;
+  }
+
+  .hero__stat {
+    font-size: var(--fs-xs);
   }
 
   /* Callout */
