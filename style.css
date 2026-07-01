@@ -1667,10 +1667,20 @@ p {
     top: auto;
   }
 
-  /* Services split — stack on mobile, image on top */
+  /* Services split — stack on mobile: header, then image, then accordion */
   .services-split {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  /* Unwrap so the header can be reordered above the image independently of the accordion */
+  .services-left {
+    display: contents;
+  }
+
+  .services-header {
+    order: -2;
+    margin-bottom: 0;
   }
 
   .services-visual {
@@ -1678,12 +1688,6 @@ p {
     top: auto;
     height: 280px;
     order: -1;
-  }
-
-  .services-left {
-    min-height: 0;
-    justify-content: flex-start;
-    gap: 2rem;
   }
 
   .service-item__progress-track {
