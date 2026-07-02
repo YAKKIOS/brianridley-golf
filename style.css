@@ -856,19 +856,23 @@ p {
   opacity: 1;
 }
 
-/* Tabs — click to switch, light grey line for inactive / solid dark line for active */
+/* Tabs — click to switch, light grey line for inactive / solid dark line for active.
+   Same 12-column grid as .about-grid so the tabs line up with the rest of the page;
+   4 tabs x span 3 = 12. */
 .testimonial-tabs {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gap);
   margin-top: 3rem;
 }
 
 .testimonial-tab {
+  grid-column: span 3;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.875rem;
-  padding: 0 1.5rem 0 0;
+  padding: 0;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -1743,13 +1747,15 @@ p {
     height: 18rem; /* 288px */
   }
 
+  /* 2x2: 4 columns, each tab spans 2 */
   .testimonial-tabs {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1rem;
+    row-gap: 1.5rem;
   }
 
   .testimonial-tab {
-    padding-right: 1rem;
+    grid-column: span 2;
   }
 
   .sponsors__grid {
