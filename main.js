@@ -420,9 +420,16 @@
   const media  = document.querySelectorAll('.testimonial-media');
   if (!tabs.length) return;
 
+  const FADE_MS = 250;
+  let switching = false;
+
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
       const index = tab.dataset.index;
+      const nextPanel = Array.prototype.find.call(panels, function (p) { return p.dataset.index === index; });
+      const currentPanel = Array.prototype.find.call(panels, function (p) { return !p.hidden; });
+      if (switching || !nextPanel || nextPanel === currentPanel) return;
+      switching = true;
 
       tabs.forEach(function (t) {
         const active = t === tab;
@@ -430,15 +437,24 @@
         t.setAttribute('aria-selected', active ? 'true' : 'false');
       });
 
-      panels.forEach(function (p) {
-        const active = p.dataset.index === index;
-        p.classList.toggle('active', active);
-        p.hidden = !active;
-      });
-
       media.forEach(function (m) {
         m.classList.toggle('active', m.dataset.index === index);
       });
+
+      /* Crossfade the quote text out, swap it, then fade the new one in */
+      currentPanel.classList.add('is-transitioning');
+
+      window.setTimeout(function () {
+        currentPanel.hidden = true;
+        currentPanel.classList.remove('is-transitioning', 'active');
+
+        nextPanel.hidden = false;
+        nextPanel.classList.add('active', 'is-transitioning');
+        void nextPanel.offsetWidth; /* force reflow so the fade-in actually transitions */
+        nextPanel.classList.remove('is-transitioning');
+
+        switching = false;
+      }, FADE_MS);
     });
   });
 })();

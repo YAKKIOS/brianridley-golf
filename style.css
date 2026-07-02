@@ -797,6 +797,15 @@ p {
   position: relative;
 }
 
+.testimonial-panel {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.testimonial-panel.is-transitioning {
+  opacity: 0;
+}
+
 .testimonial__text {
   font-family: var(--font-brand);
   font-size: var(--fs-h4);
@@ -847,7 +856,7 @@ p {
   opacity: 1;
 }
 
-/* Tabs — click to switch, dotted line for inactive / solid dark line for active */
+/* Tabs — click to switch, light grey line for inactive / solid dark line for active */
 .testimonial-tabs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -869,12 +878,12 @@ p {
 .testimonial-tab__line {
   display: block;
   width: 100%;
-  border-top: 1px dotted var(--text-subtle);
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
   transition: border-color 0.25s ease;
 }
 
 .testimonial-tab.active .testimonial-tab__line {
-  border-top: 2px solid var(--text-heading);
+  border-top-color: var(--text-heading);
 }
 
 .testimonial-tab__name {
