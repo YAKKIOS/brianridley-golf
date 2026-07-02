@@ -981,28 +981,6 @@ p {
   margin-bottom: 2rem;
 }
 
-.achievements-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-  margin-bottom: 2.5rem;
-}
-
-.achievements-list li {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--dark-green);
-}
-
-.achievements-list .material-icons-round {
-  color: var(--dark-green);
-  font-size: var(--fs-body);
-  flex-shrink: 0;
-}
-
 .about__image-placeholder {
   display: block;
   width: 100%;
