@@ -264,83 +264,7 @@
 
 
 /* ============================================================
-   6. PRICING TOGGLE
-   ============================================================ */
-(function initPricing() {
-  const toggleBtns   = document.querySelectorAll('.pricing-toggle .btn');
-  const pricingCard  = document.querySelector('.pricing-card');
-  const titleEl      = document.getElementById('pricingTitle');
-  const subtitleEl   = document.getElementById('pricingSubtitle');
-  const priceEl      = document.getElementById('pricingPrice');
-  const descEl       = document.getElementById('pricingDesc');
-  const listEl       = document.getElementById('pricingList');
-
-  if (!toggleBtns.length || !pricingCard) return;
-
-  const plans = {
-    '4hr': {
-      title:    'Focused Coaching Block',
-      subtitle: '4 hours of one-to-one coaching',
-      price:    '£320',
-      desc:     'The perfect starting point. Brian begins with a full game assessment before building a structured programme across your sessions. You\'ll leave each one with clear, actionable drills to practise between visits.',
-      features: [
-        'Full swing &amp; game assessment',
-        'Personalised practice plan',
-        'Video analysis every session',
-        'Trackman launch monitor data',
-        'Session notes &amp; drill guide'
-      ]
-    },
-    '10hr': {
-      title:    'Elite Coaching Programme',
-      subtitle: '10 hours of one-to-one coaching — best value',
-      price:    '£750',
-      desc:     'The complete transformation package. Ten hours gives Brian the time to address root causes, rebuild habits and measure your progress against real benchmarks. Includes an on-course playing lesson and ongoing support.',
-      features: [
-        'Everything in the 4-hour block',
-        'Full game deep-dive analysis',
-        'On-course playing lesson included',
-        'Mental game coaching sessions',
-        'Unlimited email &amp; WhatsApp support',
-        'Progress report at 5 &amp; 10 hours'
-      ]
-    }
-  };
-
-  function buildList(features) {
-    return features.map(function (f) {
-      return '<li><span class="material-icons-round">check_circle</span>' + f + '</li>';
-    }).join('');
-  }
-
-  function switchPlan(planKey) {
-    const plan = plans[planKey];
-    if (!plan) return;
-
-    pricingCard.classList.add('transitioning');
-
-    setTimeout(function () {
-      titleEl.textContent    = plan.title;
-      subtitleEl.textContent = plan.subtitle;
-      priceEl.innerHTML      = plan.price;
-      descEl.textContent     = plan.desc;
-      listEl.innerHTML       = buildList(plan.features);
-      pricingCard.classList.remove('transitioning');
-    }, 200);
-  }
-
-  toggleBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      toggleBtns.forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      switchPlan(btn.dataset.plan);
-    });
-  });
-})();
-
-
-/* ============================================================
-   7. FAQ ACCORDION — one open at a time
+   6. FAQ ACCORDION — one open at a time
    ============================================================ */
 (function initFaq() {
   const items = document.querySelectorAll('.faq-item');
@@ -412,7 +336,7 @@
 
 
 /* ============================================================
-   8. TESTIMONIALS — click a name tab to switch testimonial
+   7. TESTIMONIALS — click a name tab to switch testimonial
    ============================================================ */
 (function initTestimonials() {
   const tabs   = document.querySelectorAll('.testimonial-tab');
@@ -461,7 +385,7 @@
 
 
 /* ============================================================
-   9. SMOOTH SCROLL — enhanced anchor navigation
+   8. SMOOTH SCROLL — enhanced anchor navigation
    ============================================================ */
 (function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
