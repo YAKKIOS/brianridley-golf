@@ -461,52 +461,7 @@
 
 
 /* ============================================================
-   9. HOW IT WORKS — animated timeline line
-   ============================================================ */
-(function initHowItWorks() {
-  const section  = document.getElementById('how-it-works');
-  if (!section) return;
-
-  const steps    = section.querySelectorAll('.how__step');
-  const lineFill = section.querySelector('.how__line-fill');
-  let animated   = false;
-
-  const observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting && !animated) {
-        animated = true;
-        runAnimation();
-        observer.unobserve(section);
-      }
-    });
-  }, { threshold: 0.35 });
-
-  observer.observe(section);
-
-  function runAnimation() {
-    if (!lineFill) return;
-
-    // Line fills from 0 → 100% over 9s
-    lineFill.style.transition = 'width 9s linear';
-    requestAnimationFrame(function () {
-      lineFill.style.width = '100%';
-    });
-
-    // Activate step 2 at 3s (line at ~33%)
-    setTimeout(function () {
-      steps[1] && steps[1].classList.add('how__step--active');
-    }, 3000);
-
-    // Activate step 3 at 6s (line at ~66%)
-    setTimeout(function () {
-      steps[2] && steps[2].classList.add('how__step--active');
-    }, 6000);
-  }
-})();
-
-
-/* ============================================================
-   10. SMOOTH SCROLL — enhanced anchor navigation
+   9. SMOOTH SCROLL — enhanced anchor navigation
    ============================================================ */
 (function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
