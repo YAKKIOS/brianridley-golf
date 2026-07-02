@@ -345,7 +345,6 @@ p {
    7. CARDS (shared)
    ============================================================ */
 .card {
-  border-radius: var(--radius);
   padding: 2rem;              /* 32px */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -512,7 +511,6 @@ p {
   position: sticky;
   top: 80px;
   height: 580px;
-  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -849,7 +847,6 @@ p {
 .testimonial-showcase__media {
   position: relative;
   height: 26rem; /* 416px */
-  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -997,7 +994,6 @@ p {
   width: 100%;
   aspect-ratio: 5 / 6;
   object-fit: cover;
-  border-radius: var(--radius);
 }
 
 /* ============================================================
@@ -1026,7 +1022,6 @@ p {
   justify-content: center;
   height: 4rem;
   background: rgba(14, 42, 6, 0.06);
-  border-radius: 0.75rem;
   font-family: var(--font-brand);
   font-weight: 700;
   font-size: var(--fs-xs);
@@ -1068,7 +1063,6 @@ p {
 .carousel-video,
 .carousel-image {
   height: 28rem;
-  border-radius: 8px;
   overflow: hidden;
   background: #1a2e1a;
   position: relative;
@@ -1173,7 +1167,6 @@ p {
   gap: 1.75rem;
   background: var(--white);
   border: 1px solid rgba(11, 30, 21, 0.12);
-  border-radius: 4px;
   padding: 2rem;
 }
 
@@ -1348,7 +1341,6 @@ p {
   break-inside: avoid;
   background: var(--white);
   border: 1px solid rgba(14, 42, 6, 0.08);
-  border-radius: 1rem;
   padding: 1.5rem;
   margin-bottom: var(--gap);
   display: flex;
