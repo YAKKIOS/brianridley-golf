@@ -737,21 +737,26 @@ p {
   margin-right: auto;
 }
 
+/* Same 12-column grid + max-width as .container/.testimonial-tabs,
+   so the stats line up to the same column widths, just centered
+   over the hero image instead of left-aligned in the page flow. */
 .hero__stats {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 2.5rem; /* 40px off the bottom of the image */
   z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem 2.5rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
   padding: 0 var(--container-pad);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gap);
 }
 
 /* Same line-above-label treatment as the testimonial tabs */
 .hero__stat {
+  grid-column: span 3;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -770,7 +775,6 @@ p {
   gap: 0.5rem;
   font-size: var(--fs-sm); /* 16px */
   color: rgba(255, 255, 255, 0.85);
-  white-space: nowrap;
 }
 
 .hero__stat__label .material-icons-round {
@@ -1628,13 +1632,16 @@ p {
     font-size: var(--fs-sm);
   }
 
-  /* 2x2 so 4 stats don't stack into a tall single column */
+  /* 2x2: 4 columns, each stat spans 2 (same pattern as .testimonial-tab) */
   .hero__stats {
     bottom: 1.5rem; /* 24px on mobile */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     column-gap: 1.5rem;
     row-gap: 1.25rem;
+  }
+
+  .hero__stat {
+    grid-column: span 2;
   }
 
   .hero__stat__label {
