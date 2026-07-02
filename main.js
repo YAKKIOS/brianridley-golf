@@ -412,120 +412,34 @@
 
 
 /* ============================================================
-   8. TESTIMONIALS — infinite drag, snap-to-slide
+   8. TESTIMONIALS — click a name tab to switch testimonial
    ============================================================ */
 (function initTestimonials() {
-  const viewport = document.querySelector('.testimonials__viewport');
-  const track    = document.getElementById('testimonialsTrack');
-  if (!track || !viewport) return;
+  const tabs   = document.querySelectorAll('.testimonial-tab');
+  const panels = document.querySelectorAll('.testimonial-panel');
+  const media  = document.querySelectorAll('.testimonial-media');
+  if (!tabs.length) return;
 
-  /* Clone originals for seamless infinite loop */
-  Array.from(track.children).forEach(function (item) {
-    const clone = item.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
-  });
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      const index = tab.dataset.index;
 
-  let posX      = 0;
-  let startX    = 0;
-  let startPosX = 0;
-  let isDragging = false;
-  let velocity  = 0;
-  let lastX     = 0;
-  let loopWidth = 0;
+      tabs.forEach(function (t) {
+        const active = t === tab;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
 
-  function getLoopWidth() {
-    if (!loopWidth) {
-      const slideWidth = track.children[0].offsetWidth;
-      const gap = parseFloat(getComputedStyle(track).gap) || 0;
-      const origCount = track.children.length / 2; /* half are clones */
-      loopWidth = origCount * (slideWidth + gap);
-    }
-    return loopWidth;
-  }
+      panels.forEach(function (p) {
+        const active = p.dataset.index === index;
+        p.classList.toggle('active', active);
+        p.hidden = !active;
+      });
 
-  window.addEventListener('resize', function () { loopWidth = 0; }, { passive: true });
-
-  /* Map posX to canonical range (-W, 0].
-     Special-case 0 so we don't flip to -W on exact boundaries. */
-  function normalise(x) {
-    const W = getLoopWidth();
-    const n = ((x % W) + W) % W;
-    return n === 0 ? 0 : n - W;
-  }
-
-  function setPos(x) {
-    posX = normalise(x);
-    track.style.transform = 'translateX(' + posX + 'px)';
-  }
-
-  /* After releasing, snap posX to the nearest slide boundary */
-  function snap() {
-    const slideWidth = track.children[0].offsetWidth;
-    const gap        = parseFloat(getComputedStyle(track).gap) || 0;
-    const unit       = slideWidth + gap;
-
-    /* Pick next or prev slide based on velocity direction; round otherwise */
-    let idx = -posX / unit;
-    if (velocity < -1.5)     idx = Math.ceil(idx);
-    else if (velocity > 1.5) idx = Math.floor(idx);
-    else                     idx = Math.round(idx);
-
-    const target = -idx * unit;
-
-    track.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    posX = target;
-    track.style.transform = 'translateX(' + target + 'px)';
-
-    /* Once animation ends, normalise back to canonical position (no visual jump) */
-    track.addEventListener('transitionend', function () {
-      track.style.transition = '';
-      posX = normalise(posX);
-      track.style.transform = 'translateX(' + posX + 'px)';
-    }, { once: true });
-  }
-
-  /* — Mouse — */
-  viewport.addEventListener('mousedown', function (e) {
-    isDragging = true;
-    startX     = e.clientX;
-    startPosX  = posX;
-    lastX      = e.clientX;
-    velocity   = 0;
-    track.style.transition = '';
-    e.preventDefault();
-  });
-
-  window.addEventListener('mousemove', function (e) {
-    if (!isDragging) return;
-    velocity = e.clientX - lastX;
-    lastX    = e.clientX;
-    setPos(startPosX + (e.clientX - startX));
-  });
-
-  window.addEventListener('mouseup', function () {
-    if (!isDragging) return;
-    isDragging = false;
-    snap();
-  });
-
-  /* — Touch — */
-  viewport.addEventListener('touchstart', function (e) {
-    startX     = e.touches[0].clientX;
-    startPosX  = posX;
-    lastX      = e.touches[0].clientX;
-    velocity   = 0;
-    track.style.transition = '';
-  }, { passive: true });
-
-  viewport.addEventListener('touchmove', function (e) {
-    velocity = e.touches[0].clientX - lastX;
-    lastX    = e.touches[0].clientX;
-    setPos(startPosX + (e.touches[0].clientX - startX));
-  }, { passive: true });
-
-  viewport.addEventListener('touchend', function () {
-    snap();
+      media.forEach(function (m) {
+        m.classList.toggle('active', m.dataset.index === index);
+      });
+    });
   });
 })();
 

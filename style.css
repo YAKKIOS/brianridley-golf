@@ -777,90 +777,116 @@ p {
    ============================================================ */
 
 .section--testimonials {
-  background-color: #0B1E15;
+  background-color: var(--warm-bg);
   position: relative;
 }
 
-
-.section--testimonials .eyebrow {
-  color: var(--lime-accent);
-}
-
 .testimonials__header {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
-/* Draggable viewport — full bleed, clips outside.
-   Left padding mirrors the container's actual content edge
-   so the text aligns with the section title above it. */
-.testimonials__viewport {
-  overflow: hidden;
-  cursor: grab;
-  padding-left: calc(max(0px, (100vw - var(--max-width)) / 2) + var(--container-pad));
-  padding-right: var(--container-pad);
-}
-
-.testimonials__viewport:active {
-  cursor: grabbing;
-}
-
-.testimonials__track {
-  display: flex;
+/* Quote (left) + media (right) */
+.testimonial-showcase {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
   gap: 5rem;
-  width: max-content;
-  user-select: none;
-  will-change: transform;
+  align-items: center;
 }
 
-/* Each testimonial — full visible width, one at a time */
-.testimonial {
-  flex: 0 0 calc(100vw - 2 * var(--container-pad));
+.testimonial-showcase__panels {
+  position: relative;
 }
 
 .testimonial__text {
   font-family: var(--font-brand);
-  font-size: var(--fs-h3);
+  font-size: var(--fs-h4);
   font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: 1.2;
-  color: var(--lime);
+  line-height: 1.3;
+  color: var(--text-heading);
   margin-bottom: 2rem;
-  max-width: calc(var(--max-width) / 12 * 9); /* 9 of 12 cols */
 }
 
-/* Avatar + name row */
 .testimonial__attribution {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-}
-
-.testimonial__avatar {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  background-color: rgba(245, 240, 232, 0.1);
-  background-size: cover;
-  background-position: center;
-  flex-shrink: 0;
-}
-
-.testimonial__info {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
 
-.testimonial__info strong {
+.testimonial__attribution strong {
   font-family: var(--font-ui);
   font-weight: 600;
   font-size: var(--fs-sm);
-  color: var(--lime);
+  color: var(--text-heading);
 }
 
-.testimonial__info span {
+.testimonial__attribution span {
   font-size: var(--fs-xs);
-  color: rgba(245, 240, 232, 0.55);
+  color: var(--text-muted);
+}
+
+/* Media panel — stacked, crossfade between the active image */
+.testimonial-showcase__media {
+  position: relative;
+  height: 26rem; /* 416px */
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.testimonial-media {
+  position: absolute;
+  inset: 0;
+  background-color: var(--neutral-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.testimonial-media.active {
+  opacity: 1;
+}
+
+/* Tabs — click to switch, dotted line for inactive / solid dark line for active */
+.testimonial-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 3rem;
+}
+
+.testimonial-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 0 1.5rem 0 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.testimonial-tab__line {
+  display: block;
+  width: 100%;
+  border-top: 1px dotted var(--text-subtle);
+  transition: border-color 0.25s ease;
+}
+
+.testimonial-tab.active .testimonial-tab__line {
+  border-top: 2px solid var(--text-heading);
+}
+
+.testimonial-tab__name {
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.25s ease;
+}
+
+.testimonial-tab.active .testimonial-tab__name {
+  color: var(--text-heading);
 }
 
 /* ============================================================
@@ -1694,13 +1720,27 @@ p {
     display: none;
   }
 
-  /* Testimonials — scale quote text on mobile */
-  .testimonial__text {
-    font-size: var(--fs-h4);
+  /* Testimonials — stack: quote, then image, then 2x2 name tabs */
+  .testimonial-showcase {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
-  .testimonials__viewport {
-    padding: 0 var(--container-pad);
+  .testimonial__text {
+    font-size: var(--fs-h5);
+  }
+
+  .testimonial-showcase__media {
+    height: 18rem; /* 288px */
+  }
+
+  .testimonial-tabs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
+  }
+
+  .testimonial-tab {
+    padding-right: 1rem;
   }
 
   .sponsors__grid {
