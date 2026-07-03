@@ -626,9 +626,10 @@ p {
   transition: color 0.3s ease;
 }
 
+/* Hidden for now — keep markup in case links come back */
 .navbar__nav {
+  display: none;
   flex: 1;
-  display: flex;
   align-items: center;
   justify-content: center;
   gap: 2rem;
@@ -652,6 +653,7 @@ p {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-left: auto; /* push to the far right now that .navbar__nav is hidden */
 }
 
 /* Hamburger (mobile) */
@@ -1489,20 +1491,6 @@ p {
   h2 { font-size: clamp(1.75rem, 7vw, 3rem); }
   h3 { font-size: clamp(1.5rem, 6vw, 2.5rem); }
   h4 { font-size: clamp(1.25rem, 5vw, 2rem); }
-
-  /* Navbar — mobile: just brand + book button */
-  .navbar__nav {
-    display: none;
-  }
-
-  .hamburger {
-    display: none;
-  }
-
-  /* Push book button to the far right when nav links are gone */
-  .navbar__right {
-    margin-left: auto;
-  }
 
   /* Grids */
   .grid--2,
