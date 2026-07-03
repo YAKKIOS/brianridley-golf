@@ -6,17 +6,6 @@
    ============================================================ */
 
 /* ============================================================
-   0. FONTS
-   ============================================================ */
-@font-face {
-  font-family: 'LT Museum';
-  src: url('assets/fonts/LTMuseum-Light.ttf') format('truetype');
-  font-weight: 100 900;   /* maps all weights to the single Light file */
-  font-style: normal;
-  font-display: swap;
-}
-
-/* ============================================================
    1. VARIABLES
    ============================================================ */
 :root {
@@ -43,7 +32,7 @@
   --container-pad: 2.5rem;     /* 40px — container side padding */
 
   /* Fonts */
-  --font-brand:    'LT Museum', serif;
+  --font-brand:    'Lora', serif;
   --font-ui:       'Geist', sans-serif;
 
   /* Type scale */
