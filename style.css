@@ -755,7 +755,7 @@ p {
 .hero__stat__line {
   display: block;
   width: 100%;
-  border-top: 2px solid rgba(255, 255, 255, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .hero__stat__label {
@@ -781,16 +781,17 @@ p {
   position: relative;
 }
 
-.testimonials__header {
-  margin-bottom: 3rem;
+.testimonial-showcase__label {
+  font-size: var(--fs-h5);
+  margin-bottom: 2rem;
 }
 
-/* Quote (left) + media (right) */
+/* Quote (left) + media (right) — top-aligned so the label sits level with the image */
 .testimonial-showcase {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: 5rem;
-  align-items: center;
+  align-items: start;
 }
 
 .testimonial-showcase__panels {
@@ -881,7 +882,7 @@ p {
 .testimonial-tab__line {
   display: block;
   width: 100%;
-  border-top: 2px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   transition: border-color 0.25s ease;
 }
 
