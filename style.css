@@ -198,7 +198,7 @@ p {
 }
 
 .credentials-lead {
-  color: var(--text-muted);
+  color: var(--text-body);
   font-size: var(--fs-body);
   line-height: 1.5;
 }
@@ -222,7 +222,7 @@ p {
 }
 
 .credential-item p {
-  color: var(--text-muted);
+  color: var(--text-body);
   font-size: var(--fs-sm);
 }
 
@@ -238,7 +238,7 @@ p {
 }
 
 .section__lead {
-  color: var(--text-muted);
+  color: var(--text-body);
   font-size: var(--fs-body);
   line-height: 1.5;
 }
@@ -388,7 +388,7 @@ p {
 }
 
 .card p:not(.testimonial__text) {
-  color: var(--text-muted);
+  color: var(--text-body);
   font-size: var(--fs-sm);
   line-height: 1.5;
 }
@@ -489,7 +489,7 @@ p {
 
 .service-item__body p {
   padding-bottom: 1.25rem;
-  color: var(--text-muted);
+  color: var(--text-body);
   font-size: var(--fs-sm);
   line-height: 1.5;
 }
@@ -518,7 +518,7 @@ p {
 }
 
 .card__desc {
-  color: var(--text-muted);
+  color: var(--text-body);
   font-size: var(--fs-sm);
   margin-bottom: 1.5rem;
   line-height: 1.5;
@@ -938,7 +938,7 @@ p {
 
 .callout__content h2 {
   font-family: var(--font-brand);
-  font-weight: 900;
+  font-weight: 400;
   letter-spacing: -0.02em;
   color: var(--lime);
   margin-bottom: 2rem;
@@ -976,7 +976,7 @@ p {
 .lead-text {
   font-size: var(--fs-sm);
   line-height: 1.5;
-  color: var(--text-muted);
+  color: var(--text-body);
   margin-bottom: 2rem;
 }
 
@@ -1177,7 +1177,7 @@ p {
 
 .pricing-card__subtitle {
   font-size: var(--fs-sm);
-  color: var(--text-muted);
+  color: var(--text-body);
   max-width: 22rem;
 }
 
@@ -1305,7 +1305,7 @@ p {
 
 .faq-item__content p {
   padding-bottom: 1.375rem;
-  color: var(--text-muted);
+  color: var(--text-body);
   font-size: var(--fs-sm);
   line-height: 1.5;
 }
