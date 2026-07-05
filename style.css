@@ -12,7 +12,7 @@
   /* Brand colours */
   --lime:          #F5F0E8;   /* cream — text/elements on dark sections */
   --lime-accent:   #C8F549;   /* lime green — accents & CTAs on dark sections */
-  --dark-green:    #0B1E15;
+  --dark-green:    #02392b;
   --nav-green:     rgba(13, 36, 16, 0.95);
   --warm-bg:       #F6F1EE;
   --neutral-bg:    #f6f6f3;
@@ -533,7 +533,7 @@ p {
   left: 0;
   right: 0;
   height: var(--banner-h);
-  background: #0B1E15;
+  background: var(--dark-green);
   color: rgba(245, 240, 232, 0.7);
   display: flex;
   align-items: center;
@@ -781,11 +781,6 @@ p {
   position: relative;
 }
 
-.testimonial-showcase__label {
-  font-size: var(--fs-h5);
-  margin-bottom: 2rem;
-}
-
 /* Quote (left) + media (right) — top-aligned so the label sits level with the image */
 .testimonial-showcase {
   display: grid;
@@ -809,7 +804,7 @@ p {
 
 .testimonial__text {
   font-family: var(--font-brand);
-  font-size: var(--fs-h4);
+  font-size: var(--fs-h5);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.3;
@@ -1184,8 +1179,8 @@ p {
 
 .pricing-card__price {
   font-family: var(--font-brand);
-  font-size: var(--fs-display);
-  font-weight: 700;
+  font-size: var(--fs-h3);
+  font-weight: 400;
   color: var(--dark-green);
   line-height: 1;
   margin-top: 0.5rem;
@@ -1193,12 +1188,6 @@ p {
 
 .pricing-card__price--muted {
   color: var(--text-muted);
-}
-
-.pricing-card__duration {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--dark-green);
 }
 
 /* Feature list — icon sits in a centered circular container,
