@@ -7,10 +7,18 @@
    ============================================================ */
 (function initNavbar() {
   const navbar = document.getElementById('navbar');
+  const hero   = document.getElementById('hero');
   if (!navbar) return;
 
+  /* Delay the flip until the hero has actually scrolled past, not just
+     a small fixed distance — so the nav (and its buttons) stay in their
+     "over the hero" look until the next section arrives. */
+  function getThreshold() {
+    return hero ? hero.offsetHeight - navbar.offsetHeight : 80;
+  }
+
   function onScroll() {
-    if (window.scrollY > 80) {
+    if (window.scrollY > getThreshold()) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
@@ -18,6 +26,7 @@
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
   onScroll();
 })();
 
