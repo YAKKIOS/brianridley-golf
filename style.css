@@ -173,6 +173,7 @@ p {
 
 .section--warm  { background-color: var(--warm-bg); }
 .section--white { background-color: var(--white); }
+.section--dark  { background-color: var(--dark-green); }
 
 /* ============================================================
    CREDENTIALS SECTION
@@ -1013,12 +1014,13 @@ p {
   align-items: center;
 }
 
+/* Image left, text right */
 .about__text {
-  grid-column: 1 / span 5;
+  grid-column: 8 / span 5;
 }
 
 .about__image {
-  grid-column: 8 / span 5;
+  grid-column: 1 / span 5;
 }
 
 .about__text h3 {
@@ -1037,6 +1039,20 @@ p {
   width: 100%;
   aspect-ratio: 5 / 6;
   object-fit: cover;
+}
+
+/* About sits on --dark-green (the "flip" from the sage credentials
+   carousel right before it) — flip text to light-on-dark */
+#about .eyebrow {
+  color: var(--cream);
+}
+
+#about .about__text h3 {
+  color: var(--cream);
+}
+
+#about .lead-text {
+  color: rgba(245, 240, 232, 0.75);
 }
 
 /* ============================================================
