@@ -1085,114 +1085,48 @@ p {
 }
 
 /* ============================================================
-   16. VIDEO CAROUSEL
+   16. MEDIA GRID — scroll-linked, opposite-direction rows
    ============================================================ */
-.videos-section {
+.media-grid-section {
   overflow: hidden;
 }
 
-.carousel-wrapper {
-  overflow: hidden;
-  width: 100%;
-  margin: 0 0 2rem;
-  cursor: grab;
+/* Left-align just this section's header instead of the usual centered one */
+.media-grid__header {
+  text-align: left;
+  margin-left: 0;
 }
 
-.carousel-wrapper:active {
-  cursor: grabbing;
-}
-
-.carousel-track {
+.media-grid {
   display: flex;
-  width: max-content;
-  will-change: transform;
-  user-select: none;
-}
-
-.carousel-card {
-  flex: 0 0 calc((min(100vw, 75rem) - 3rem) / 4.5);
-  margin-right: var(--gap);
-}
-
-.carousel-video,
-.carousel-image {
-  height: 28rem;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 4rem;
   overflow: hidden;
-  background: #1a2e1a;
-  position: relative;
 }
 
-/* Landscape variant — wider card, same height */
-.carousel-card--landscape {
-  flex: 0 0 calc((min(100vw, 75rem) - 3rem) / 3);
-}
-
-.carousel-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.carousel-video video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-}
-
-.carousel-card.is-playing .carousel-video video {
-  pointer-events: auto;
-}
-
-/* Play overlay */
-.carousel-play {
-  position: absolute;
-  inset: 0;
+.media-grid__row {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
+  gap: 1.5rem;
+  width: max-content;
+  margin: 0 auto;
+  will-change: transform;
 }
 
-.carousel-play .material-icons-round {
-  font-size: 3.5rem;
-  color: var(--cream);
-  filter: drop-shadow(0 2px 12px rgba(0,0,0,0.5));
-  transition: transform 0.2s ease;
+/* Fixed row height, width left to each image's own aspect ratio —
+   this is the "grow/shrink" variation instead of fixed-width cards. */
+.media-grid__item {
+  flex-shrink: 0;
+  height: 22rem; /* 352px */
 }
 
-.carousel-play:hover .material-icons-round {
-  transform: scale(1.1);
-}
-
-.carousel-card.is-playing .carousel-play {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.videos-cta {
-  text-align: center;
-  margin-top: 2.5rem;
-}
-
-/* Carousel captions */
-.carousel-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 2.5rem 1rem 1rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
-  color: var(--cream);
-  font-size: var(--fs-xs);
-  font-family: var(--font-ui);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  line-height: 1.4;
-  pointer-events: none;
+.media-grid__item img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  display: block;
 }
 
 /* ============================================================
@@ -1454,14 +1388,21 @@ p {
   /* inherits .btn .btn--cream .btn--pill */
 }
 
+/* Border stretches full width; the content inside stays within
+   the page's normal max-width so it lines up with everything else. */
 .footer__links {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer__links-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem 2rem;
   padding: 1.25rem var(--gap);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer__links-group {
@@ -1682,9 +1623,9 @@ p {
     grid-template-columns: 1fr;
   }
 
-  /* Carousel cards */
-  .carousel-card {
-    flex: 0 0 clamp(14rem, 75vw, 20rem);
+  /* Media grid rows */
+  .media-grid__item {
+    height: 14rem; /* 224px */
   }
 
   /* Masonry */
