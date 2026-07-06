@@ -11,6 +11,7 @@
 :root {
   /* Brand colours */
   --cream:         #F5F0E8;   /* cream — text on dark sections, and light-on-dark buttons */
+  --sage:          #D6E4DC;   /* pale green accent — a tint of --dark-green, used sparingly */
   --dark-green:    #02392b;
   --nav-green:     rgba(13, 36, 16, 0.95);
   --warm-bg:       #F6F1EE;
@@ -708,7 +709,7 @@ p {
 .hero {
   position: relative;
   height: 100vh;
-  min-height: 44rem; /* 704px — leaves room for hero__stats without crowding content */
+  min-height: 44rem; /* 704px */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -754,51 +755,78 @@ p {
   margin-right: auto;
 }
 
-/* Same 12-column grid + max-width as .container/.testimonial-tabs,
-   so the stats line up to the same column widths, just centered
-   over the hero image instead of left-aligned in the page flow. */
-.hero__stats {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 2.5rem; /* 40px off the bottom of the image */
-  z-index: 2;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--container-pad);
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: var(--gap);
+/* ============================================================
+   10b. CREDENTIALS CAROUSEL
+   ============================================================ */
+.credentials-carousel-section {
+  background: var(--sage);
+  overflow: hidden;
+  padding: 3rem 0;
 }
 
-/* Same line-above-label treatment as the testimonial tabs */
-.hero__stat {
-  grid-column: span 3;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.875rem;
-}
-
-.hero__stat__line {
-  display: block;
-  width: 100%;
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.hero__stat__label {
+.credentials-carousel {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: var(--fs-sm); /* 16px */
-  color: rgba(255, 255, 255, 0.85);
+  gap: 3rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: var(--container-pad);
 }
 
-.hero__stat__label .material-icons-round {
-  font-size: 1.25rem;
-  color: var(--cream);
+.credentials-carousel__title {
+  flex-shrink: 0;
+  max-width: 16rem;
+  color: var(--dark-green);
 }
 
+/* Fades the track into the section's background at both edges */
+.credentials-carousel__viewport {
+  flex: 1;
+  min-width: 0; /* let this flex item shrink below the track's content width */
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.credentials-carousel__track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: credentials-scroll 26s linear infinite;
+}
+
+.credentials-carousel__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--dark-green);
+  white-space: nowrap;
+}
+
+.credentials-carousel__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 1px solid rgba(2, 57, 43, 0.25);
+  flex-shrink: 0;
+}
+
+.credentials-carousel__icon .material-icons-round {
+  font-size: 1rem;
+  color: var(--dark-green);
+}
+
+/* Content is duplicated once in the HTML, so -50% is exactly one full set —
+   the reset back to 0% is invisible since the second set is identical. */
+@keyframes credentials-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 
 /* ============================================================
    12. TESTIMONIALS
@@ -1458,14 +1486,12 @@ p {
 }
 
 /* Hero intro (right under the navbar) fades in flat — no shift-up */
-.hero__content.fade-in,
-.hero__stats.fade-in {
+.hero__content.fade-in {
   transform: none;
   transition: opacity 0.65s ease;
 }
 
-.hero__content.fade-in.is-visible,
-.hero__stats.fade-in.is-visible {
+.hero__content.fade-in.is-visible {
   transform: none;
 }
 
@@ -1538,6 +1564,18 @@ p {
   .grid--2,
   .grid--2x2 {
     grid-template-columns: 1fr;
+  }
+
+  /* Credentials carousel — title above, both full width */
+  .credentials-carousel {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    padding: 0 var(--container-pad);
+  }
+
+  .credentials-carousel__title {
+    max-width: none;
   }
 
   /* Credentials — stack on mobile */
@@ -1616,26 +1654,6 @@ p {
     font-size: var(--fs-sm);
   }
 
-  /* 2x2: 4 columns, each stat spans 2 (same pattern as .testimonial-tab) */
-  .hero__stats {
-    bottom: 1.5rem; /* 24px on mobile */
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 1.5rem;
-    row-gap: 1.25rem;
-  }
-
-  .hero__stat {
-    grid-column: span 2;
-  }
-
-  .hero__stat__label {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.375rem;
-    font-size: var(--fs-xs);
-    white-space: normal;
-  }
-
   /* Callout */
   .callout {
     padding: 5rem var(--container-pad);
@@ -1678,6 +1696,10 @@ p {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .credentials-carousel__track {
+    animation: none;
   }
 
   html {
