@@ -319,92 +319,33 @@
     </div>
   </section>
 
-  <!-- ===================== VIDEO CAROUSEL ===================== -->
-  <section class="section section--warm videos-section" id="videos">
+  <!-- ===================== MEDIA GRID ===================== -->
+  <section class="section section--warm media-grid-section" id="videos">
     <div class="container">
-      <div class="section__header fade-in">
+      <div class="section__header media-grid__header fade-in">
         <span class="eyebrow">On the range</span>
         <h3>See the coaching in action</h3>
         <p class="section__lead">Real sessions, real students, real results &mdash; from the range and on the course.</p>
       </div>
     </div>
 
-    <div class="carousel-wrapper">
-      <div class="carousel-track" id="carouselTrack">
-
-        <div class="carousel-card">
-          <div class="carousel-image">
-            <img src="assets/images/one.avif" alt="Coaching session on the range" loading="lazy">
-            <div class="carousel-caption">Full swing session on the range</div>
-          </div>
-        </div>
-
-        <div class="carousel-card" data-type="video">
-          <div class="carousel-video">
-            <video src="assets/videos/coaching-01.mp4" poster="assets/images/IMG_3847.JPG" playsinline muted loop preload="none"></video>
-            <div class="carousel-play" aria-label="Play video">
-              <span class="material-icons-round">play_circle</span>
-            </div>
-            <div class="carousel-caption">Short game work with a student</div>
-          </div>
-        </div>
-
-        <div class="carousel-card carousel-card--landscape">
-          <div class="carousel-image">
-            <img src="assets/images/IMG_3847.JPG" alt="Brian Ridley coaching" loading="lazy">
-            <div class="carousel-caption">Short game work with a student</div>
-          </div>
-        </div>
-
-        <div class="carousel-card" data-type="video">
-          <div class="carousel-video">
-            <video src="assets/videos/coaching-02.mp4" poster="assets/images/two.avif" playsinline muted loop preload="none"></video>
-            <div class="carousel-play" aria-label="Play video">
-              <span class="material-icons-round">play_circle</span>
-            </div>
-            <div class="carousel-caption">On-course playing lesson</div>
-          </div>
-        </div>
-
-        <div class="carousel-card" data-type="video">
-          <div class="carousel-video">
-            <video src="assets/videos/coaching-03.mp4" poster="assets/images/one.avif" playsinline muted loop preload="none"></video>
-            <div class="carousel-play" aria-label="Play video">
-              <span class="material-icons-round">play_circle</span>
-            </div>
-            <div class="carousel-caption">Full swing analysis</div>
-          </div>
-        </div>
-
-        <div class="carousel-card">
-          <div class="carousel-image">
-            <img src="assets/images/two.avif" alt="Golf coaching drill" loading="lazy">
-            <div class="carousel-caption">On-course playing lesson</div>
-          </div>
-        </div>
-
-        <div class="carousel-card" data-type="video">
-          <div class="carousel-video">
-            <video src="assets/videos/coaching-04.mp4" poster="assets/images/IMG_4506.JPG" playsinline muted loop preload="none"></video>
-            <div class="carousel-play" aria-label="Play video">
-              <span class="material-icons-round">play_circle</span>
-            </div>
-            <div class="carousel-caption">Trackman analysis session</div>
-          </div>
-        </div>
-
-        <div class="carousel-card carousel-card--landscape">
-          <div class="carousel-image">
-            <img src="assets/images/IMG_4506.JPG" alt="On-course session" loading="lazy">
-            <div class="carousel-caption">Trackman analysis session</div>
-          </div>
-        </div>
-
+    <div class="media-grid">
+      <div class="media-grid__row" id="mediaRow1">
+        <div class="media-grid__item"><img src="assets/images/one.avif" alt="Full swing session on the range" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/IMG_3847.JPG" alt="Short game work with a student" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/two.avif" alt="On-course playing lesson" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/IMG_4506.JPG" alt="Trackman analysis session" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/one.avif" alt="Full swing session on the range" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/IMG_3847.JPG" alt="Short game work with a student" loading="lazy"></div>
       </div>
-    </div>
-
-    <div class="container videos-cta fade-in">
-      <a href="#pricing" class="btn btn--dark btn--pill" data-text="Book your coaching session"><span>Book your coaching session</span></a>
+      <div class="media-grid__row" id="mediaRow2">
+        <div class="media-grid__item"><img src="assets/images/two.avif" alt="On-course playing lesson" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/IMG_4506.JPG" alt="Trackman analysis session" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/one.avif" alt="Full swing session on the range" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/IMG_3847.JPG" alt="Short game work with a student" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/two.avif" alt="On-course playing lesson" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/IMG_4506.JPG" alt="Trackman analysis session" loading="lazy"></div>
+      </div>
     </div>
   </section>
 
@@ -562,10 +503,12 @@
       <a href="#pricing" class="btn btn--cream btn--pill footer__cta" data-text="Book a lesson"><span>Book a lesson</span></a>
     </div>
     <div class="footer__links">
-      <span>&copy; 2026 Brian Ridley Golf. All rights reserved.</span>
-      <div class="footer__links-group">
-        <a href="/privacy-policy">Privacy Policy</a>
-        <a href="https://jackjohnson.fyi" target="_blank" rel="noopener noreferrer">Website by jackjohnson.fyi</a>
+      <div class="footer__links-inner">
+        <span>&copy; 2026 Brian Ridley Golf. All rights reserved.</span>
+        <div class="footer__links-group">
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="https://jackjohnson.fyi" target="_blank" rel="noopener noreferrer">Website by jackjohnson.fyi</a>
+        </div>
       </div>
     </div>
   </footer>

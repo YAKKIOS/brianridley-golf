@@ -105,170 +105,44 @@
 
 
 /* ============================================================
-   5. VIDEO CAROUSEL — infinite drag, momentum-based
+   5. MEDIA GRID — rows shift opposite directions as you scroll
    ============================================================ */
-(function initCarousel() {
-  const wrapper = document.querySelector('.carousel-wrapper');
-  const track   = document.getElementById('carouselTrack');
-  if (!track || !wrapper) return;
+(function initMediaGrid() {
+  const section = document.getElementById('videos');
+  const row1    = document.getElementById('mediaRow1');
+  const row2    = document.getElementById('mediaRow2');
+  if (!section || !row1 || !row2) return;
 
-  /* — Clone originals for seamless looping — */
-  const originals = Array.from(track.children);
-  originals.forEach(function (card) {
-    const clone = card.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
-  });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  let posX       = 0;
-  let startX     = 0;
-  let startPosX  = 0;
-  let isDragging = false;
-  let velocity   = 0;
-  let lastX      = 0;
-  let rafId      = null;
-  let hasDragged = false;
-  let loopWidth  = 0; // computed lazily after first render
+  const RANGE = 220; // max px each row shifts in either direction
+  let ticking = false;
 
-  function getLoopWidth() {
-    // Half of total scrollWidth = width of one full set of originals
-    if (!loopWidth) loopWidth = track.scrollWidth / 2;
-    return loopWidth;
+  function update() {
+    ticking = false;
+    const rect  = section.getBoundingClientRect();
+    const vh    = window.innerHeight;
+    const total = vh + rect.height;
+
+    // 0 as the section enters from the bottom, 1 as it exits the top
+    let progress = (vh - rect.top) / total;
+    progress = Math.max(0, Math.min(1, progress));
+
+    const offset = (progress - 0.5) * 2 * RANGE; // -RANGE .. +RANGE
+
+    row1.style.transform = 'translateX(' + offset + 'px)';
+    row2.style.transform = 'translateX(' + (-offset) + 'px)';
   }
 
-  window.addEventListener('resize', function () {
-    loopWidth = 0; // recompute on next use
-  }, { passive: true });
-
-  /* Normalise posX so it always stays within one loop width.
-     This is the infinite seam — when we cross the boundary we
-     jump instantly (no transition) to the equivalent position
-     in the original set, which looks identical visually. */
-  function normalise(x) {
-    const W = getLoopWidth();
-    // Map x into the range (-W, 0]
-    x = ((x % W) + W) % W; // to [0, W)
-    x -= W;                  // to (-W, 0]
-    return x;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
   }
 
-  function setPos(newX) {
-    posX = normalise(newX);
-    track.style.transform = 'translateX(' + posX + 'px)';
-  }
-
-  function momentum() {
-    if (Math.abs(velocity) < 0.5) return;
-    setPos(posX + velocity);
-    velocity *= 0.94;
-    rafId = requestAnimationFrame(momentum);
-  }
-
-  /* — Mouse — */
-  wrapper.addEventListener('mousedown', function (e) {
-    isDragging = true;
-    hasDragged = false;
-    startX     = e.clientX;
-    startPosX  = posX;
-    lastX      = e.clientX;
-    velocity   = 0;
-    cancelAnimationFrame(rafId);
-    e.preventDefault();
-  });
-
-  window.addEventListener('mousemove', function (e) {
-    if (!isDragging) return;
-    const dx = e.clientX - startX;
-    if (Math.abs(dx) > 4) hasDragged = true;
-    velocity = e.clientX - lastX;
-    lastX    = e.clientX;
-    setPos(startPosX + dx);
-  });
-
-  window.addEventListener('mouseup', function () {
-    if (!isDragging) return;
-    isDragging = false;
-    momentum();
-  });
-
-  /* — Touch — */
-  wrapper.addEventListener('touchstart', function (e) {
-    hasDragged = false;
-    startX     = e.touches[0].clientX;
-    startPosX  = posX;
-    lastX      = e.touches[0].clientX;
-    velocity   = 0;
-    cancelAnimationFrame(rafId);
-  }, { passive: true });
-
-  wrapper.addEventListener('touchmove', function (e) {
-    const dx = e.touches[0].clientX - startX;
-    if (Math.abs(dx) > 4) hasDragged = true;
-    velocity = e.touches[0].clientX - lastX;
-    lastX    = e.touches[0].clientX;
-    setPos(startPosX + dx);
-  }, { passive: true });
-
-  wrapper.addEventListener('touchend', function () {
-    momentum();
-  });
-
-  /* — Play on click (not drag) — */
-  wrapper.addEventListener('click', function (e) {
-    if (hasDragged) return;
-    const playBtn = e.target.closest('.carousel-play');
-    if (playBtn) {
-      toggleVideo(playBtn.closest('.carousel-card'));
-      return;
-    }
-    // Click on a playing card pauses it
-    const card = e.target.closest('.carousel-card.is-playing');
-    if (card) toggleVideo(card);
-  });
-
-  /* — Hover to preview on desktop — */
-  wrapper.addEventListener('mouseenter', function (e) {
-    const card = e.target.closest('.carousel-card[data-type="video"]');
-    if (card && !card.classList.contains('is-playing')) playVideo(card);
-  }, true);
-
-  wrapper.addEventListener('mouseleave', function (e) {
-    const card = e.target.closest('.carousel-card[data-type="video"]');
-    if (card && !card.classList.contains('is-playing-clicked')) pauseVideo(card);
-  }, true);
-
-  function playVideo(card) {
-    if (!card) return;
-    const video = card.querySelector('video');
-    if (!video) return;
-    video.muted = true;
-    video.play().catch(function () {});
-    card.classList.add('is-playing');
-  }
-
-  function pauseVideo(card) {
-    if (!card) return;
-    const video = card.querySelector('video');
-    if (!video) return;
-    video.pause();
-    card.classList.remove('is-playing');
-  }
-
-  function toggleVideo(card) {
-    if (!card) return;
-    if (card.classList.contains('is-playing-clicked')) {
-      // User-clicked play → pause
-      card.classList.remove('is-playing-clicked');
-      pauseVideo(card);
-    } else {
-      // First click — play with sound
-      const video = card.querySelector('video');
-      if (!video) return;
-      video.muted = false;
-      video.play().catch(function () { video.muted = true; video.play(); });
-      card.classList.add('is-playing', 'is-playing-clicked');
-    }
-  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
 })();
 
 
