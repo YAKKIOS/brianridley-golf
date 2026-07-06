@@ -1448,11 +1448,25 @@ p {
    ============================================================ */
 .fade-in {
   opacity: 0;
-  transition: opacity 0.65s ease;
+  transform: translateY(1.5rem);
+  transition: opacity 0.65s ease, transform 0.65s ease;
 }
 
 .fade-in.is-visible {
   opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero intro (right under the navbar) fades in flat — no shift-up */
+.hero__content.fade-in,
+.hero__stats.fade-in {
+  transform: none;
+  transition: opacity 0.65s ease;
+}
+
+.hero__content.fade-in.is-visible,
+.hero__stats.fade-in.is-visible {
+  transform: none;
 }
 
 /* Staggered delays for grid children */
