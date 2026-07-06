@@ -1425,7 +1425,7 @@ p {
    20. FOOTER
    ============================================================ */
 .footer {
-  background: #0a0f0a;
+  background: var(--dark-green);
   display: flex;
   flex-direction: column;
 }
@@ -1439,7 +1439,7 @@ p {
   align-items: center;
   text-align: center;
   gap: 2rem;
-  padding: 7rem var(--gap) 6rem;
+  padding: 9rem var(--gap) 8rem;
   flex: 1;
 }
 
@@ -1458,10 +1458,17 @@ p {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 0.5rem 2rem;
   padding: 1.25rem var(--gap);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer__links-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 2rem;
 }
 
 .footer__links a {
