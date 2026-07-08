@@ -536,22 +536,27 @@ p {
   right: 0;
   height: var(--banner-h);
   background: var(--dark-green);
-  color: rgba(245, 240, 232, 0.7);
+  z-index: 1001;
+}
+
+.banner__link {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  color: rgba(245, 240, 232, 0.7);
   font-family: var(--font-ui);
   font-size: var(--fs-eyebrow);
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  z-index: 1001;
-  transition: transform 0.35s ease;
+  transition: color 0.2s ease;
 }
 
-.banner--hidden {
-  transform: translateY(-100%);
+.banner__link:hover {
+  color: var(--cream);
 }
 
 .banner .material-icons-round {
@@ -572,14 +577,9 @@ p {
   transition: height 0.4s ease, background-color 0.4s ease, top 0.35s ease;
 }
 
-.navbar--no-banner {
-  top: 0;
-}
-
 .navbar.scrolled {
   height: var(--nav-h);
-  background-color: var(--cream);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: var(--white);
 }
 
 /* Colour flips when navbar goes white */
