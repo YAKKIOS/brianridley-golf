@@ -7,18 +7,10 @@
    ============================================================ */
 (function initNavbar() {
   const navbar = document.getElementById('navbar');
-  const hero   = document.getElementById('hero');
   if (!navbar) return;
 
-  /* Delay the flip until the hero has actually scrolled past, not just
-     a small fixed distance — so the nav (and its buttons) stay in their
-     "over the hero" look until the next section arrives. */
-  function getThreshold() {
-    return hero ? hero.offsetHeight - navbar.offsetHeight : 80;
-  }
-
   function onScroll() {
-    if (window.scrollY > getThreshold()) {
+    if (window.scrollY > 10) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
@@ -26,7 +18,6 @@
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
   onScroll();
 })();
 
@@ -56,31 +47,7 @@
 
 
 /* ============================================================
-   3. BANNER — hide on scroll
-   ============================================================ */
-(function initBannerHide() {
-  const banner = document.querySelector('.banner');
-  const navbar = document.getElementById('navbar');
-  if (!banner) return;
-
-  let bannerHidden = false;
-
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 10 && !bannerHidden) {
-      bannerHidden = true;
-      banner.classList.add('banner--hidden');
-      navbar && navbar.classList.add('navbar--no-banner');
-    } else if (window.scrollY <= 10 && bannerHidden) {
-      bannerHidden = false;
-      banner.classList.remove('banner--hidden');
-      navbar && navbar.classList.remove('navbar--no-banner');
-    }
-  }, { passive: true });
-})();
-
-
-/* ============================================================
-   4. FADE-IN — IntersectionObserver
+   3. FADE-IN — IntersectionObserver
    ============================================================ */
 (function initFadeIn() {
   const elements = document.querySelectorAll('.fade-in');
@@ -105,7 +72,7 @@
 
 
 /* ============================================================
-   5. MEDIA GRID — rows shift opposite directions as you scroll
+   4. MEDIA GRID — rows shift opposite directions as you scroll
    ============================================================ */
 (function initMediaGrid() {
   const section = document.getElementById('videos');
@@ -278,8 +245,7 @@
 
       e.preventDefault();
 
-      const bannerHidden = document.querySelector('.banner--hidden');
-      const bannerH = bannerHidden ? 0 : parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--banner-h')) * 16;
+      const bannerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--banner-h')) * 16;
       const navH    = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) * 16;
       const offset  = bannerH + navH;
 
