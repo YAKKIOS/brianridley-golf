@@ -1468,11 +1468,9 @@ p {
   .about__text,
   .about__image {
     grid-column: 1 / -1;
+    grid-row: auto;
   }
 
-  .about__image {
-    order: -1;
-  }
 
   .sponsors__grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1497,9 +1495,8 @@ p {
     gap: 0.375rem;
   }
 
-  .navbar__cta,
   .navbar__cta--outline {
-    padding: 0 0.5rem;
+    display: none;
   }
 
   .navbar__brand {
@@ -1614,6 +1611,7 @@ p {
   /* Pricing — stack the two cards */
   .pricing-grid {
     grid-template-columns: 1fr;
+    row-gap: var(--gap);
   }
 
   /* Media grid rows */
