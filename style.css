@@ -27,6 +27,7 @@
   --section-pad:   7.5rem;     /* 120px */
   --gap:           1.5rem;     /* 24px */
   --radius:        1rem;     /* 16px */
+  --img-radius:    0.25rem;  /* 4px — images & containers */
   --btn-radius:    100px;     /* pill — applied to all buttons */
   --banner-h:      2.5rem;     /* 40px */
   --nav-h:         4.5rem;     /* 72px */
@@ -87,6 +88,7 @@ ul {
 img {
   display: block;
   max-width: 100%;
+  border-radius: var(--img-radius);
 }
 
 /* Offset for fixed header on anchor links */
@@ -503,6 +505,7 @@ p {
   top: 80px;
   height: 580px;
   overflow: hidden;
+  border-radius: var(--img-radius);
 }
 
 .services-img {
@@ -577,6 +580,7 @@ p {
 .navbar.scrolled {
   height: var(--nav-h);
   background-color: var(--white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Colour flips when navbar goes white */
@@ -717,7 +721,7 @@ p {
 .hero__image {
   position: absolute;
   inset: 0;
-  background-image: url('assets/images/A4620B8B-6A90-4B91-A7EA-F8A4D998039D.jpeg');
+  background-image: url('assets/images/welcome-08Ipbe8GpWw-unsplash.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -798,7 +802,7 @@ p {
   align-items: center;
   gap: 0.75rem;
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--dark-green);
   white-space: nowrap;
 }
@@ -879,6 +883,7 @@ p {
   position: relative;
   height: 26rem; /* 416px */
   overflow: hidden;
+  border-radius: var(--img-radius);
 }
 
 .testimonial-media {
@@ -951,14 +956,14 @@ p {
   justify-content: center;
   text-align: center;
   padding: 8rem var(--container-pad);
-  min-height: 32rem;
+  min-height: 40rem;
   overflow: hidden;
 }
 
 .callout__image {
   position: absolute;
   inset: 0;
-  background-image: url('AdobeStock_266058425.jpeg');
+  background-image: url('assets/images/welcome-08Ipbe8GpWw-unsplash.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -973,7 +978,7 @@ p {
 .callout__content {
   position: relative;
   z-index: 2;
-  max-width: 42rem;
+  max-width: 50rem;
 }
 
 .callout__content h2 {
@@ -1142,6 +1147,7 @@ p {
   gap: 2rem;
   background: var(--cream);
   border: 1px solid rgba(11, 30, 21, 0.12);
+  border-radius: var(--img-radius);
   padding: 3rem;
 }
 
@@ -1325,6 +1331,7 @@ p {
   break-inside: avoid;
   background: var(--cream);
   border: 1px solid rgba(14, 42, 6, 0.08);
+  border-radius: var(--img-radius);
   padding: 1.5rem;
   margin-bottom: var(--gap);
   display: flex;
