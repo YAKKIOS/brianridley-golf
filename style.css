@@ -553,6 +553,8 @@ p {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   transition: color 0.2s ease;
+  z-index: 1001;
+  transition: transform 0.35s ease;
 }
 
 .banner__link:hover {
