@@ -150,9 +150,9 @@ p {
 }
 
 .eyebrow {
-  font-family: 'Geist Mono', monospace;
+  font-family: 'Geist', sans-serif;
   font-size: var(--fs-eyebrow);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--dark-green);
@@ -424,16 +424,6 @@ p {
   margin-bottom: 2rem;
 }
 
-.services-eyebrow {
-  display: block;
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.625rem; /* 10px */
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--dark-green);
-  margin-bottom: 0.75rem;
-}
 
 .services-header h3 {
   color: var(--text-heading);
@@ -877,9 +867,9 @@ p {
 }
 
 .testimonial__attribution strong {
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: var(--fs-sm);
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-size: var(--fs-h6);
   color: var(--text-heading);
 }
 
@@ -910,50 +900,50 @@ p {
   opacity: 1;
 }
 
-/* Tabs — click to switch, light grey line for inactive / solid dark line for active.
-   Same 12-column grid as .about-grid so the tabs line up with the rest of the page;
-   4 tabs x span 3 = 12. */
-.testimonial-tabs {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: var(--gap);
-  margin-top: 3rem;
-}
-
-.testimonial-tab {
-  grid-column: span 3;
+/* Controls — counter + arrows grouped together, right-aligned under the image */
+.testimonial-controls {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.875rem;
-  padding: 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-align: left;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
-.testimonial-tab__line {
-  display: block;
-  width: 100%;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  transition: border-color 0.25s ease;
-}
-
-.testimonial-tab.active .testimonial-tab__line {
-  border-top-color: var(--text-heading);
-}
-
-.testimonial-tab__name {
-  font-family: var(--font-ui);
-  font-size: var(--fs-sm);
-  font-weight: 500;
+.testimonial-counter {
+  font-family: var(--font-brand);
+  font-size: var(--fs-h6);
+  font-weight: 400;
   color: var(--text-muted);
-  transition: color 0.25s ease;
 }
 
-.testimonial-tab.active .testimonial-tab__name {
-  color: var(--text-heading);
+.testimonial-nav {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.testimonial-nav__btn .material-symbols-outlined {
+  font-variation-settings: 'wght' 200;
+  font-size: 1.25rem;
+}
+
+.testimonial-nav__btn {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid rgba(14, 42, 6, 0.2);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-green);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.testimonial-nav__btn:hover {
+  background: var(--dark-green);
+  border-color: var(--dark-green);
+  color: #ffffff;
 }
 
 /* ============================================================
@@ -1407,8 +1397,6 @@ p {
 
 .footer__brand {
   color: var(--white);
-  font-size: clamp(2rem, 5vw, 4.5rem);
-  line-height: 1;
   max-width: calc(var(--max-width) / 12 * 8);
 }
 
@@ -1614,15 +1602,8 @@ p {
     height: 18rem; /* 288px */
   }
 
-  /* 2x2: 4 columns, each tab spans 2 */
-  .testimonial-tabs {
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 1rem;
-    row-gap: 1.5rem;
-  }
-
-  .testimonial-tab {
-    grid-column: span 2;
+  .testimonial-controls {
+    margin-top: 1.5rem;
   }
 
   .sponsors__grid {

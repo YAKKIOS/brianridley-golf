@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -167,7 +168,7 @@
         <div class="services-left">
 
           <div class="services-header">
-            <span class="services-eyebrow">What I offer</span>
+            <span class="eyebrow">What I offer</span>
             <h3>Coaching for every part of your game</h3>
           </div>
 
@@ -269,23 +270,16 @@
 
       </div>
 
-      <div class="testimonial-tabs fade-in" role="tablist" id="testimonialTabs">
-        <button class="testimonial-tab active" data-index="0" role="tab" aria-selected="true">
-          <span class="testimonial-tab__line"></span>
-          <span class="testimonial-tab__name">James Crawford</span>
-        </button>
-        <button class="testimonial-tab" data-index="1" role="tab" aria-selected="false">
-          <span class="testimonial-tab__line"></span>
-          <span class="testimonial-tab__name">Sarah Whitmore</span>
-        </button>
-        <button class="testimonial-tab" data-index="2" role="tab" aria-selected="false">
-          <span class="testimonial-tab__line"></span>
-          <span class="testimonial-tab__name">Mark Thompson</span>
-        </button>
-        <button class="testimonial-tab" data-index="3" role="tab" aria-selected="false">
-          <span class="testimonial-tab__line"></span>
-          <span class="testimonial-tab__name">Megan Nicholls</span>
-        </button>
+      <div class="testimonial-controls fade-in">
+        <span class="testimonial-counter" aria-live="polite">1 / 4</span>
+        <div class="testimonial-nav">
+          <button class="testimonial-nav__btn" id="testimonialPrev" aria-label="Previous testimonial">
+            <span class="material-symbols-outlined">arrow_back</span>
+          </button>
+          <button class="testimonial-nav__btn" id="testimonialNext" aria-label="Next testimonial">
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
       </div>
 
     </div>
@@ -329,7 +323,7 @@
     <div class="container">
       <div class="section__header media-grid__header fade-in">
         <span class="eyebrow">On the range</span>
-        <h3>See the coaching in action</h3>
+        <h3>Coaching in action from the range and on the course</h3>
         <p class="section__lead">Real sessions, real students, real results &mdash; from the range and on the course.</p>
       </div>
     </div>
