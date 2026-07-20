@@ -392,7 +392,7 @@ p {
   margin-bottom: 0.75rem;
 }
 
-.card p:not(.testimonial__text) {
+.card p {
   color: var(--text-body);
   font-size: var(--fs-sm);
   line-height: 1.5;
@@ -821,12 +821,11 @@ p {
 }
 
 /* ============================================================
-   12. TESTIMONIALS
+   12. TESTIMONIALS — draggable card rail
    ============================================================ */
-
 .section--testimonials {
   background-color: var(--warm-bg);
-  position: relative;
+  overflow: hidden;
 }
 
 /* Quote (left) + media (right) — top-aligned so the label sits level with the image */
@@ -837,33 +836,39 @@ p {
   align-items: center;
 }
 
-.testimonial-showcase__panels {
-  position: relative;
+.testimonial-rail::-webkit-scrollbar {
+  display: none;
 }
 
-.testimonial-panel {
-  opacity: 1;
-  transition: opacity 0.25s ease;
+.testimonial-rail.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
 }
 
-.testimonial-panel.is-transitioning {
-  opacity: 0;
+.testimonial-card {
+  flex: 0 0 26rem; /* 416px */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2.5rem;
 }
 
-.testimonial__text {
+.testimonial-card__text {
   font-family: var(--font-brand);
   font-size: var(--fs-h4);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
   color: var(--text-heading);
-  margin-bottom: 2rem;
 }
 
-.testimonial__attribution {
+.testimonial-card__attribution {
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  align-items: center;
+  gap: 0.875rem;
 }
 
 .testimonial__attribution strong {
@@ -873,7 +878,7 @@ p {
   color: var(--text-heading);
 }
 
-.testimonial__attribution span {
+.testimonial-card__attribution span {
   font-size: var(--fs-xs);
   color: var(--text-muted);
 }
@@ -1588,9 +1593,10 @@ p {
     display: none;
   }
 
-  /* Testimonials — stack: quote, then image, then 2x2 name tabs */
-  .testimonial-showcase {
-    grid-template-columns: 1fr;
+  /* Testimonials — narrower cards, tighter padding */
+  .testimonial-card {
+    flex-basis: 20rem;
+    padding: 2rem;
     gap: 2rem;
   }
 
