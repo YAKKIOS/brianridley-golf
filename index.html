@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -43,6 +44,8 @@
     </div>
   </header>
 
+  <!-- ===================== HERO + CREDENTIALS VIEWPORT ===================== -->
+  <div class="hero-viewport">
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="hero">
     <div class="hero__image"></div>
@@ -57,46 +60,47 @@
   <!-- ===================== CREDENTIALS CAROUSEL ===================== -->
   <section class="credentials-carousel-section" id="credentials-carousel">
     <div class="credentials-carousel fade-in">
-      <h4 class="credentials-carousel__title">Credentials built over 40 years on tour</h4>
+      <h6 class="credentials-carousel__title">Credentials built over 40 years on tour</h6>
       <div class="credentials-carousel__viewport">
         <div class="credentials-carousel__track">
           <div class="credentials-carousel__item">
-            <span class="material-icons-round">check_circle</span>
+            <span class="material-symbols-outlined">check</span>
             <span>40 years experience</span>
           </div>
           <div class="credentials-carousel__item">
-            <span class="material-icons-round">check_circle</span>
+            <span class="material-symbols-outlined">check</span>
             <span>AimPoint certified</span>
           </div>
           <div class="credentials-carousel__item">
-            <span class="material-icons-round">check_circle</span>
+            <span class="material-symbols-outlined">check</span>
             <span>DP World Tour coach</span>
           </div>
           <div class="credentials-carousel__item">
-            <span class="material-icons-round">check_circle</span>
+            <span class="material-symbols-outlined">check</span>
             <span>PGA Advanced Certified</span>
           </div>
           <!-- Duplicate set so the loop is seamless -->
           <div class="credentials-carousel__item" aria-hidden="true">
-            <span class="material-icons-round">check_circle</span>
+            <span class="material-symbols-outlined">check</span>
             <span>40 years experience</span>
           </div>
           <div class="credentials-carousel__item" aria-hidden="true">
-            <span class="material-icons-round">check_circle</span>
+            <span class="material-symbols-outlined">check</span>
             <span>AimPoint certified</span>
           </div>
           <div class="credentials-carousel__item" aria-hidden="true">
-            <span class="material-icons-round">check_circle</span>
+            <span class="material-symbols-outlined">check</span>
             <span>DP World Tour coach</span>
           </div>
           <div class="credentials-carousel__item" aria-hidden="true">
-            <span class="material-icons-round">check_circle</span>
+            <span class="material-symbols-outlined">check</span>
             <span>PGA Advanced Certified</span>
           </div>
         </div>
       </div>
     </div>
   </section>
+  </div><!-- /.hero-viewport -->
 
   <!-- ===================== EXPERIENCE ===================== -->
   <section class="section section--credentials" id="experience">
@@ -149,7 +153,7 @@
           <a href="#pricing" class="btn btn--cream btn--pill" data-text="Work with Brian"><span>Work with Brian</span></a>
         </div>
         <div class="about__image fade-in">
-          <img src="AdobeStock_266058425.jpeg" alt="Brian Ridley golf coach" class="about__image-placeholder">
+          <img src="assets/images/A4620B8B-6A90-4B91-A7EA-F8A4D998039D.jpeg" alt="Brian Ridley holding the BMW International Open trophy" class="about__image-placeholder">
         </div>
       </div>
     </div>
@@ -164,7 +168,7 @@
         <div class="services-left">
 
           <div class="services-header">
-            <span class="services-eyebrow">What I offer</span>
+            <span class="eyebrow">What I offer</span>
             <h3>Coaching for every part of your game</h3>
           </div>
 
@@ -208,9 +212,9 @@
 
         <!-- RIGHT: image panel -->
         <div class="services-visual">
-          <img src="assets/images/one.avif"    alt="Full swing coaching"  class="services-img active" data-index="0">
-          <img src="assets/images/two.avif"    alt="Short game mastery"   class="services-img"        data-index="1">
-          <img src="assets/images/IMG_3847.JPG" alt="Putting clinic"      class="services-img"        data-index="2">
+          <img src="assets/images/benny-hassum-ia5VNKpapys-unsplash.jpg" alt="Full swing coaching"  class="services-img active" data-index="0">
+          <img src="assets/images/courtney-cook-6LeTXoIokvI-unsplash.jpg" alt="Short game mastery"   class="services-img"        data-index="1">
+          <img src="assets/images/two.avif"                               alt="Putting clinic"        class="services-img"        data-index="2">
         </div>
 
       </div>
@@ -221,55 +225,62 @@
   <section class="section section--testimonials" id="testimonials">
 
     <div class="container">
-      <div class="section__header fade-in">
-        <span class="eyebrow">Testimonials</span>
-        <h2>Don&rsquo;t just take our word for it</h2>
-        <p class="section__lead">Real results from golfers who&rsquo;ve worked with Brian, in their own words.</p>
-      </div>
-    </div>
+      <div class="testimonial-showcase fade-in">
 
-    <div class="testimonial-rail fade-in" id="testimonialRail">
-      <div class="testimonial-card">
-        <p class="testimonial-card__text">&ldquo;Brian completely transformed my ball striking. Within three sessions I was hitting it 20 yards further with more consistency than I&rsquo;d had in years. The data from the Trackman sessions made it impossible to argue with the improvements. The investment paid for itself immediately.&rdquo;</p>
-        <div class="testimonial-card__attribution">
-          <img src="assets/images/one.avif" alt="James Crawford" class="testimonial-card__avatar">
-          <div>
-            <strong>James Crawford</strong>
-            <span>Club Champion, Royal Birkdale</span>
+        <div class="testimonial-showcase__panels">
+          <div class="testimonial-panel active" data-index="0">
+            <p class="testimonial__text">&ldquo;Brian completely transformed my ball striking. Within three sessions I was hitting it 20 yards further with more consistency than I&rsquo;d had in years.&rdquo;</p>
+            <div class="testimonial__attribution">
+              <strong>James Crawford</strong>
+              <span>Club Champion, Royal Birkdale</span>
+            </div>
+          </div>
+
+          <div class="testimonial-panel" data-index="1" hidden>
+            <p class="testimonial__text">&ldquo;I&rsquo;d spent thousands on lessons that never worked. Brian identified the root cause of my slice in the first hour and gave me a clear, structured plan to fix it permanently. Six months later I&rsquo;m playing off 4 for the first time in my life &mdash; something I genuinely never thought was possible.&rdquo;</p>
+            <div class="testimonial__attribution">
+              <strong>Sarah Whitmore</strong>
+              <span>Handicap reduced from 18 to 4</span>
+            </div>
+          </div>
+
+          <div class="testimonial-panel" data-index="2" hidden>
+            <p class="testimonial__text">&ldquo;Best investment I&rsquo;ve made in my game. Full stop.&rdquo;</p>
+            <div class="testimonial__attribution">
+              <strong>Mark Thompson</strong>
+              <span>Amateur County Player</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="testimonial-card">
-        <p class="testimonial-card__text">&ldquo;I&rsquo;d spent thousands on lessons that never worked. Brian identified the root cause of my slice in the first hour and gave me a clear, structured plan to fix it permanently. Six months later I&rsquo;m playing off 4 for the first time in my life and I genuinely never thought that was possible.&rdquo;</p>
-        <div class="testimonial-card__attribution">
-          <img src="assets/images/two.avif" alt="Sarah Whitmore" class="testimonial-card__avatar">
-          <div>
-            <strong>Sarah Whitmore</strong>
-            <span>Handicap reduced from 18 to 4</span>
+          <div class="testimonial-panel" data-index="3" hidden>
+            <p class="testimonial__text">&ldquo;The mental coaching side was something I wasn&rsquo;t expecting but it&rsquo;s made as much difference as the technical work. Brian understands the performance pressures that come with being in the public eye and tailored every session around that. I can&rsquo;t recommend him highly enough.&rdquo;</p>
+            <div class="testimonial__attribution">
+              <strong>Megan Nicholls</strong>
+              <span>ITV Racing Presenter</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="testimonial-card">
-        <p class="testimonial-card__text">&ldquo;The short game sessions alone were worth every penny. My scrambling went from the bottom of our club to one of the best. Brian has a genuine gift for making complex technical things simple and immediately actionable. I left every session with something concrete to work on.&rdquo;</p>
-        <div class="testimonial-card__attribution">
-          <img src="assets/images/IMG_4506.JPG" alt="Mark Thompson" class="testimonial-card__avatar">
-          <div>
-            <strong>Mark Thompson</strong>
-            <span>Amateur County Player</span>
-          </div>
+        <div class="testimonial-showcase__media">
+          <div class="testimonial-media active" data-index="0" style="background-image: url('assets/images/bryce-wendler-RI5g7U0kwpM-unsplash.jpg')"></div>
+          <div class="testimonial-media" data-index="1" style="background-image: url('assets/images/benny-hassum-ia5VNKpapys-unsplash.jpg')"></div>
+          <div class="testimonial-media" data-index="2" style="background-image: url('assets/images/courtney-cook-6LeTXoIokvI-unsplash.jpg')"></div>
+          <div class="testimonial-media" data-index="3" style="background-image: url('assets/images/IMG_4506.JPG')"></div>
         </div>
       </div>
 
-      <div class="testimonial-card">
-        <p class="testimonial-card__text">&ldquo;Working with Brian changed how I think about the game entirely. The mental coaching side was something I wasn&rsquo;t expecting but it&rsquo;s made as much difference as the technical work. He understands the performance pressures that come with being in the public eye and tailored every session around that.&rdquo;</p>
-        <div class="testimonial-card__attribution">
-          <img src="assets/images/VRPV7PlS_400x400.jpg" alt="Megan Nicholls" class="testimonial-card__avatar">
-          <div>
-            <strong>Megan Nicholls</strong>
-            <span>ITV Racing Presenter</span>
-          </div>
+      <div class="testimonial-controls fade-in">
+        <span class="testimonial-counter" aria-live="polite">1 / 4</span>
+        <div class="testimonial-nav">
+          <button class="testimonial-nav__btn" id="testimonialPrev" aria-label="Previous testimonial">
+            <span class="material-symbols-outlined">arrow_back</span>
+          </button>
+          <button class="testimonial-nav__btn" id="testimonialNext" aria-label="Next testimonial">
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
         </div>
       </div>
     </div>
@@ -309,37 +320,37 @@
   </section>
 
   <!-- ===================== MEDIA GRID ===================== -->
-  <section class="section section--warm media-grid-section" id="videos">
+  <section class="section section--white media-grid-section" id="videos">
     <div class="container">
       <div class="section__header media-grid__header fade-in">
         <span class="eyebrow">On the range</span>
-        <h3>See the coaching in action</h3>
+        <h3>Coaching in action from the range and on the course</h3>
         <p class="section__lead">Real sessions, real students, real results &mdash; from the range and on the course.</p>
       </div>
     </div>
 
     <div class="media-grid">
       <div class="media-grid__row" id="mediaRow1">
+        <div class="media-grid__item"><img src="assets/images/benny-hassum-ia5VNKpapys-unsplash.jpg" alt="Golfer full swing follow-through" loading="lazy"></div>
         <div class="media-grid__item"><img src="assets/images/one.avif" alt="Full swing session on the range" loading="lazy"></div>
-        <div class="media-grid__item"><img src="assets/images/IMG_3847.JPG" alt="Short game work with a student" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/bryce-wendler-RI5g7U0kwpM-unsplash.jpg" alt="Golf course fairway at golden hour" loading="lazy"></div>
         <div class="media-grid__item"><img src="assets/images/two.avif" alt="On-course playing lesson" loading="lazy"></div>
-        <div class="media-grid__item"><img src="assets/images/IMG_4506.JPG" alt="Trackman analysis session" loading="lazy"></div>
-        <div class="media-grid__item"><img src="assets/images/one.avif" alt="Full swing session on the range" loading="lazy"></div>
-        <div class="media-grid__item"><img src="assets/images/IMG_3847.JPG" alt="Short game work with a student" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/courtney-cook-6LeTXoIokvI-unsplash.jpg" alt="Student driver swing on the course" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/welcome-08Ipbe8GpWw-unsplash.jpg" alt="Aerial view of golf green and bunker" loading="lazy"></div>
       </div>
       <div class="media-grid__row" id="mediaRow2">
-        <div class="media-grid__item"><img src="assets/images/two.avif" alt="On-course playing lesson" loading="lazy"></div>
-        <div class="media-grid__item"><img src="assets/images/IMG_4506.JPG" alt="Trackman analysis session" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/IMG_4506.JPG" alt="Coaching session on a links course" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/courtney-cook-6LeTXoIokvI-unsplash.jpg" alt="Student driver swing on the course" loading="lazy"></div>
         <div class="media-grid__item"><img src="assets/images/one.avif" alt="Full swing session on the range" loading="lazy"></div>
-        <div class="media-grid__item"><img src="assets/images/IMG_3847.JPG" alt="Short game work with a student" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/bryce-wendler-RI5g7U0kwpM-unsplash.jpg" alt="Golf course fairway at golden hour" loading="lazy"></div>
+        <div class="media-grid__item"><img src="assets/images/IMG_3847.JPG" alt="Brian Ridley holding the BMW International Open trophy" loading="lazy"></div>
         <div class="media-grid__item"><img src="assets/images/two.avif" alt="On-course playing lesson" loading="lazy"></div>
-        <div class="media-grid__item"><img src="assets/images/IMG_4506.JPG" alt="Trackman analysis session" loading="lazy"></div>
       </div>
     </div>
   </section>
 
   <!-- ===================== PRICING ===================== -->
-  <section class="section section--warm" id="pricing">
+  <section class="section section--sage" id="pricing">
     <div class="container">
       <div class="section__header fade-in">
         <span class="eyebrow">Pricing</span>
@@ -351,29 +362,23 @@
 
         <div class="pricing-card">
           <div class="pricing-card__header">
-            <span class="pricing-card__badge">
-              <span class="material-icons-round">sports_golf</span>
-              In person
-            </span>
-            <p class="pricing-card__subtitle">One-to-one coaching, tailored to your game</p>
+            <h5 class="pricing-card__badge">In person</h5>
+            <p class="pricing-card__subtitle">One-to-one coaching, tailored to your game. Lorem ipsum dolor sit amet.</p>
             <p class="pricing-card__price">From &pound;320</p>
           </div>
           <ul class="pricing-list">
-            <li><span class="pricing-list__icon"><span class="material-icons-round">check</span></span>Full swing &amp; game assessment</li>
-            <li><span class="pricing-list__icon"><span class="material-icons-round">check</span></span>Personalised practice plan</li>
-            <li><span class="pricing-list__icon"><span class="material-icons-round">check</span></span>Video analysis every session</li>
-            <li><span class="pricing-list__icon"><span class="material-icons-round">check</span></span>Trackman launch monitor data</li>
-            <li><span class="pricing-list__icon"><span class="material-icons-round">check</span></span>Session notes &amp; drill guide</li>
+            <li><span class="material-symbols-outlined pricing-list__icon">check</span>Full swing &amp; game assessment</li>
+            <li><span class="material-symbols-outlined pricing-list__icon">check</span>Personalised practice plan</li>
+            <li><span class="material-symbols-outlined pricing-list__icon">check</span>Video analysis every session</li>
+            <li><span class="material-symbols-outlined pricing-list__icon">check</span>Trackman launch monitor data</li>
+            <li><span class="material-symbols-outlined pricing-list__icon">check</span>Session notes &amp; drill guide</li>
           </ul>
           <a href="#" class="btn btn--dark btn--pill pricing-card__cta" data-text="Book now"><span>Book now</span></a>
         </div>
 
         <div class="pricing-card">
           <div class="pricing-card__header">
-            <span class="pricing-card__badge">
-              <span class="material-icons-round">laptop_mac</span>
-              Online
-            </span>
+            <h5 class="pricing-card__badge">Online</h5>
             <p class="pricing-card__subtitle">Remote coaching, wherever you play</p>
             <p class="pricing-card__price pricing-card__price--muted">Coming soon</p>
           </div>
@@ -384,13 +389,38 @@
     </div>
   </section>
 
-  <!-- ===================== FAQ ===================== -->
-  <section class="section section--warm" id="faq">
+  <!-- ===================== MASONRY TESTIMONIALS ===================== -->
+  <section class="section section--warm masonry-section" id="more-testimonials">
     <div class="container">
       <div class="section__header fade-in">
-        <span class="eyebrow">FAQ</span>
+        <span class="eyebrow">Student reviews</span>
+        <h2>More from students</h2>
+      </div>
+    </div>
+    <div class="masonry-wrapper">
+      <div class="masonry-grid">
+        <div class="masonry-card">&ldquo;Went from 24 to 14 in a single year. Never thought it was possible at my age.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">D</span><strong>David R.</strong></div></div>
+        <div class="masonry-card">&ldquo;Brian&rsquo;s knowledge of the tour game shows in every single session. You can feel the difference in quality.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">A</span><strong>Alex M.</strong></div></div>
+        <div class="masonry-card">&ldquo;The putting module changed my entire approach to reading greens. I&rsquo;m now holing putts I used to walk past without a second thought.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">C</span><strong>Claire F.</strong></div></div>
+        <div class="masonry-card">&ldquo;I was sceptical after trying so many coaches, but these results speak for themselves. Five stars isn&rsquo;t enough.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">P</span><strong>Phil W.</strong></div></div>
+        <div class="masonry-card">&ldquo;Three sessions in and I&rsquo;ve added 25 yards off the tee. My playing partners genuinely cannot believe it.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">J</span><strong>Jamie S.</strong></div></div>
+        <div class="masonry-card">&ldquo;Best money I&rsquo;ve ever spent on golf. Brian makes complex technical stuff easy to understand and immediately implement on the course.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">R</span><strong>Rachel T.</strong></div></div>
+        <div class="masonry-card">&ldquo;Booked the 10-hour block after my first session. Didn&rsquo;t want to stop.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">C</span><strong>Chris D.</strong></div></div>
+        <div class="masonry-card">&ldquo;My son is now playing county golf after 18 months working with Brian. An incredible coach and an even better person.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">H</span><strong>Helen B.</strong></div></div>
+        <div class="masonry-card">&ldquo;Shot my first ever par round last month. Brian made it happen.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">G</span><strong>Gary L.</strong></div></div>
+        <div class="masonry-card">&ldquo;I&rsquo;ve had lessons from club pros my whole life. Brian is in a completely different league. Game-changing coaching.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">S</span><strong>Steve K.</strong></div></div>
+        <div class="masonry-card">&ldquo;Brian identified my swing fault within 10 minutes that three previous coaches had completely missed. Remarkable.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">A</span><strong>Anna C.</strong></div></div>
+        <div class="masonry-card">&ldquo;From 15 handicap to 8 in 6 months. The structured approach and accountability is what made the difference.&rdquo;<div class="masonry-card__footer"><span class="masonry-card__avatar">M</span><strong>Marcus J.</strong></div></div>
+      </div>
+      <div class="masonry-fade"></div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section section--dark" id="faq">
+    <div class="container">
+      <div class="section__header fade-in">
         <h3>Frequently asked questions</h3>
-        <p class="section__lead">Everything you need to know before booking your first session with Brian.</p>
       </div>
       <div class="faq-list">
 
@@ -455,33 +485,6 @@
         </div>
 
       </div>
-    </div>
-  </section>
-
-  <!-- ===================== MASONRY TESTIMONIALS ===================== -->
-  <section class="section section--warm masonry-section" id="more-testimonials">
-    <div class="container">
-      <div class="section__header fade-in">
-        <span class="eyebrow">Student reviews</span>
-        <h3>More from students</h3>
-      </div>
-    </div>
-    <div class="masonry-wrapper">
-      <div class="masonry-grid">
-        <div class="masonry-card">&ldquo;Went from 24 to 14 in a single year. Never thought it was possible at my age.&rdquo;<strong>David R.</strong></div>
-        <div class="masonry-card">&ldquo;Brian&rsquo;s knowledge of the tour game shows in every single session. You can feel the difference in quality.&rdquo;<strong>Alex M.</strong></div>
-        <div class="masonry-card">&ldquo;The putting module changed my entire approach to reading greens. I&rsquo;m now holing putts I used to walk past without a second thought.&rdquo;<strong>Claire F.</strong></div>
-        <div class="masonry-card">&ldquo;I was sceptical after trying so many coaches, but these results speak for themselves. Five stars isn&rsquo;t enough.&rdquo;<strong>Phil W.</strong></div>
-        <div class="masonry-card">&ldquo;Three sessions in and I&rsquo;ve added 25 yards off the tee. My playing partners genuinely cannot believe it.&rdquo;<strong>Jamie S.</strong></div>
-        <div class="masonry-card">&ldquo;Best money I&rsquo;ve ever spent on golf. Brian makes complex technical stuff easy to understand and immediately implement on the course.&rdquo;<strong>Rachel T.</strong></div>
-        <div class="masonry-card">&ldquo;Booked the 10-hour block after my first session. Didn&rsquo;t want to stop.&rdquo;<strong>Chris D.</strong></div>
-        <div class="masonry-card">&ldquo;My son is now playing county golf after 18 months working with Brian. An incredible coach and an even better person.&rdquo;<strong>Helen B.</strong></div>
-        <div class="masonry-card">&ldquo;Shot my first ever par round last month. Brian made it happen.&rdquo;<strong>Gary L.</strong></div>
-        <div class="masonry-card">&ldquo;I&rsquo;ve had lessons from club pros my whole life. Brian is in a completely different league. Game-changing coaching.&rdquo;<strong>Steve K.</strong></div>
-        <div class="masonry-card">&ldquo;Brian identified my swing fault within 10 minutes that three previous coaches had completely missed. Remarkable.&rdquo;<strong>Anna C.</strong></div>
-        <div class="masonry-card">&ldquo;From 15 handicap to 8 in 6 months. The structured approach and accountability is what made the difference.&rdquo;<strong>Marcus J.</strong></div>
-      </div>
-      <div class="masonry-fade"></div>
     </div>
   </section>
 
