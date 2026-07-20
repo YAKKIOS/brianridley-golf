@@ -239,7 +239,7 @@ p {
 
 .section__header h2,
 .section__header h3 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .section__lead {
@@ -325,6 +325,12 @@ p {
 .btn--dark {
   background-color: var(--dark-green);
   color: var(--cream);   /* cream on dark — light sections */
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--dark-green);
+  border: 1px solid var(--dark-green);
 }
 
 /* Secondary / small button — 40px height */
@@ -853,7 +859,7 @@ p {
 }
 
 .testimonial-card {
-  flex: 0 0 26rem; /* 416px */
+  flex: 0 0 30rem; /* 480px */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -879,22 +885,22 @@ p {
 }
 
 .testimonial-card__avatar {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
 }
 
-.testimonial-card__attribution strong {
-  display: block;
+.testimonial-card__name {
   font-family: var(--font-ui);
-  font-weight: 600;
+  font-weight: 500;
   font-size: var(--fs-sm);
+  margin-bottom: 4px;
   color: var(--text-heading);
 }
 
-.testimonial-card__attribution span {
+.testimonial-card__title {
   font-size: var(--fs-xs);
   color: var(--text-muted);
 }
@@ -905,10 +911,9 @@ p {
 .callout {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 8rem var(--container-pad);
+  align-items: flex-start;
+  text-align: left;
+  padding: 4rem 0 8rem;
   min-height: 40rem;
   overflow: hidden;
 }
@@ -931,6 +936,13 @@ p {
 .callout__content {
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.callout__content > * {
   max-width: 50rem;
 }
 
@@ -1287,6 +1299,16 @@ p {
   color: var(--text-body);
 }
 
+.masonry-card__stars {
+  display: flex;
+  gap: 0.125rem;
+}
+
+.masonry-card__stars .material-icons-round {
+  font-size: 1.125rem;
+  color: var(--dark-green);
+}
+
 .masonry-card__footer {
   display: flex;
   align-items: center;
@@ -1311,9 +1333,9 @@ p {
 
 .masonry-card strong {
   font-family: var(--font-ui);
-  font-weight: 600;
+  font-weight: 500;
   font-size: var(--fs-xs);
-  color: var(--text-muted);
+  color: var(--text-heading);
 }
 
 .masonry-fade {
