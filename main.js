@@ -186,57 +186,37 @@
 
 
 /* ============================================================
-   7. TESTIMONIALS — prev/next chevron navigation
+   7. TESTIMONIALS — click-and-drag horizontal rail
    ============================================================ */
-(function initTestimonials() {
-  const panels  = document.querySelectorAll('.testimonial-panel');
-  const media   = document.querySelectorAll('.testimonial-media');
-  const prevBtn = document.getElementById('testimonialPrev');
-  const nextBtn = document.getElementById('testimonialNext');
-  const counter = document.querySelector('.testimonial-counter');
-  if (!panels.length || !prevBtn || !nextBtn) return;
+(function initTestimonialRail() {
+  const rail = document.getElementById('testimonialRail');
+  if (!rail) return;
 
-  const FADE_MS = 250;
-  const total   = panels.length;
-  let current   = 0;
-  let switching = false;
+  let isDown = false;
+  let startX = 0;
+  let startScroll = 0;
 
-  function goTo(index) {
-    if (switching || index === current) return;
-    switching = true;
+  rail.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse') return; /* touch already scrolls natively */
+    isDown = true;
+    startX = e.clientX;
+    startScroll = rail.scrollLeft;
+    rail.classList.add('is-dragging');
+    rail.setPointerCapture(e.pointerId);
+  });
 
-    const currentPanel = panels[current];
-    const nextPanel    = panels[index];
-    const indexStr     = String(index);
+  rail.addEventListener('pointermove', function (e) {
+    if (!isDown) return;
+    rail.scrollLeft = startScroll - (e.clientX - startX);
+  });
 
-    media.forEach(function (m) {
-      m.classList.toggle('active', m.dataset.index === indexStr);
-    });
-
-    currentPanel.classList.add('is-transitioning');
-
-    window.setTimeout(function () {
-      currentPanel.hidden = true;
-      currentPanel.classList.remove('is-transitioning', 'active');
-
-      nextPanel.hidden = false;
-      nextPanel.classList.add('active', 'is-transitioning');
-      void nextPanel.offsetWidth;
-      nextPanel.classList.remove('is-transitioning');
-
-      current = index;
-      if (counter) counter.textContent = (current + 1) + ' / ' + total;
-      switching = false;
-    }, FADE_MS);
+  function stopDrag() {
+    isDown = false;
+    rail.classList.remove('is-dragging');
   }
 
-  prevBtn.addEventListener('click', function () {
-    goTo((current - 1 + total) % total);
-  });
-
-  nextBtn.addEventListener('click', function () {
-    goTo((current + 1) % total);
-  });
+  rail.addEventListener('pointerup', stopDrag);
+  rail.addEventListener('pointercancel', stopDrag);
 })();
 
 
