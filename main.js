@@ -186,51 +186,37 @@
 
 
 /* ============================================================
-   7. TESTIMONIALS — click a name tab to switch testimonial
+   7. TESTIMONIALS — click-and-drag horizontal rail
    ============================================================ */
-(function initTestimonials() {
-  const tabs   = document.querySelectorAll('.testimonial-tab');
-  const panels = document.querySelectorAll('.testimonial-panel');
-  const media  = document.querySelectorAll('.testimonial-media');
-  if (!tabs.length) return;
+(function initTestimonialRail() {
+  const rail = document.getElementById('testimonialRail');
+  if (!rail) return;
 
-  const FADE_MS = 250;
-  let switching = false;
+  let isDown = false;
+  let startX = 0;
+  let startScroll = 0;
 
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      const index = tab.dataset.index;
-      const nextPanel = Array.prototype.find.call(panels, function (p) { return p.dataset.index === index; });
-      const currentPanel = Array.prototype.find.call(panels, function (p) { return !p.hidden; });
-      if (switching || !nextPanel || nextPanel === currentPanel) return;
-      switching = true;
-
-      tabs.forEach(function (t) {
-        const active = t === tab;
-        t.classList.toggle('active', active);
-        t.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-
-      media.forEach(function (m) {
-        m.classList.toggle('active', m.dataset.index === index);
-      });
-
-      /* Crossfade the quote text out, swap it, then fade the new one in */
-      currentPanel.classList.add('is-transitioning');
-
-      window.setTimeout(function () {
-        currentPanel.hidden = true;
-        currentPanel.classList.remove('is-transitioning', 'active');
-
-        nextPanel.hidden = false;
-        nextPanel.classList.add('active', 'is-transitioning');
-        void nextPanel.offsetWidth; /* force reflow so the fade-in actually transitions */
-        nextPanel.classList.remove('is-transitioning');
-
-        switching = false;
-      }, FADE_MS);
-    });
+  rail.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse') return; /* touch already scrolls natively */
+    isDown = true;
+    startX = e.clientX;
+    startScroll = rail.scrollLeft;
+    rail.classList.add('is-dragging');
+    rail.setPointerCapture(e.pointerId);
   });
+
+  rail.addEventListener('pointermove', function (e) {
+    if (!isDown) return;
+    rail.scrollLeft = startScroll - (e.clientX - startX);
+  });
+
+  function stopDrag() {
+    isDown = false;
+    rail.classList.remove('is-dragging');
+  }
+
+  rail.addEventListener('pointerup', stopDrag);
+  rail.addEventListener('pointercancel', stopDrag);
 })();
 
 
