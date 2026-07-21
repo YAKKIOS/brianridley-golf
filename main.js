@@ -195,12 +195,25 @@
   let isDown = false;
   let startX = 0;
   let startScroll = 0;
+  let lastX = 0;
+  let lastT = 0;
+  let velocity = 0;   /* px per ms */
+  let momentumId = null;
+
+  function stopMomentum() {
+    if (momentumId) cancelAnimationFrame(momentumId);
+    momentumId = null;
+  }
 
   rail.addEventListener('pointerdown', function (e) {
     if (e.pointerType !== 'mouse') return; /* touch already scrolls natively */
+    stopMomentum();
     isDown = true;
     startX = e.clientX;
     startScroll = rail.scrollLeft;
+    lastX = e.clientX;
+    lastT = performance.now();
+    velocity = 0;
     rail.classList.add('is-dragging');
     rail.setPointerCapture(e.pointerId);
   });
@@ -208,11 +221,33 @@
   rail.addEventListener('pointermove', function (e) {
     if (!isDown) return;
     rail.scrollLeft = startScroll - (e.clientX - startX);
+
+    const now = performance.now();
+    const dt = now - lastT;
+    if (dt > 0) {
+      velocity = (lastX - e.clientX) / dt;
+    }
+    lastX = e.clientX;
+    lastT = now;
   });
 
+  function glide() {
+    velocity *= 0.94; /* friction */
+    if (Math.abs(velocity) < 0.02) {
+      momentumId = null;
+      return;
+    }
+    rail.scrollLeft += velocity * 16;
+    momentumId = requestAnimationFrame(glide);
+  }
+
   function stopDrag() {
+    if (!isDown) return;
     isDown = false;
     rail.classList.remove('is-dragging');
+    if (Math.abs(velocity) > 0.05) {
+      momentumId = requestAnimationFrame(glide);
+    }
   }
 
   rail.addEventListener('pointerup', stopDrag);
