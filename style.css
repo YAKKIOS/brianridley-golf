@@ -1300,6 +1300,45 @@ p {
   flex-direction: column;
 }
 
+.footer__top-inner {
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.5rem var(--gap) 0;
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
+  color: var(--cream);
+}
+
+.footer__logo-mark {
+  height: 1.25rem;
+  width: auto;
+  display: block;
+}
+
+.footer__social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  transition: opacity 0.2s ease;
+}
+
+.footer__social:hover {
+  opacity: 0.65;
+}
+
+.footer__social svg {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
 .footer__inner {
   max-width: var(--max-width);
   width: 100%;
@@ -1309,13 +1348,19 @@ p {
   align-items: center;
   text-align: center;
   gap: 2rem;
-  padding: 9rem var(--gap) 8rem;
+  padding: 5rem var(--gap) 8rem;
   flex: 1;
 }
 
 .footer__brand {
   color: var(--white);
   max-width: calc(var(--max-width) / 12 * 8);
+}
+
+.footer__subtext {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: var(--fs-body);
+  max-width: 32rem;
 }
 
 .footer__cta {
