@@ -768,76 +768,11 @@ p {
   font-variation-settings: 'wght' 400;
 }
 
-/* ============================================================
-   10b. CREDENTIALS CAROUSEL
-   ============================================================ */
 .hero-viewport {
   height: 100vh;
-  /* min-height = hero min (44rem) + approx carousel height (8rem) so on
-     small screens the hero is usable even if the carousel scrolls off-screen */
   min-height: 52rem;
   display: flex;
   flex-direction: column;
-}
-
-.credentials-carousel-section {
-  background: var(--sage);
-  overflow: hidden;
-  padding: 2rem 0;
-}
-
-.credentials-carousel {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding-left: var(--container-pad);
-}
-
-.credentials-carousel__title {
-  flex-shrink: 0;
-  max-width: 16rem;
-  color: var(--dark-green);
-}
-
-/* Fades the track into the section's background at both edges */
-.credentials-carousel__viewport {
-  flex: 1;
-  min-width: 0; /* let this flex item shrink below the track's content width */
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-}
-
-.credentials-carousel__track {
-  display: flex;
-  gap: 3rem;
-  width: max-content;
-  animation: credentials-scroll 26s linear infinite;
-}
-
-.credentials-carousel__item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: var(--fs-sm);
-  color: var(--dark-green);
-  white-space: nowrap;
-}
-
-.credentials-carousel__item .material-symbols-outlined {
-  font-size: 1.25rem;
-  font-variation-settings: 'wght' 200;
-  color: var(--dark-green);
-  flex-shrink: 0;
-}
-
-/* Content is duplicated once in the HTML, so -50% is exactly one full set —
-   the reset back to 0% is invisible since the second set is identical. */
-@keyframes credentials-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
 }
 
 /* ============================================================
@@ -1169,7 +1104,7 @@ p {
 .pricing-card__price {
   font-family: var(--font-brand);
   font-size: var(--fs-h2);
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-heading);
   line-height: 1;
 }
@@ -1547,27 +1482,15 @@ p {
   }
 
   /* Typography scale down */
-  h1 { font-size: clamp(2.75rem, 12vw, 7.5rem); }
-  h2 { font-size: clamp(2rem, 8vw, 3rem); }
-  h3 { font-size: clamp(1.75rem, 7vw, 2.5rem); }
-  h4 { font-size: clamp(1.5rem, 6vw, 2rem); }
+  h1 { font-size: clamp(3rem, 13vw, 7.5rem); }
+  h2 { font-size: clamp(2.25rem, 9vw, 3rem); }
+  h3 { font-size: clamp(2rem, 8vw, 2.5rem); }
+  h4 { font-size: clamp(1.75rem, 7vw, 2rem); }
 
   /* Grids */
   .grid--2,
   .grid--2x2 {
     grid-template-columns: 1fr;
-  }
-
-  /* Credentials carousel — title above, both full width */
-  .credentials-carousel {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1.5rem;
-    padding: 0 var(--container-pad);
-  }
-
-  .credentials-carousel__title {
-    max-width: none;
   }
 
   /* Credentials — stack on mobile */
@@ -1616,7 +1539,7 @@ p {
   }
 
   .testimonial-card__text {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-h6);
   }
 
   .sponsors__grid {
@@ -1625,7 +1548,7 @@ p {
 
   /* Hero */
   .hero__content h1 {
-    font-size: clamp(2.5rem, 14vw, 7.5rem);
+    font-size: clamp(3rem, 15vw, 7.5rem);
   }
 
   .hero__sub {
@@ -1675,10 +1598,6 @@ p {
     opacity: 1;
     transform: none;
     transition: none;
-  }
-
-  .credentials-carousel__track {
-    animation: none;
   }
 
   html {
