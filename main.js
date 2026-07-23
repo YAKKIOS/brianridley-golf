@@ -23,6 +23,38 @@
 
 
 /* ============================================================
+   1b. HERO TICKER — steps through credentials, one per 2s
+   ============================================================ */
+(function initHeroTicker() {
+  const track = document.getElementById('heroTicker');
+  const items = track ? track.children : null;
+  if (!track || !items || items.length < 2) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ITEM_H  = 24; // px — must match .hero__ticker-item { height: 1.5rem }
+  const REAL_COUNT = items.length - 1; // exclude the duplicate first item
+  const TRANSITION_MS = 600; // must match .hero__ticker-track transition duration
+  let index = 0;
+
+  setInterval(function () {
+    index++;
+    track.style.transform = 'translateY(-' + (index * ITEM_H) + 'px)';
+
+    if (index === REAL_COUNT) {
+      window.setTimeout(function () {
+        track.style.transition = 'none';
+        track.style.transform = 'translateY(0)';
+        void track.offsetWidth; /* force reflow so the jump back is instant, not animated */
+        track.style.transition = '';
+        index = 0;
+      }, TRANSITION_MS);
+    }
+  }, 2000);
+})();
+
+
+/* ============================================================
    2. HAMBURGER — mobile nav toggle
    ============================================================ */
 (function initHamburger() {

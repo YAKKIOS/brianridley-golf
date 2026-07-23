@@ -733,6 +733,41 @@ p {
   margin-right: auto;
 }
 
+/* Ticker under the CTA — cycles through the same credentials as the
+   marquee below, one at a time. Item height (1.5rem) is duplicated in
+   main.js to step the track by the right amount each tick. */
+.hero__ticker {
+  margin-top: 2rem;
+}
+
+.hero__ticker-viewport {
+  height: 1.5rem;
+  overflow: hidden;
+}
+
+.hero__ticker-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero__ticker-item {
+  height: 1.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--cream);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.hero__ticker-item .material-symbols-outlined {
+  font-size: 1.1rem;
+  font-variation-settings: 'wght' 400;
+}
+
 /* ============================================================
    10b. CREDENTIALS CAROUSEL
    ============================================================ */
