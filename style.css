@@ -1307,7 +1307,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2.5rem var(--gap) 0;
+  padding: 0 var(--gap) 4rem;
 }
 
 .footer__logo {
@@ -1317,7 +1317,7 @@ p {
 }
 
 .footer__logo-mark {
-  height: 1.25rem;
+  height: 2rem;
   width: auto;
   display: block;
 }
@@ -1335,8 +1335,8 @@ p {
 }
 
 .footer__social svg {
-  width: 1.375rem;
-  height: 1.375rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .footer__inner {
@@ -1348,7 +1348,7 @@ p {
   align-items: center;
   text-align: center;
   gap: 2rem;
-  padding: 5rem var(--gap) 8rem;
+  padding: 6rem var(--gap) 3rem;
   flex: 1;
 }
 
