@@ -589,7 +589,7 @@ p {
 .navbar__inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--gap);
+  padding: 0 var(--container-pad);
   height: 100%;
   display: flex;
   align-items: center;
@@ -1227,7 +1227,7 @@ p {
 .masonry-wrapper {
   position: relative;
   margin-top: 0;
-  padding: 0 var(--gap);
+  padding: 0 var(--container-pad);
   max-width: var(--max-width);
   margin-left: auto;
   margin-right: auto;
@@ -1292,30 +1292,6 @@ p {
 }
 
 /* ============================================================
-   19b. CTA BAND — pre-footer callout, colours inverted from the
-   dark footer below it (white bg, dark text, dark button)
-   ============================================================ */
-.cta-band__inner {
-  max-width: 48rem;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 2rem;
-}
-
-.cta-band__subtext {
-  color: var(--text-body);
-  font-size: var(--fs-body);
-  max-width: 32rem;
-}
-
-.cta-band__cta {
-  /* inherits .btn .btn--dark .btn--pill */
-}
-
-/* ============================================================
    20. FOOTER
    ============================================================ */
 .footer {
@@ -1324,25 +1300,39 @@ p {
   flex-direction: column;
 }
 
-.footer__top-inner {
+.footer__cta-inner {
   max-width: var(--max-width);
-  width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4rem var(--gap);
+  gap: 2rem;
+  padding: 4rem var(--container-pad);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer__cta-heading {
+  color: var(--cream);
+  font-size: var(--fs-h3);
+  text-align: left;
+}
+
+.footer__top-inner {
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 4rem var(--container-pad);
 }
 
 .footer__logo {
-  display: flex;
-  align-items: center;
+  display: block;
   color: var(--cream);
+  opacity: 0.08;
 }
 
 .footer__logo-mark {
-  height: 2rem;
-  width: auto;
+  width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -1363,12 +1353,6 @@ p {
   height: 1.5rem;
 }
 
-/* Border stretches full width; the content inside stays within
-   the page's normal max-width so it lines up with everything else. */
-.footer__links {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .footer__links-inner {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -1377,7 +1361,7 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem 2rem;
-  padding: 1.25rem var(--gap);
+  padding: 1.25rem var(--container-pad);
 }
 
 .footer__links-group {
@@ -1582,11 +1566,23 @@ p {
     object-position: center top;
   }
 
-  /* Footer */
-  .footer__links {
+  /* Footer — stack everything, keep left-aligned */
+  .footer__cta-inner {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .footer__links-inner {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
-    text-align: center;
+  }
+
+  .footer__links-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 }
 
