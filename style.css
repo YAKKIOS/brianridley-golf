@@ -885,7 +885,7 @@ p {
 
 .testimonial-card__text {
   font-family: var(--font-brand);
-  font-size: var(--fs-h6);
+  font-size: var(--fs-h5);
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1.4;
@@ -997,11 +997,23 @@ p {
   margin-bottom: 1.25rem;
 }
 
-.lead-text {
-  font-size: var(--fs-sm);
-  line-height: 1.5;
-  color: var(--text-body);
+.lead-text,
+.about__sub-text {
+  margin-bottom: 1.5rem;
+}
+
+.about__attribution {
+  margin-bottom: 1.5rem;
+}
+
+.about__signature {
   margin-bottom: 2rem;
+}
+
+.about__signature img {
+  height: 2.5rem;
+  width: auto;
+  border-radius: 0;
 }
 
 .about__image-placeholder {
@@ -1015,8 +1027,26 @@ p {
   color: var(--cream);
 }
 
-#about .lead-text {
+#about .lead-text,
+#about .about__sub-text {
   color: rgba(245, 240, 232, 0.75);
+}
+
+#about .testimonial-card__name {
+  color: var(--cream);
+}
+
+#about .testimonial-card__title {
+  color: rgba(245, 240, 232, 0.6);
+}
+
+/* Signature PNG is black ink on transparent — invert to render light on the dark section */
+#about .about__signature img {
+  filter: invert(1);
+}
+
+#about .about__signature svg {
+  color: var(--cream);
 }
 
 /* ============================================================
